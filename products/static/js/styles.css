@@ -1,0 +1,57 @@
+body {
+    background: linear-gradient(to right, #f9f9f9, #f0f0f0);
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 300px;
+}
+
+.title {
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.language-select {
+    margin-bottom: 25px;
+}
+
+.language-select label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.language-select select {
+    padding: 8px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.role-buttons button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.role-buttons button:hover {
+    background: #45a049;
+}

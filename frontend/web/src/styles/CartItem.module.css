@@ -1,0 +1,341 @@
+.card {
+
+    display:flex;
+
+    gap:25px;
+
+    padding:24px;
+
+    background:white;
+
+    border-radius:18px;
+
+    border:1px solid #eee;
+
+    margin-bottom:18px;
+
+    transition:.3s;
+
+}
+
+
+.card:hover {
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.08);
+
+}
+
+
+
+.imageSection {
+
+    width:180px;
+
+    height:180px;
+
+    flex-shrink:0;
+
+}
+
+
+.imageSection img {
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+}
+
+
+
+
+.content {
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+
+
+.top {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+
+
+.store {
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+
+
+.rating {
+
+    margin-left:auto;
+
+    font-size:14px;
+
+}
+
+
+.rating span {
+
+    color:#777;
+
+    margin-left:5px;
+
+}
+
+
+
+.favorite {
+
+    border:none;
+
+    background:none;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+}
+
+
+
+
+.middle {
+
+    margin-top:15px;
+
+}
+
+
+
+.middle h3 {
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.description {
+
+    color:#666;
+
+    line-height:1.5;
+
+    max-width:650px;
+
+}
+
+
+
+
+.badges {
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.badges span {
+
+    background:#f4f4f4;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.priceSection {
+
+    margin-top:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+
+.price {
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+
+
+.oldPrice {
+
+    color:#999;
+
+    text-decoration:line-through;
+
+}
+
+
+
+.discount {
+
+    color:#e53935;
+
+    font-weight:bold;
+
+}
+
+
+
+
+.actions {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:auto;
+
+    padding-top:20px;
+
+}
+
+
+
+
+.quantity {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+
+.quantity button {
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:50%;
+
+    border:1px solid #ddd;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+
+
+.quantity span {
+
+    font-weight:bold;
+
+}
+
+
+
+
+.remove {
+
+    border:none;
+
+    background:none;
+
+    color:#d32f2f;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+
+@media(max-width:700px){
+
+
+.card {
+
+    flex-direction:column;
+
+}
+
+
+.imageSection {
+
+    width:100%;
+
+    height:260px;
+
+}
+
+
+.top {
+
+    flex-wrap:wrap;
+
+}
+
+
+.rating {
+
+    margin-left:0;
+
+}
+
+
+}

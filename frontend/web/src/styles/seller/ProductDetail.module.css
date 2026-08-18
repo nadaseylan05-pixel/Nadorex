@@ -1,0 +1,9 @@
+.colorValue {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
