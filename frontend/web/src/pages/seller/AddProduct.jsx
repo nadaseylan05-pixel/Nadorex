@@ -2496,9 +2496,9 @@ const removeEditingVariant = (index) => {
                               ))}
                             </div>
                           )}
-                          placeholder= {t.variant_name}
+                          {/* placeholder= {t.variant_name}
                           onChange={(e) => updateEditingVariant(index, "title", e.target.value)}
-                        />
+                        /> */}
 
                         {/* اختيار نوع الصورة الرئيسية */}
                         <div>
