@@ -36,7 +36,8 @@ function CategoryFilter({
     //         });
     // }, [lang]);
     useEffect(() => {
-        fetch(`http://localhost:8000/api/categories/?lang=${lang}`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/categories/?lang=${lang}`)
+        // fetch(`http://localhost:8000/api/categories/?lang=${lang}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log("ALL CATEGORIES FROM API:", data.categories);

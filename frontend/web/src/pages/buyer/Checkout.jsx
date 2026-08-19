@@ -57,8 +57,9 @@ function Checkout({ lang = "en" }) {
                 address: cleanAddress
             });
 
-            // استخدام الـ Endpoint الخاص بك لتأكيد الطلب
-            const response = await fetch("http://127.0.0.1:8000/api/buyer/order/confirm/", {
+            // // استخدام الـ Endpoint الخاص بك لتأكيد الطلب
+            // fetch("http://127.0.0.1:8000/api/buyer/order/confirm/", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/buyer/order/confirm/`, {
                 method: "POST",
                 credentials: "include", // للسماح بإرسال الـ Cookies وجلسة العمل
                 headers: {

@@ -28,7 +28,8 @@ function SellerLogin({ lang }) {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/login/?lang=${lang || "en"}`,
+        `${import.meta.env.VITE_API_URL}/api/login/?lang=${lang || "en"}`,
+        // `http://127.0.0.1:8000/api/login/?lang=${lang || "en"}`,
         {
           method: "POST",
           headers: {

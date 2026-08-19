@@ -129,7 +129,8 @@ function AddProduct() {
 
       try {
           const dashboardRes = await fetch(
-              `http://localhost:8000/api/seller/dashboard/?lang=${lang}`,
+              `${import.meta.env.VITE_API_URL}/api/seller/dashboard/?lang=${lang}`,
+              // `http://localhost:8000/api/seller/dashboard/?lang=${lang}`,
               {
                   headers: {
                       Authorization: `Bearer ${token}`
@@ -269,7 +270,8 @@ const removeEditingVariant = (index) => {
 
     try {
       const productsRes = await fetch(
-        `http://localhost:8000/api/seller/products/?lang=${lang}`,
+        `${import.meta.env.VITE_API_URL}/api/seller/products/?lang=${lang}`,
+        // `http://localhost:8000/api/seller/products/?lang=${lang}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -304,7 +306,8 @@ const removeEditingVariant = (index) => {
       await fetchProducts();
 
       const categoriesRes = await fetch(
-        `http://localhost:8000/api/categories/?lang=${lang}`,
+        `${import.meta.env.VITE_API_URL}/api/categories/?lang=${lang}`,
+        // `http://localhost:8000/api/categories/?lang=${lang}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -443,7 +446,8 @@ const removeEditingVariant = (index) => {
       console.log("FETCHING ATTRIBUTES FOR CATEGORY:", categoryCode);
 
       const response = await fetch(
-        `http://localhost:8000/api/categories/${categoryCode}/attributes/?lang=${lang}`
+        `${import.meta.env.VITE_API_URL}/api/categories/${categoryCode}/attributes/?lang=${lang}`
+        // `http://localhost:8000/api/categories/${categoryCode}/attributes/?lang=${lang}`
       );
 
       console.log("ATTRIBUTES RESPONSE STATUS:", response.status);
@@ -466,7 +470,8 @@ const removeEditingVariant = (index) => {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/api/seller/orders/${orderId}/update-status/`,
+        `${import.meta.env.VITE_API_URL}/api/seller/orders/${orderId}/update-status/`,
+        // `http://localhost:8000/api/seller/orders/${orderId}/update-status/`,
         {
           method: "POST",
           headers: {
@@ -652,7 +657,8 @@ const removeEditingVariant = (index) => {
     });
 
     try {
-      const res = await fetch(`http://localhost:8000/api/seller/products/add/?lang=${lang}`, {
+      // fetch(`http://localhost:8000/api/seller/products/add/?lang=${lang}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/seller/products/add/?lang=${lang}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: payload,
@@ -804,7 +810,8 @@ const removeEditingVariant = (index) => {
 
 
     try {
-      const res = await fetch(`http://localhost:8000/api/seller/products/update/${editingProduct.id}/`, {
+      // fetch(`http://localhost:8000/api/seller/products/update/${editingProduct.id}/`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/seller/products/update/${editingProduct.id}/`, {
         method: "POST",
         headers: { 
           
@@ -832,7 +839,8 @@ const removeEditingVariant = (index) => {
     const token = localStorage.getItem("access_token");
     if (!window.confirm(t.confirm_delete)) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/seller/products/delete/${productId}/`, {
+      // fetch(`http://localhost:8000/api/seller/products/delete/${productId}/`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/seller/products/delete/${productId}/`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

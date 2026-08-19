@@ -322,7 +322,8 @@ function ProductDetail() {
         const fetchProduct = async () => {
             try {
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/buyer/product/${id}/?lang=${lang}&instagram_username=${encodeURIComponent(instagramUsername)}`,
+                    `${import.meta.env.VITE_API_URL}/api/buyer/product/${id}/?lang=${lang}&instagram_username=${encodeURIComponent(instagramUsername)}`,
+                    // `http://127.0.0.1:8000/api/buyer/product/${id}/?lang=${lang}&instagram_username=${encodeURIComponent(instagramUsername)}`,
                     {
                         credentials: "include",
                     }

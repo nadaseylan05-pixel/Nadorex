@@ -3,8 +3,8 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 import styles from "../../styles/Buyer.module.css";
 import { useParams } from "react-router-dom";
-const API_URL = "http://127.0.0.1:8000/api";
-
+// const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 export const toggleFavoriteApi = async (buyerPhone, productId) => {
     const response = await axios.post(`${API_URL}/favorites/toggle/`, {
         buyer_phone: buyerPhone,
@@ -24,8 +24,8 @@ function FavoritesPage() {
             setLoading(false);
             return;
         }
-
-        fetch(`http://127.0.0.1:8000/buyer/favorites/?buyer_phone=${buyerPhone} & instagram_username=${instagramUsername}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/buyer/favorites/?buyer_phone=${buyerPhone} & instagram_username=${instagramUsername}`, {
+        // fetch(`http://127.0.0.1:8000/buyer/favorites/?buyer_phone=${buyerPhone} & instagram_username=${instagramUsername}`, {
             credentials: "include"
         })
         .then((res) => res.json())

@@ -17,7 +17,8 @@ function ProductDetails() {
       console.log("TOKEN:", token);
       
       const res = await fetch(
-        `http://localhost:8000/api/products/details/${id}/?lang=${lang}`,
+        `${import.meta.env.VITE_API_URL}/api/products/details/${id}/?lang=${lang}`,
+        // `http://localhost:8000/api/products/details/${id}/?lang=${lang}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

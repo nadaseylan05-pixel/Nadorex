@@ -24,8 +24,8 @@ function BuyerOrders() {
             console.warn("⚠️ [BuyerOrders] لم يتم العثور على رقم هاتف العميل في الـ localStorage.");
             return;
         }
-
-        fetch(`http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
+        // fetch(`http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
             credentials: "include"
         })
         .then((res) => {
@@ -57,7 +57,8 @@ function BuyerOrders() {
 
     const orderAction = async (action, id) => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/orders/action/", {
+            // fetch("http://127.0.0.1:8000/api/orders/action/", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/action/`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

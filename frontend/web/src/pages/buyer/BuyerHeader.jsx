@@ -147,8 +147,8 @@ import useTranslations from "../../hooks/useTranslations";
 // API
 // ==================================================
 
-const API_URL = "http://127.0.0.1:8000/api";
-
+// const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 // ==================================================
 // جلب عدد المفضلة
@@ -247,7 +247,8 @@ function BuyerHeader({
             }
 
             const response = await fetch(
-                `http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${encodeURIComponent(phone)}&lang=${lang}`,
+                `${import.meta.env.VITE_API_URL}/api/buyer/orders/confirmed/?phone=${encodeURIComponent(phone)}&lang=${lang}`,
+                // `http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${encodeURIComponent(phone)}&lang=${lang}`,
                 {
                     credentials: "include",
                 }

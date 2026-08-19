@@ -405,7 +405,8 @@ const getSellerNotifications = async (lang) => {
     const token = localStorage.getItem("access_token");
     
     const response = await fetch(
-        `http://localhost:8000/api/seller/notifications/?lang=${lang}`,
+        `${import.meta.env.VITE_API_URL}/api/seller/notifications/?lang=${lang}`,
+        // `http://localhost:8000/api/seller/notifications/?lang=${lang}`,
         {
             method: "GET",
 

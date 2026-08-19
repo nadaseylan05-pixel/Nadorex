@@ -76,7 +76,8 @@ function Buyer() {
             const phone = getBuyerPhone();
 
             const res = await fetch(
-                `http://127.0.0.1:8000/api/buyer/products/?lang=${lang}&buyer_phone=${phone}&instagram_username=${instagramUsername}`,
+                `${import.meta.env.VITE_API_URL}/api/buyer/products/?lang=${lang}&buyer_phone=${phone}&instagram_username=${instagramUsername}`,
+                // `http://127.0.0.1:8000/api/buyer/products/?lang=${lang}&buyer_phone=${phone}&instagram_username=${instagramUsername}`,
                 { credentials: "include" }
             );
 
@@ -128,7 +129,8 @@ function Buyer() {
 
             // تعديل الرابط للمسار الصحيح حسب urls.py في الباك إند
             const res = await fetch(
-                `http://127.0.0.1:8000/api/buyer/search/?${params}`,
+                `${import.meta.env.VITE_API_URL}/api/buyer/search/?${params}`,
+                // `http://127.0.0.1:8000/api/buyer/search/?${params}`,
                 { credentials: "include" }
             );
 

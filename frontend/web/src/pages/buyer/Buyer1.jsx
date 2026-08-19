@@ -42,7 +42,8 @@ function Buyer({ lang = "en" }) {
     if (!phone) return;
 
     fetch(
-      `http://127.0.0.1:8000/api/buyer/orders/confirmed/?lang=${lang}&phone=${phone}`,
+      `${import.meta.env.VITE_API_URL}/api/buyer/orders/confirmed/?lang=${lang}&phone=${phone}`,
+      // `http://127.0.0.1:8000/api/buyer/orders/confirmed/?lang=${lang}&phone=${phone}`,
       { credentials: "include" }
     )
       .then((res) => res.json())
@@ -53,7 +54,8 @@ function Buyer({ lang = "en" }) {
   };
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/buyer/products/?lang=${lang}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/buyer/products/?lang=${lang}`, {
+    // fetch(`http://127.0.0.1:8000/api/buyer/products/?lang=${lang}`, {
       credentials: "include",
     })
       .then((res) => {
@@ -82,7 +84,8 @@ function Buyer({ lang = "en" }) {
   // ---------------- ACTION BUTTON CLICK ----------------
   const onActionButtonClick = async (action, orderId) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/orders/action/", {
+      // fetch("http://127.0.0.1:8000/api/orders/action/", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/action/`, {
         method: "POST",
         credentials: "include",
         headers: {

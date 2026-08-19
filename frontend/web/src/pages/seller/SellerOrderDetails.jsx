@@ -36,7 +36,8 @@ function SellerOrderDetails() {
             setError("");
 
             const response = await fetch(
-                `http://localhost:8000/api/seller/orders/${encodeURIComponent(orderNumber)}/?lang=${lang}`,
+                `${import.meta.env.VITE_API_URL}/api/seller/orders/${encodeURIComponent(orderNumber)}/?lang=${lang}`,
+                // `http://localhost:8000/api/seller/orders/${encodeURIComponent(orderNumber)}/?lang=${lang}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -157,7 +158,8 @@ function SellerOrderDetails() {
             }
 
             const res = await fetch(
-                `http://localhost:8000/api/seller/orders/${orderItemId}/update-status/?lang=${lang}`,
+                `${import.meta.env.VITE_API_URL}/api/seller/orders/${orderItemId}/update-status/?lang=${lang}`,
+                // `http://localhost:8000/api/seller/orders/${orderItemId}/update-status/?lang=${lang}`,
                 {
                     method: "POST",
                     headers: {

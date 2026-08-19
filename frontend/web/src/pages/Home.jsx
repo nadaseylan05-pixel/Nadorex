@@ -6,7 +6,8 @@ function Home({ lang }) {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/index/?lang=${lang}`, {
+    fetch(`${import.meta.env.VITE_API_URL}api/index/?lang=${lang}`, {
+    // fetch(`http://127.0.0.1:8000/api/index/?lang=${lang}`, {
         method:"GET",
         credentials: "include", // مهم إذا كنت تستخدم session/cookies
     })

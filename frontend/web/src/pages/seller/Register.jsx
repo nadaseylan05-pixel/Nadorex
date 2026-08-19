@@ -35,7 +35,8 @@ function SellerRegister({ lang }) {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/merchant/register/?lang=${lang}`,
+        `${import.meta.env.VITE_API_URL}/merchant/register/?lang=${lang}`,
+        // `http://localhost:8000/merchant/register/?lang=${lang}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
