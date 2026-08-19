@@ -807,6 +807,16 @@ def merchant_register_api(request):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
         
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+@api_view(["GET"])
+def instagram_callback(request):
+    return Response({
+        "success": True,
+        "message": "Instagram callback reached successfully"
+    })
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import uuid

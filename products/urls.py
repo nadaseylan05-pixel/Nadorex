@@ -180,6 +180,12 @@ urlpatterns = [
         views.mark_seller_notification_read_api,
         name="mark_seller_notification_as_read"
     ),
+    path("merchant/register/", views.merchant_register_api, name="register"),
+    path(
+        "instagram/callback/",
+        views.instagram_callback,
+        name="instagram_callback",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
