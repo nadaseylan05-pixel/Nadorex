@@ -186,6 +186,17 @@ urlpatterns = [
         views.instagram_callback,
         name="instagram_callback",
     ),
+    path(
+        "instagram/deauthorize/",
+        views.instagram_deauthorize,
+        name="instagram_deauthorize",
+    ),
+
+    path(
+        "instagram/data-deletion/",
+        views.instagram_data_deletion,
+        name="instagram_data_deletion",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
