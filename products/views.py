@@ -825,7 +825,11 @@ def instagram_login(request):
 
     request.session[f"instagram_state_{state}"] = merchant.id
     request.session.modified = True
-
+    print("===== INSTAGRAM STATE =====")
+    print("STATE:", state)
+    print("MERCHANT ID:", merchant.id)
+    print("SESSION KEY EXISTS:", request.session.get(f"instagram_state_{state}"))
+    print("SESSION KEY:", f"instagram_state_{state}")
     params = {
         "force_reauth": "true",
         
@@ -1092,7 +1096,10 @@ def instagram_callback(request):
     # ==========================================
     # 3️⃣ التحقق من State ومعرفة التاجر
     # ==========================================
-
+    print("===== INSTAGRAM CALLBACK STATE =====")
+    print("STATE:", state)
+    print("SESSION KEY:", f"instagram_state_{state}")
+    print("MERCHANT ID FROM SESSION:", request.session.get(f"instagram_state_{state}"))
     merchant_id = request.session.get(
         f"instagram_state_{state}"
     )
