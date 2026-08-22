@@ -912,6 +912,7 @@ const removeEditingVariant = (index) => {
         `${import.meta.env.VITE_API_URL}/api/instagram/login/`,
         {
           method: "GET",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
