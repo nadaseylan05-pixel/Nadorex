@@ -904,6 +904,33 @@ const removeEditingVariant = (index) => {
 
       }
   };
+  const handleConnectInstagram = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/instagram/login/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("Instagram Login Response:", data);
+
+      if (data.success && data.login_url) {
+        window.location.href = data.login_url;
+      } else {
+        console.error("Instagram login URL not received:", data);
+      }
+    } catch (error) {
+      console.error("Instagram login error:", error);
+    }
+  };
   console.log(t);
   console.log("🔥 About to RETURN AddProduct");
   return (
@@ -1212,6 +1239,21 @@ const removeEditingVariant = (index) => {
               </span>
           )}
       </button>
+        <button
+          type="button"
+          onClick={handleConnectInstagram}
+          style={{
+            background: "#111827",
+            color: "#fff",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          📸 Connect Instagram
+        </button>  
         <button type="button" style={{ border: "none", background: activeTab === "products" || activeTab === "add" ? "#eff6ff" : "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#2563eb", fontWeight: "bold" }} onClick={() => setActiveTab("products")}>🏷️{t.products}</button>
         {/* <button type="button" style={{ border: "none", background: "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#475569" }}>📊 {t.inventory_management}</button>
         <button type="button" style={{ border: "none", background: "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#475569" }}>👥 {t.customers}</button> */}
@@ -1232,30 +1274,7 @@ const removeEditingVariant = (index) => {
           </div>
         </div>
 
-        {/* كروت الإحصائيات */}
-        {/* <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "30px" }}>
-          <div style={{ background: "#fff", padding: "20px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-            <div style={{ color: "#64748b", fontSize: "14px" }}>{t.total_sales}</div>
-            <div style={{ fontSize: "24px", fontWeight: "bold", margin: "10px 0", color: "#0f172a" }}>{stats.totalSales.toLocaleString()} ر.س</div>
-            <div style={{ color: "#10b981", fontSize: "12px" }}>⬆️ +23% {t.from_last_month}</div>
-          </div>
-          <div style={{ background: "#fff", padding: "20px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-            <div style={{ color: "#64748b", fontSize: "14px" }}>{t.total_inventory}</div>
-            <div style={{ fontSize: "24px", fontWeight: "bold", margin: "10px 0", color: "#0f172a" }}>{stats.totalStock.toLocaleString()}</div>
-            <div style={{ color: "#10b981", fontSize: "12px" }}>⬆️ +8% {t.from_last_month}</div>
-          </div>
-          <div style={{ background: "#fff", padding: "20px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-            <div style={{ color: "#64748b", fontSize: "14px" }}>{t.active_products}</div>
-            <div style={{ fontSize: "24px", fontWeight: "bold", margin: "10px 0", color: "#0f172a" }}>{stats.activeProducts}</div>
-            <div style={{ color: "#10b981", fontSize: "12px" }}>⬆️ +8% {t.from_last_month}</div>
-          </div>
-          <div style={{ background: "#fff", padding: "20px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-            <div style={{ color: "#64748b", fontSize: "14px" }}>{t.total_products}</div>
-            <div style={{ fontSize: "24px", fontWeight: "bold", margin: "10px 0", color: "#0f172a" }}>{stats.totalProducts}</div>
-            <div style={{ color: "#10b981", fontSize: "12px" }}>⬆️ +12% {t.from_last_month}</div>
-          </div>
-        </div> */}
-        <div className="stats-grid">
+       <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-title">{t.total_sales}</div>
             <div className="stat-value">

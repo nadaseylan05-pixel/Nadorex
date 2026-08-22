@@ -197,6 +197,11 @@ urlpatterns = [
         views.instagram_data_deletion,
         name="instagram_data_deletion",
     ),
+    path(
+        "instagram/login/",
+        views.instagram_login,
+        name="instagram_login"
+    ),
 ]
 if settings.DEBUG:
     urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

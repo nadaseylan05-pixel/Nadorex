@@ -274,6 +274,24 @@ class Merchants(models.Model):
     store_description = models.TextField(blank=True, null=True)
     description_color = models.CharField(max_length=20, blank=True, null=True)
     description_font = models.CharField(max_length=50, blank=True, null=True)
+    
+    
+    instagram_access_token = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    instagram_user_id = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    instagram_token_expires_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+    
     instagram_username = models.CharField(
         max_length=100, 
         unique=True, 

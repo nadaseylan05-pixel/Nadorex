@@ -21,7 +21,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 import traceback
-import traceback
+import secrets
+from urllib.parse import urlencode
+from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum, Avg
 from django.db.models.functions import Lower  # ← استيراد دالة تحويل الحروف لصغيرة في قاعدة البيانات
 from rest_framework.decorators import api_view, permission_classes
@@ -811,12 +813,40 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-# @api_view(["GET"])
-# def instagram_callback(request):
-#     return Response({
-#         "success": True,
-#         "message": "Instagram callback reached successfully"
-#     })
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def instagram_login(request):
+    merchant = Merchants.objects.get(user=request.user)
+
+    state = secrets.token_urlsafe(32)
+
+    request.session[f"instagram_state_{state}"] = merchant.id
+    request.session.modified = True
+
+    params = {
+        "force_reauth": "true",
+        
+        "client_id": "1430555705712818",
+        "redirect_uri": "https://nadorex.onrender.com/api/instagram/callback/",
+        "response_type": "code",
+        "scope": (
+            "instagram_business_basic,"
+            "instagram_business_manage_messages,"
+            "instagram_business_manage_comments,"
+            "instagram_business_content_publish,"
+            "instagram_business_manage_insights"
+        ),
+        "state": state,
+    }
+
+    query_string = urlencode(params)
+    print("INSTAGRAM PARAMS:", params)
+    print("INSTAGRAM QUERY:", query_string)
+    print("INSTAGRAM LOGIN URL:", f"https://www.instagram.com/oauth/authorize?{query_string}")
+    return Response({
+        "success": True,
+        "login_url": f"https://www.instagram.com/oauth/authorize?{query_string}"
+    })
 @api_view(["GET"])
 def instagram_callback(request):
     return Response({
