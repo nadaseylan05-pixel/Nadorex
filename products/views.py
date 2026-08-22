@@ -847,7 +847,7 @@ def instagram_login(request):
     return Response({
         "success": True,
         "login_url": f"https://www.instagram.com/oauth/authorize?{query_string}"
-#     })
+    })
 # @api_view(["GET"])
 # def instagram_callback(request):
 #     return Response({
