@@ -134,7 +134,7 @@ USE_TZ = True
 # ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
-    "http://localhost:5176",
+    "http://localhost:5177",
     os.getenv("FRONTEND_URL"),
 ]
 CORS_ALLOW_CREDENTIALS =True

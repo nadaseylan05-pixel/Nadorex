@@ -22,6 +22,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 import traceback
 import secrets
+import os
 from urllib.parse import urlencode
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum, Avg
@@ -846,15 +847,151 @@ def instagram_login(request):
     return Response({
         "success": True,
         "login_url": f"https://www.instagram.com/oauth/authorize?{query_string}"
-    })
+#     })
+# @api_view(["GET"])
+# def instagram_callback(request):
+#     return Response({
+#         "success": True,
+#         "message": "Instagram callback reached successfully"
+#     })
+
 @api_view(["GET"])
 def instagram_callback(request):
-    return Response({
-        "success": True,
-        "message": "Instagram callback reached successfully"
-    })
+    # ==========================================
+    # 1️⃣ الحصول على Authorization Code
+    # ==========================================
+    # Instagram يرسله لنا بعد أن يضغط المستخدم "السماح"
+    code = request.GET.get("code")
 
+    if not code:
+        return Response(
+            {
+                "success": False,
+                "error": "Instagram authorization code is missing"
+            },
+            status=400
+        )
 
+    # ==========================================
+    # 2️⃣ Instagram App ID
+    # ==========================================
+    # هذا هو Instagram App ID الموجود في Meta App Dashboard
+   
+    client_id = os.getenv("INSTAGRAM_CLIENT_ID")
+    # ==========================================
+    # 3️⃣ Instagram App Secret
+    # ==========================================
+    # هذا هو App Secret الموجود في Meta App Dashboard
+    # ⚠️ لا تضعيه في React أو GitHub
+    
+    client_secret = os.getenv("INSTAGRAM_CLIENT_SECRET")
+    # ==========================================
+    # 4️⃣ Grant Type
+    # ==========================================
+    # ثابت حسب وثائق Instagram Business Login
+    
+    grant_type = "authorization_code"
+
+    # ==========================================
+    # 5️⃣ Redirect URI
+    # ==========================================
+    # يجب أن يكون مطابقًا تمامًا للـ Redirect URI
+    # الموجود في Meta App Dashboard
+    redirect_uri = (
+        "https://nadorex.onrender.com/api/instagram/callback/"
+    )
+    code = request.GET.get("code")
+    # ==========================================
+    # 6️⃣ إرسال الـ code إلى Instagram
+    #    للحصول على Access Token
+    # ==========================================
+
+    try:
+        response = requests.post(
+            "https://api.instagram.com/oauth/access_token",
+            data={
+                # Instagram App ID
+                "client_id": client_id,
+
+                # Instagram App Secret
+                "client_secret": client_secret,
+
+                # ثابت
+                "grant_type": grant_type,
+
+                # نفس Redirect URI المسجل في Meta
+                "redirect_uri": redirect_uri,
+
+                # الـ Authorization Code الذي أعاده Instagram
+                "code": code,
+            },
+            timeout=15
+        )
+
+        print("===== INSTAGRAM TOKEN EXCHANGE =====")
+        print("STATUS:", response.status_code)
+        print("RESPONSE:", response.text)
+
+        if response.status_code != 200:
+            return Response(
+                {
+                    "success": False,
+                    "error": "Failed to exchange Instagram code",
+                    "instagram_response": response.text,
+                },
+                status=400
+            )
+
+        token_data = response.json()
+
+        # ==========================================
+        # 7️⃣ استخراج Access Token
+        # ==========================================
+
+        access_token = token_data.get("access_token")
+
+        # Instagram User ID
+        instagram_user_id = token_data.get("user_id")
+
+        if not access_token:
+            return Response(
+                {
+                    "success": False,
+                    "error": "Instagram access token was not returned",
+                    "instagram_response": token_data,
+                },
+                status=400
+            )
+
+        # ==========================================
+        # 8️⃣ عرض النتيجة مؤقتًا للاختبار
+        # ==========================================
+        # لا نحفظه في قاعدة البيانات بعد.
+        # نريد أولًا التأكد أن Step 2 يعمل.
+
+        return Response({
+            "success": True,
+            "message": "Instagram code exchanged successfully",
+
+            # لا نفضل إظهار الـToken في الإنتاج.
+            # نعرض فقط هل وصل أم لا.
+            "access_token_received": bool(access_token),
+
+            # User ID الذي أعاده Instagram
+            "instagram_user_id": instagram_user_id,
+        })
+
+    except Exception as e:
+        print("🔥 INSTAGRAM TOKEN ERROR:", str(e))
+
+        return Response(
+            {
+                "success": False,
+                "error": "Instagram token exchange failed",
+                "debug": str(e),
+            },
+            status=500
+        )
 @api_view(["POST"])
 def instagram_deauthorize(request):
     return Response({
