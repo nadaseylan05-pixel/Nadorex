@@ -6,6 +6,8 @@ from products.services.translations import get_translations
 from operator import truediv
 from django.core.signals import request_started
 from rest_framework.decorators import api_view
+import os, uuid
+import requests
 #from rest_framework.response import Response
 from django.db.models import Sum, Avg
 from .models import Products, Orders, ProductReviews  # تأكدي من مسميات الموديلز لديكِ
@@ -22,7 +24,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 import traceback
 import secrets
-import os
+
 from urllib.parse import urlencode
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum, Avg
@@ -1207,7 +1209,7 @@ from .models import Categories, CategoryTranslations, Products
 from django.core.files.storage import FileSystemStorage
 
 # views.py
-import os
+
 import uuid
 from django.shortcuts import render, redirect
 # from .utils import get_all_color_gradients
@@ -1231,7 +1233,7 @@ import uuid, os
 
 
 from django.conf import settings
-import os, uuid
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.shortcuts import render, redirect
