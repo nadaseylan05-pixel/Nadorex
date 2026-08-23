@@ -202,6 +202,15 @@ urlpatterns = [
         views.instagram_login,
         name="instagram_login"
     ),
+
+
+    path(
+        "instagram/webhook/",
+        views.instagram_webhook,
+        name="instagram_webhook"
+    ),
+
+
 ]
 if settings.DEBUG:
     urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

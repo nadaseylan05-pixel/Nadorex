@@ -3226,7 +3226,112 @@ def cancel_order_api(request, order_id):
         
     except Exception as e:
         return JsonResponse({"success": False, "message": f"حدث خطأ داخلي: {str(e)}"}, status=200)
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import os
+import json
 
+
+@csrf_exempt
+@api_view(["GET", "POST"])
+def instagram_webhook(request):
+
+    # ==========================================
+    # GET
+    # Instagram يستخدم GET للتحقق من الـWebhook
+    # ==========================================
+
+    if request.method == "GET":
+
+        mode = request.GET.get(
+            "hub.mode"
+        )
+
+        verify_token = request.GET.get(
+            "hub.verify_token"
+        )
+
+        challenge = request.GET.get(
+            "hub.challenge"
+        )
+
+        # الـVerify Token الموجود في Environment Variables
+        expected_token = os.getenv(
+            "INSTAGRAM_WEBHOOK_VERIFY_TOKEN"
+        )
+
+        print("===== INSTAGRAM WEBHOOK VERIFY =====")
+        print("MODE:", mode)
+        print("VERIFY TOKEN RECEIVED:", bool(verify_token))
+        print("CHALLENGE RECEIVED:", bool(challenge))
+
+        # ==========================================
+        # التحقق
+        # ==========================================
+
+        if (
+            mode == "subscribe"
+            and verify_token == expected_token
+        ):
+            print(
+                "INSTAGRAM WEBHOOK VERIFIED: True"
+            )
+
+            # Instagram يتوقع challenge كنص
+            return HttpResponse(
+                challenge,
+                status=200
+            )
+
+        print(
+            "INSTAGRAM WEBHOOK VERIFIED: False"
+        )
+
+        return HttpResponse(
+            "Verification failed",
+            status=403
+        )
+
+    # ==========================================
+    # POST
+    # Instagram يرسل الأحداث هنا
+    # ==========================================
+
+    if request.method == "POST":
+
+        try:
+
+            data = json.loads(
+                request.body
+            )
+
+            print(
+                "===== INSTAGRAM WEBHOOK EVENT ====="
+            )
+
+            print(
+                "WEBHOOK DATA:",
+                data
+            )
+
+            # نرجع 200 بسرعة إلى Instagram
+            # حتى يعرف أن الطلب وصل
+            return HttpResponse(
+                "EVENT_RECEIVED",
+                status=200
+            )
+
+        except Exception as e:
+
+            print(
+                "🔥 INSTAGRAM WEBHOOK ERROR:",
+                str(e)
+            )
+
+            return HttpResponse(
+                "Invalid payload",
+                status=400
+            )
 @require_POST
 def return_order_api(request, order_id):
     try:
