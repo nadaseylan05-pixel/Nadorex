@@ -5,6 +5,7 @@ import { HexColorPicker } from "react-colorful";
 import { useLanguage } from "../../context/LanguageContext";
 import Notifications from "./Notifications"
 import SellerArchivedOrders from "./sellerArchivesdOrders";
+import { requestNotificationPermission } from "../../notifications";
 function AddProduct() {
   console.log("🔥 AddProduct component started");
   const {lang} = useLanguage();
@@ -294,7 +295,9 @@ const removeEditingVariant = (index) => {
       console.error("Error loading products:", error);
     }
   };
-
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
   useEffect(() => {
     
     

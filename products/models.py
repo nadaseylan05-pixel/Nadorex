@@ -300,6 +300,10 @@ class Merchants(models.Model):
         db_index=True,
         verbose_name="يوزر إنستغرام التاجر"
     )
+    fcm_token = models.TextField(
+        blank=True,
+        null=True
+    )
     class Meta:
         managed = False
         db_table = 'merchants'

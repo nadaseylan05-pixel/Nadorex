@@ -5015,3 +5015,48 @@ def mark_seller_notification_read_api(request, notification_id):
 #             "success": False,
 #             "message": str(e),
 #         }, status=500)
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .models import Merchants
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def register_fcm_token(request):
+    token = request.data.get("fcm_token")
+
+    if not token:
+        return Response(
+            {
+                "success": False,
+                "error": "FCM token is required"
+            },
+            status=400
+        )
+
+    try:
+        merchant = Merchants.objects.get(
+            email=request.user.email
+        )
+
+        merchant.fcm_token = token
+        merchant.save(
+            update_fields=["fcm_token"]
+        )
+
+        return Response({
+            "success": True,
+            "message": "FCM token registered successfully"
+        })
+
+    except Merchants.DoesNotExist:
+        return Response(
+            {
+                "success": False,
+                "error": "Merchant not found"
+            },
+            status=404
+        )

@@ -210,7 +210,11 @@ urlpatterns = [
         name="instagram_webhook"
     ),
 
-
+    path(
+        "notifications/register-token/",
+        views.register_fcm_token,
+        name="register_fcm_token"
+    ),
 ]
 if settings.DEBUG:
     urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
