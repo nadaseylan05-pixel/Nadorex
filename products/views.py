@@ -816,26 +816,90 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def instagram_login(request):
+#     merchant = Merchants.objects.get(user=request.user)
+
+#     state = secrets.token_urlsafe(32)
+
+#     request.session[f"instagram_state_{state}"] = merchant.id
+#     request.session.modified = True
+#     print("===== INSTAGRAM STATE =====")
+#     print("STATE:", state)
+#     print("MERCHANT ID:", merchant.id)
+#     print("SESSION KEY EXISTS:", request.session.get(f"instagram_state_{state}"))
+#     print("SESSION KEY:", f"instagram_state_{state}")
+#     params = {
+#         "force_reauth": "true",
+        
+#         "client_id": "1430555705712818",
+#         "redirect_uri": "https://nadorex.onrender.com/api/instagram/callback/",
+#         "response_type": "code",
+#         "scope": (
+#             "instagram_business_basic,"
+#             "instagram_business_manage_messages,"
+#             "instagram_business_manage_comments,"
+#             "instagram_business_content_publish,"
+#             "instagram_business_manage_insights"
+#         ),
+#         "state": state,
+#     }
+
+#     query_string = urlencode(params)
+#     print("INSTAGRAM PARAMS:", params)
+#     print("INSTAGRAM QUERY:", query_string)
+#     print("INSTAGRAM LOGIN URL:", f"https://www.instagram.com/oauth/authorize?{query_string}")
+#     return Response({
+#         "success": True,
+#         "login_url": f"https://www.instagram.com/oauth/authorize?{query_string}"
+#     })
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def instagram_login(request):
-    merchant = Merchants.objects.get(user=request.user)
+    try:
+        merchant = Merchants.objects.get(
+            user=request.user
+        )
 
-    state = secrets.token_urlsafe(32)
+    except Merchants.DoesNotExist:
+        return Response(
+            {
+                "success": False,
+                "error": "Merchant not found"
+            },
+            status=404
+        )
 
-    request.session[f"instagram_state_{state}"] = merchant.id
-    request.session.modified = True
-    print("===== INSTAGRAM STATE =====")
-    print("STATE:", state)
-    print("MERCHANT ID:", merchant.id)
-    print("SESSION KEY EXISTS:", request.session.get(f"instagram_state_{state}"))
-    print("SESSION KEY:", f"instagram_state_{state}")
+    # ==========================================
+    # إنشاء State آمن وموقّع
+    # ==========================================
+    # نضع merchant.id داخل state ولكن بتوقيع Django
+    # حتى لا يستطيع المستخدم تغييره.
+    signer = TimestampSigner()
+
+    state = signer.sign(
+        str(merchant.id)
+    )
+
+    # ==========================================
+    # Instagram OAuth parameters
+    # ==========================================
+
     params = {
         "force_reauth": "true",
-        
+
+        # Instagram App ID
         "client_id": "1430555705712818",
-        "redirect_uri": "https://nadorex.onrender.com/api/instagram/callback/",
+
+        # يجب أن يطابق Meta تمامًا
+        "redirect_uri":
+            "https://nadorex.onrender.com/api/instagram/callback/",
+
+        # نريد Authorization Code
         "response_type": "code",
+
+        # الصلاحيات المطلوبة
         "scope": (
             "instagram_business_basic,"
             "instagram_business_manage_messages,"
@@ -843,18 +907,28 @@ def instagram_login(request):
             "instagram_business_content_publish,"
             "instagram_business_manage_insights"
         ),
+
+        # State الموقّع
         "state": state,
     }
 
     query_string = urlencode(params)
-    print("INSTAGRAM PARAMS:", params)
-    print("INSTAGRAM QUERY:", query_string)
-    print("INSTAGRAM LOGIN URL:", f"https://www.instagram.com/oauth/authorize?{query_string}")
-    return Response({
-        "success": True,
-        "login_url": f"https://www.instagram.com/oauth/authorize?{query_string}"
-    })
 
+    login_url = (
+        "https://www.instagram.com/oauth/authorize?"
+        f"{query_string}"
+    )
+
+    print("===== INSTAGRAM LOGIN =====")
+    print("MERCHANT ID:", merchant.id)
+    print("STATE CREATED: True")
+
+    return Response(
+        {
+            "success": True,
+            "login_url": login_url
+        }
+    )
 # @api_view(["GET"])
 # def instagram_callback(request):
 #     # ==========================================
@@ -1059,95 +1133,484 @@ def instagram_login(request):
 #             },
 #             status=500
 #         )
+# @api_view(["GET"])
+# def instagram_callback(request):
+
+#     # ==========================================
+#     # 1️⃣ الحصول على Authorization Code
+#     # ==========================================
+#     # Instagram يرسله لنا بعد موافقة المستخدم
+#     code = request.GET.get("code")
+
+#     if not code:
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error": "Instagram authorization code is missing"
+#             },
+#             status=400
+#         )
+
+#     # ==========================================
+#     # 2️⃣ الحصول على State
+#     # ==========================================
+#     # الـstate أنشأناه في instagram_login
+#     # وهو مربوط بـ merchant.id داخل session
+#     state = request.GET.get("state")
+
+#     if not state:
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error": "Instagram state is missing"
+#             },
+#             status=400
+#         )
+
+#     # ==========================================
+#     # 3️⃣ التحقق من State ومعرفة التاجر
+#     # ==========================================
+#     print("===== INSTAGRAM CALLBACK STATE =====")
+#     print("STATE:", state)
+#     print("SESSION KEY:", f"instagram_state_{state}")
+#     print("MERCHANT ID FROM SESSION:", request.session.get(f"instagram_state_{state}"))
+#     merchant_id = request.session.get(
+#         f"instagram_state_{state}"
+#     )
+
+#     if not merchant_id:
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error": "Invalid or expired Instagram state"
+#             },
+#             status=400
+#         )
+
+#     try:
+#         merchant = Merchants.objects.get(
+#             id=merchant_id
+#         )
+
+#     except Merchants.DoesNotExist:
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error": "Merchant not found"
+#             },
+#             status=404
+#         )
+
+#     # ==========================================
+#     # 4️⃣ Instagram App ID
+#     # ==========================================
+#     client_id = os.getenv(
+#         "INSTAGRAM_CLIENT_ID"
+#     )
+
+#     # ==========================================
+#     # 5️⃣ Instagram App Secret
+#     # ==========================================
+#     # ⚠️ يبقى في Environment Variables
+#     # ولا يظهر في React أو GitHub
+#     client_secret = os.getenv(
+#         "INSTAGRAM_CLIENT_SECRET"
+#     )
+
+#     if not client_id or not client_secret:
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error": "Instagram credentials are not configured"
+#             },
+#             status=500
+#         )
+
+#     # ==========================================
+#     # 6️⃣ Redirect URI
+#     # ==========================================
+#     # يجب أن يطابق الموجود في Meta تمامًا
+#     redirect_uri = (
+#         "https://nadorex.onrender.com/api/instagram/callback/"
+#     )
+
+#     try:
+
+#         # ==========================================
+#         # STEP 2️⃣
+#         # Exchange Authorization Code
+#         # للحصول على Short-Lived Access Token
+#         # ==========================================
+
+#         response = requests.post(
+#             "https://api.instagram.com/oauth/access_token",
+#             data={
+
+#                 # Instagram App ID
+#                 "client_id": client_id,
+
+#                 # Instagram App Secret
+#                 "client_secret": client_secret,
+
+#                 # ثابت
+#                 "grant_type": "authorization_code",
+
+#                 # Redirect URI
+#                 "redirect_uri": redirect_uri,
+
+#                 # Authorization Code
+#                 "code": code,
+#             },
+#             timeout=15
+#         )
+
+#         print(
+#             "===== INSTAGRAM STEP 2 ====="
+#         )
+
+#         print(
+#             "STATUS:",
+#             response.status_code
+#         )
+
+#         if response.status_code != 200:
+
+#             print(
+#                 "STEP 2 ERROR:",
+#                 response.text
+#             )
+
+#             return Response(
+#                 {
+#                     "success": False,
+#                     "error": "Failed to exchange Instagram code"
+#                 },
+#                 status=400
+#             )
+
+#         token_data = response.json()
+
+#         # ==========================================
+#         # Short-Lived Access Token
+#         # ==========================================
+
+#         short_lived_token = token_data.get(
+#             "access_token"
+#         )
+
+#         # Instagram User ID
+#         instagram_user_id = token_data.get(
+#             "user_id"
+#         )
+
+#         if not short_lived_token:
+
+#             return Response(
+#                 {
+#                     "success": False,
+#                     "error": "Instagram access token was not returned"
+#                 },
+#                 status=400
+#             )
+
+#         print(
+#             "✅ SHORT-LIVED TOKEN RECEIVED"
+#         )
+
+#         print(
+#             "INSTAGRAM USER ID:",
+#             instagram_user_id
+#         )
+
+#         # ==========================================
+#         # STEP 3️⃣
+#         # الحصول على Long-Lived Access Token
+#         # ==========================================
+
+#         long_lived_response = requests.get(
+#             "https://graph.instagram.com/access_token",
+#             params={
+
+#                 # ثابت حسب وثائق Meta
+#                 "grant_type":
+#                     "ig_exchange_token",
+
+#                 # Instagram App Secret
+#                 "client_secret":
+#                     client_secret,
+
+#                 # Short-Lived Access Token
+#                 "access_token":
+#                     short_lived_token,
+#             },
+#             timeout=15
+#         )
+
+#         print(
+#             "===== INSTAGRAM STEP 3 ====="
+#         )
+
+#         print(
+#             "STATUS:",
+#             long_lived_response.status_code
+#         )
+
+#         if long_lived_response.status_code != 200:
+
+#             print(
+#                 "STEP 3 ERROR:",
+#                 long_lived_response.text
+#             )
+
+#             return Response(
+#                 {
+#                     "success": False,
+#                     "error":
+#                         "Failed to get long-lived Instagram access token"
+#                 },
+#                 status=400
+#             )
+
+#         long_lived_data = (
+#             long_lived_response.json()
+#         )
+
+#         # ==========================================
+#         # Long-Lived Access Token
+#         # ==========================================
+
+#         long_lived_token = (
+#             long_lived_data.get(
+#                 "access_token"
+#             )
+#         )
+
+#         # مدة صلاحية الـToken بالثواني
+#         expires_in = (
+#             long_lived_data.get(
+#                 "expires_in"
+#             )
+#         )
+
+#         if not long_lived_token:
+
+#             return Response(
+#                 {
+#                     "success": False,
+#                     "error":
+#                         "Long-lived Instagram access token was not returned"
+#                 },
+#                 status=400
+#             )
+
+#         print(
+#             "✅ LONG-LIVED TOKEN RECEIVED"
+#         )
+
+#         print(
+#             "EXPIRES IN:",
+#             expires_in
+#         )
+
+#         # ==========================================
+#         # 7️⃣ حفظ بيانات Instagram للتاجر
+#         # ==========================================
+
+#         merchant.instagram_access_token = (
+#             long_lived_token
+#         )
+
+#         merchant.instagram_user_id = (
+#             instagram_user_id
+#         )
+
+#         # ==========================================
+#         # 8️⃣ حساب وقت انتهاء الـToken
+#         # ==========================================
+
+#         if expires_in:
+
+#             merchant.instagram_token_expires_at = (
+#                 timezone.now()
+#                 + timedelta(
+#                     seconds=int(expires_in)
+#                 )
+#             )
+
+#         # ==========================================
+#         # 9️⃣ حفظ التعديلات
+#         # ==========================================
+
+#         merchant.save(
+#             update_fields=[
+#                 "instagram_access_token",
+#                 "instagram_user_id",
+#                 "instagram_token_expires_at",
+#             ]
+#         )
+
+#         # ==========================================
+#         # 🔟 حذف State بعد نجاح العملية
+#         # ==========================================
+
+#         del request.session[
+#             f"instagram_state_{state}"
+#         ]
+
+#         request.session.modified = True
+
+#         # ==========================================
+#         # 1️⃣1️⃣ النتيجة
+#         # ==========================================
+
+#         return Response(
+#             {
+#                 "success": True,
+#                 "message":
+#                     "Instagram connected successfully",
+
+#                 "instagram_connected": True,
+
+#                 "instagram_user_id":
+#                     instagram_user_id,
+
+#                 "access_token_saved": True,
+
+#                 "token_expires_at":
+#                     merchant.instagram_token_expires_at,
+#             }
+#         )
+
+#     except Exception as e:
+
+#         print(
+#             "🔥 INSTAGRAM CALLBACK ERROR:",
+#             str(e)
+#         )
+
+#         return Response(
+#             {
+#                 "success": False,
+#                 "error":
+#                     "Instagram authentication failed",
+#                 "debug": str(e),
+#             },
+#             status=500
+#         )
 @api_view(["GET"])
 def instagram_callback(request):
 
     # ==========================================
-    # 1️⃣ الحصول على Authorization Code
+    # 1️⃣ Authorization Code
     # ==========================================
-    # Instagram يرسله لنا بعد موافقة المستخدم
+
     code = request.GET.get("code")
 
     if not code:
         return Response(
             {
                 "success": False,
-                "error": "Instagram authorization code is missing"
+                "error":
+                    "Instagram authorization code is missing"
             },
             status=400
         )
 
     # ==========================================
-    # 2️⃣ الحصول على State
+    # 2️⃣ State
     # ==========================================
-    # الـstate أنشأناه في instagram_login
-    # وهو مربوط بـ merchant.id داخل session
+
     state = request.GET.get("state")
 
     if not state:
         return Response(
             {
                 "success": False,
-                "error": "Instagram state is missing"
+                "error":
+                    "Instagram state is missing"
             },
             status=400
         )
 
     # ==========================================
-    # 3️⃣ التحقق من State ومعرفة التاجر
+    # 3️⃣ التحقق من State
     # ==========================================
-    print("===== INSTAGRAM CALLBACK STATE =====")
-    print("STATE:", state)
-    print("SESSION KEY:", f"instagram_state_{state}")
-    print("MERCHANT ID FROM SESSION:", request.session.get(f"instagram_state_{state}"))
-    merchant_id = request.session.get(
-        f"instagram_state_{state}"
-    )
 
-    if not merchant_id:
+    signer = TimestampSigner()
+
+    try:
+
+        merchant_id = signer.unsign(
+            state,
+            max_age=600
+        )
+
+    except SignatureExpired:
+
         return Response(
             {
                 "success": False,
-                "error": "Invalid or expired Instagram state"
+                "error":
+                    "Instagram state expired"
             },
             status=400
         )
 
+    except BadSignature:
+
+        return Response(
+            {
+                "success": False,
+                "error":
+                    "Invalid Instagram state"
+            },
+            status=400
+        )
+
+    # ==========================================
+    # 4️⃣ الحصول على Merchant
+    # ==========================================
+
     try:
+
         merchant = Merchants.objects.get(
-            id=merchant_id
+            id=int(merchant_id)
         )
 
     except Merchants.DoesNotExist:
+
         return Response(
             {
                 "success": False,
-                "error": "Merchant not found"
+                "error":
+                    "Merchant not found"
             },
             status=404
         )
 
+    print("===== INSTAGRAM CALLBACK =====")
+    print("MERCHANT ID:", merchant.id)
+    print("STATE VERIFIED: True")
+
     # ==========================================
-    # 4️⃣ Instagram App ID
+    # 5️⃣ Instagram credentials
     # ==========================================
+
     client_id = os.getenv(
         "INSTAGRAM_CLIENT_ID"
     )
 
-    # ==========================================
-    # 5️⃣ Instagram App Secret
-    # ==========================================
-    # ⚠️ يبقى في Environment Variables
-    # ولا يظهر في React أو GitHub
     client_secret = os.getenv(
         "INSTAGRAM_CLIENT_SECRET"
     )
 
     if not client_id or not client_secret:
+
         return Response(
             {
                 "success": False,
-                "error": "Instagram credentials are not configured"
+                "error":
+                    "Instagram credentials are not configured"
             },
             status=500
         )
@@ -1155,45 +1618,44 @@ def instagram_callback(request):
     # ==========================================
     # 6️⃣ Redirect URI
     # ==========================================
-    # يجب أن يطابق الموجود في Meta تمامًا
+
     redirect_uri = (
-        "https://nadorex.onrender.com/api/instagram/callback/"
+        "https://nadorex.onrender.com/"
+        "api/instagram/callback/"
     )
 
     try:
 
         # ==========================================
         # STEP 2️⃣
-        # Exchange Authorization Code
-        # للحصول على Short-Lived Access Token
+        # Code → Short-lived Access Token
         # ==========================================
 
         response = requests.post(
             "https://api.instagram.com/oauth/access_token",
+
             data={
 
-                # Instagram App ID
-                "client_id": client_id,
+                "client_id":
+                    client_id,
 
-                # Instagram App Secret
-                "client_secret": client_secret,
+                "client_secret":
+                    client_secret,
 
-                # ثابت
-                "grant_type": "authorization_code",
+                "grant_type":
+                    "authorization_code",
 
-                # Redirect URI
-                "redirect_uri": redirect_uri,
+                "redirect_uri":
+                    redirect_uri,
 
-                # Authorization Code
-                "code": code,
+                "code":
+                    code,
             },
+
             timeout=15
         )
 
-        print(
-            "===== INSTAGRAM STEP 2 ====="
-        )
-
+        print("===== INSTAGRAM STEP 2 =====")
         print(
             "STATUS:",
             response.status_code
@@ -1209,24 +1671,24 @@ def instagram_callback(request):
             return Response(
                 {
                     "success": False,
-                    "error": "Failed to exchange Instagram code"
+                    "error":
+                        "Failed to exchange Instagram code"
                 },
                 status=400
             )
 
         token_data = response.json()
 
-        # ==========================================
-        # Short-Lived Access Token
-        # ==========================================
-
-        short_lived_token = token_data.get(
-            "access_token"
+        short_lived_token = (
+            token_data.get(
+                "access_token"
+            )
         )
 
-        # Instagram User ID
-        instagram_user_id = token_data.get(
-            "user_id"
+        instagram_user_id = (
+            token_data.get(
+                "user_id"
+            )
         )
 
         if not short_lived_token:
@@ -1234,13 +1696,14 @@ def instagram_callback(request):
             return Response(
                 {
                     "success": False,
-                    "error": "Instagram access token was not returned"
+                    "error":
+                        "Instagram access token was not returned"
                 },
                 status=400
             )
 
         print(
-            "✅ SHORT-LIVED TOKEN RECEIVED"
+            "SHORT-LIVED TOKEN RECEIVED: True"
         )
 
         print(
@@ -1250,32 +1713,28 @@ def instagram_callback(request):
 
         # ==========================================
         # STEP 3️⃣
-        # الحصول على Long-Lived Access Token
+        # Short-lived → Long-lived Token
         # ==========================================
 
         long_lived_response = requests.get(
             "https://graph.instagram.com/access_token",
+
             params={
 
-                # ثابت حسب وثائق Meta
                 "grant_type":
                     "ig_exchange_token",
 
-                # Instagram App Secret
                 "client_secret":
                     client_secret,
 
-                # Short-Lived Access Token
                 "access_token":
                     short_lived_token,
             },
+
             timeout=15
         )
 
-        print(
-            "===== INSTAGRAM STEP 3 ====="
-        )
-
+        print("===== INSTAGRAM STEP 3 =====")
         print(
             "STATUS:",
             long_lived_response.status_code
@@ -1301,17 +1760,12 @@ def instagram_callback(request):
             long_lived_response.json()
         )
 
-        # ==========================================
-        # Long-Lived Access Token
-        # ==========================================
-
         long_lived_token = (
             long_lived_data.get(
                 "access_token"
             )
         )
 
-        # مدة صلاحية الـToken بالثواني
         expires_in = (
             long_lived_data.get(
                 "expires_in"
@@ -1330,7 +1784,7 @@ def instagram_callback(request):
             )
 
         print(
-            "✅ LONG-LIVED TOKEN RECEIVED"
+            "LONG-LIVED TOKEN RECEIVED: True"
         )
 
         print(
@@ -1339,7 +1793,7 @@ def instagram_callback(request):
         )
 
         # ==========================================
-        # 7️⃣ حفظ بيانات Instagram للتاجر
+        # 7️⃣ حفظ بيانات Instagram
         # ==========================================
 
         merchant.instagram_access_token = (
@@ -1351,7 +1805,7 @@ def instagram_callback(request):
         )
 
         # ==========================================
-        # 8️⃣ حساب وقت انتهاء الـToken
+        # 8️⃣ تاريخ انتهاء Token
         # ==========================================
 
         if expires_in:
@@ -1364,7 +1818,7 @@ def instagram_callback(request):
             )
 
         # ==========================================
-        # 9️⃣ حفظ التعديلات
+        # 9️⃣ حفظ Merchant
         # ==========================================
 
         merchant.save(
@@ -1375,32 +1829,29 @@ def instagram_callback(request):
             ]
         )
 
-        # ==========================================
-        # 🔟 حذف State بعد نجاح العملية
-        # ==========================================
-
-        del request.session[
-            f"instagram_state_{state}"
-        ]
-
-        request.session.modified = True
+        print(
+            "INSTAGRAM DATA SAVED: True"
+        )
 
         # ==========================================
-        # 1️⃣1️⃣ النتيجة
+        # 🔟 النتيجة
         # ==========================================
 
         return Response(
             {
                 "success": True,
+
                 "message":
                     "Instagram connected successfully",
 
-                "instagram_connected": True,
+                "instagram_connected":
+                    True,
 
                 "instagram_user_id":
                     instagram_user_id,
 
-                "access_token_saved": True,
+                "access_token_saved":
+                    True,
 
                 "token_expires_at":
                     merchant.instagram_token_expires_at,
@@ -1417,9 +1868,12 @@ def instagram_callback(request):
         return Response(
             {
                 "success": False,
+
                 "error":
                     "Instagram authentication failed",
-                "debug": str(e),
+
+                "debug":
+                    str(e),
             },
             status=500
         )
@@ -2735,11 +3189,16 @@ def orders_api(request):
         "orders":data
 
     })
-
+from django.core.signing import TimestampSigner
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.core.signing import (
+    TimestampSigner,
+    BadSignature,
+    SignatureExpired,
+)
 # تأكدي من استيراد الموديل Orders إذا لم يكن مستورداً أعلى الملف
 
 @require_POST
