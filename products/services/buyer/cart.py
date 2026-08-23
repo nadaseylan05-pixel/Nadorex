@@ -1835,7 +1835,39 @@ def confirm_order(
     notifications = create_new_order_notifications(
         created_order_objects
     )
+    # =====================================================
+    # PUSH NOTIFICATIONS
+    # =====================================================
 
+    from products.services.firebase_service import send_push_notification
+
+    for order in created_order_objects:
+
+        merchant = order.merchant
+        print("🔔 PUSH DEBUG")
+        print("Order:", order.id)
+        print("Merchant:", merchant)
+        print("Merchant ID:", order.merchant_id)
+        print("FCM TOKEN:", merchant.fcm_token if merchant else None)
+        if merchant and merchant.fcm_token:
+
+            try:
+                send_push_notification(
+                    merchant.fcm_token,
+                    "طلب جديد 🛍️",
+                    f"لديك طلب جديد رقم {order.order_number}"
+                )
+
+                print(
+                    f"📲 PUSH SENT TO MERCHANT: {merchant.email}"
+                )
+
+            except Exception as e:
+
+                print(
+                    f"❌ PUSH NOTIFICATION ERROR "
+                    f"FOR {merchant.email}: {repr(e)}"
+                )
     print(
         f"🔔 NEW ORDER NOTIFICATIONS CREATED: "
         f"{len(notifications)}"

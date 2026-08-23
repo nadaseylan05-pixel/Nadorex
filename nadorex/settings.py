@@ -1,5 +1,5 @@
 import os
-import dj_database_url
+# import dj_database_url
 from pathlib import Path
 
 import os
@@ -134,7 +134,7 @@ USE_TZ = True
 # ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
-    "http://localhost:5188",
+    "http://localhost:5173",
     os.getenv("FRONTEND_URL"),
 ]
 CORS_ALLOW_CREDENTIALS =True
