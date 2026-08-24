@@ -11,8 +11,14 @@ export default function VerifyAccount() {
     setLoading(true);
 
     try {
+      console.log(
+        "REGISTER URL:",
+        `${import.meta.env.VITE_API_URL}/merchant/register/`
+      );
+      // const res = await fetch(
+      //   "http://localhost:8000/api/merchant/verify/",
       const res = await fetch(
-        "http://localhost:8000/api/merchant/verify/",
+        `${import.meta.env.VITE_API_URL}/api/merchant/verify/`,
         {
           method: "POST",
           headers: {

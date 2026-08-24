@@ -23,7 +23,7 @@ EMAIL_HOST_USER =os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-DEFUALT_FROM_EMAIL = os.getenv("DEFUALT_FROM_EMAIL")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 
 # ALLOWED_HOSTS = []
@@ -132,9 +132,11 @@ USE_TZ = True
 #     "http://localhost:8000",
 #     "http://localhost:5176",
 # ]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
     os.getenv("FRONTEND_URL"),
 ]
 CORS_ALLOW_CREDENTIALS =True
@@ -170,12 +172,28 @@ LOGGING = {
         'level': 'DEBUG',  # يمكنك تغييره إلى INFO أو ERROR إذا أردتِ تقليل التفاصيل
     },
 }
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_SAMESITE = 'Lax'
+# CSRF_COOKIE_SAMESITE = 'Lax'
 
-# لمنع المتصفح من حظر الكوكيز أثناء استخدام http المحلي (Localhost)
-SESSION_COOKIE_SECURE = True
+# # لمنع المتصفح من حظر الكوكيز أثناء استخدام http المحلي (Localhost)
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SAMESITE = "None" if not DEBUG else "Lax"
+# SESSION_COOKIE_SECURE = not DEBUG
+
+# CSRF_COOKIE_SAMESITE = "None" if not DEBUG else "Lax"
+# CSRF_COOKIE_SECURE = not DEBUG
+
+# CORS_ALLOW_CREDENTIALS = True
+
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = False
+
+CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SECURE = False
+
+CORS_ALLOW_CREDENTIALS = True
+
 from datetime import timedelta
 
 SIMPLE_JWT = {

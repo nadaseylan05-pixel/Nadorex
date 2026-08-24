@@ -220,15 +220,67 @@ def generate_verification_code():
 #         print("EMAIL ERROR:", e)
 #         return False
 import traceback
-def send_verification_email(email, code):
+# def send_verification_email(email, code):
+#     try:
+#         print("EMAIL HOST:", settings.EMAIL_HOST)
+#         print("EMAIL PORT:", settings.EMAIL_PORT)
+#         print("EMAIL USER:", settings.EMAIL_HOST_USER)
+#         print("FROM EMAIL:", settings.DEFAULT_FROM_EMAIL)
+#         print("TO EMAIL:", email)
+#         # sent = send_mail(
+#         #     subject="Verify your account",
+#         #     message=f"Your verification code is: {code}",
+#         #     from_email=settings.DEFAULT_FROM_EMAIL,
+#         #     recipient_list=[email],
+#         #     fail_silently=False,
+#         # )
+        
+#         sent = send_mail(
+#             subject="TEST - NadoRex Verification Code",
+#             message=f"""
+#         Hello,
+
+#         Your verification code is:
+
+#         {code}
+
+#         This is a test email from NadoRex.
+#         """,
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             recipient_list=[email],
+#             fail_silently=False,
+#         )
+#         print("SEND_EMAIL RESULT", sent)
+#         print("FROM:", settings.DEFAULT_FROM_EMAIL)
+#         print("TO:", email)
+#         print("SEND_MAIL RESULT:", sent)
+#         return sent > 0
+        
+#     except Exception as e:
+#         print("EMAIL ERROR:", type(e).__name__)
+#         print("MESSAGE:", str(e))
+#         traceback.print_exc()
+#         return False
+from products.services.translations import merchant_verify_translations
+def send_verification_email(email, code, lang="en"):
     try:
+        email_translations = merchant_verify_translations(lang)
+
+        subject = email_translations["verification_email_subject"]
+
+        message = email_translations["verification_email_body"].format(
+            code=code
+        )
+
         sent = send_mail(
-            subject="Verify your account",
-            message=f"Your verification code is: {code}",
+            subject=subject,
+            message=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[email],
             fail_silently=False,
         )
+
+        print("SEND_MAIL RESULT:", sent)
 
         return sent > 0
 

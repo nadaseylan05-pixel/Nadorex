@@ -491,6 +491,8 @@ def merchant_verify_api(request):
     lang = request.session.get("lang", "ar")
     translations = merchant_verify_translations(lang)
     try:
+        print("VERIFY SESSION KEY:", request.session.session_key)
+        print("VERIFY PENDING:", request.session.get("pending_merchant"))
         
         pending = request.session.get("pending_merchant")
         if not pending:
@@ -757,8 +759,9 @@ def merchant_register_api(request):
         # إنشاء كود التحقق
         # ==============================
         verification_code = generate_verification_code()
-        email_sent = send_verification_email(email, verification_code)
+        email_sent = send_verification_email(email, verification_code, lang)
         print("Generated code:", verification_code)
+        print("EMAIL SENT ", email_sent)
         if not email_sent:
             return Response(
                 {
@@ -772,6 +775,17 @@ def merchant_register_api(request):
         # ==============================
         # حفظ البيانات مؤقتاً
         # ==============================
+        # request.session["pending_merchant"] = {
+        #     "name": name,
+        #     "email": email,
+        #     "password": password,
+        #     "instagram_username": instagram_username,
+        #     "notification_lang": notification_lang,
+        #     "code": verification_code,
+        # }
+
+        # request.session["lang"] = notification_lang
+        # request.session.modified = True
         request.session["pending_merchant"] = {
             "name": name,
             "email": email,
@@ -782,14 +796,34 @@ def merchant_register_api(request):
         }
 
         request.session["lang"] = notification_lang
-        request.session.modified = True
 
+        request.session.save()
+
+        print("REGISTER SESSION KEY:", request.session.session_key)
+        print("REGISTER PENDING:", request.session.get("pending_merchant"))
+        print("REGISTER SESSION KEY:", request.session.session_key)
+        print("REGISTER PENDING:", request.session.get("pending_merchant"))
+        print("SESSION KEY:", request.session.session_key)
+        print("SESSION DATA:", dict(request.session))
+        print("SESSION MODIFIED:", request.session.modified)
+        print("SESSION COOKIE NAME:", settings.SESSION_COOKIE_NAME)
     # ==============================
     # إرسال الكود (سيستبدل لاحقاً بالإيميل)
     # ==============================
         print("MERCHANT VERIFY CODE:", verification_code)
-    
-        return Response(
+        print("FINAL SESSION KEY:", request.session.session_key)
+        print("FINAL SESSION DATA:", dict(request.session))
+        # return Response(
+        #     {
+        #         "success": True,
+        #         "message": translations.get(
+        #             "verification_sent",
+        #             "Verification code sent successfully",
+        #         ),
+        #     },
+        #     status=status.HTTP_200_OK,
+        # )
+        response = Response(
             {
                 "success": True,
                 "message": translations.get(
@@ -799,6 +833,12 @@ def merchant_register_api(request):
             },
             status=status.HTTP_200_OK,
         )
+
+        print("FINAL SESSION KEY:", request.session.session_key)
+        print("FINAL SESSION DATA:", dict(request.session))
+        print("RESPONSE COOKIES:", response.cookies)
+
+        return response
     except Exception as e:
         print("ERROR IN REGISTRATION:", e)
         return Response(
@@ -2037,7 +2077,8 @@ def merchant_login_api(request):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": merchant_login_translations(result.error, lang)
+                    # "error": merchant_login_translations(result.error, lang)
+                    "error": merchant_login_translations("account_not_verified", lang)
                 },
                 status=401
             )
@@ -2069,7 +2110,8 @@ def merchant_login_api(request):
         return JsonResponse(
             {
                 "success": False,
-                "error": "Internal server error",
+                # "error": "account_not_verified",
+                "error":merchant_login_translations("account_not_verified", lang),
                 "debug": str(e)
             },
             status=500

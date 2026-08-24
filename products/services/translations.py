@@ -32,6 +32,8 @@ def merchant_verify_translations(lang):
         "verification_code_required",
         "invalid_verification_code",
         "verification_success",
+        "verification_email_subject",
+        "verification_email_body",
     ]
 
     return {
@@ -40,7 +42,7 @@ def merchant_verify_translations(lang):
     }
 
 
-def merchant_login_translations(lang):
+def merchant_login_translations(key=None, lang="en"):
     translations = load_translations()
     keys = [
         "merchant_login",
@@ -52,9 +54,16 @@ def merchant_login_translations(lang):
         "account_not_linked",
     ]
 
+    # return {
+    #     key: t(key, lang, translations)
+    #     for key in keys
+    # }
+    if key:
+        return t(key, lang, translations)
+
     return {
-        key: t(key, lang, translations)
-        for key in keys
+        k: t(k, lang, translations)
+        for k in keys
     }
 
 def merchant_register_translations(lang):
