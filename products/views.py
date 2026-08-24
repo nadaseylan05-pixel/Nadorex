@@ -688,6 +688,7 @@ def merchant_register_api(request):
         # ==============================
         # التحقق من الحقول المطلوبة فقط
         # ==============================
+        print("التحقق من الحقول المطلوبة فقط")
         if not all([name, email, password, instagram_username]):
             return Response(
                 {
@@ -712,9 +713,11 @@ def merchant_register_api(request):
         #         status=status.HTTP_400_BAD_REQUEST,
         #     )
 ###############################
+        
         existing_merchant = Merchants.objects.filter(email=email).first()
 
         if existing_merchant and existing_merchant.user_id is not None:
+            print("التحقق من البريد الإلكتروني")
             return Response(
                 {
                     "success": False,
@@ -737,6 +740,7 @@ def merchant_register_api(request):
         #         status=status.HTTP_400_BAD_REQUEST,
         #     )
     ###########################
+        
         existing_instagram = Merchants.objects.filter(
             instagram_username=instagram_username
         ).first()
@@ -745,6 +749,7 @@ def merchant_register_api(request):
     #############################
         #اخر شي اضفته 
         # if User.objects.filter(username=email).exists():
+            print("التحقق من اسم مستخدم إنستغرام")
             return Response(
                 {
                     "success": False,
@@ -755,6 +760,7 @@ def merchant_register_api(request):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+            
         # ==============================
         # إنشاء كود التحقق
         # ==============================
@@ -762,6 +768,7 @@ def merchant_register_api(request):
         email_sent = send_verification_email(email, verification_code, lang)
         print("Generated code:", verification_code)
         print("EMAIL SENT ", email_sent)
+        print("إنشاء كود التحقق")
         if not email_sent:
             return Response(
                 {
@@ -772,6 +779,7 @@ def merchant_register_api(request):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
     )
+            
         # ==============================
         # حفظ البيانات مؤقتاً
         # ==============================

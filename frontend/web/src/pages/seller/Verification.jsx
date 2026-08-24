@@ -12,8 +12,8 @@ export default function VerifyAccount() {
 
     try {
       console.log(
-        "REGISTER URL:",
-        `${import.meta.env.VITE_API_URL}/merchant/register/`
+        "VERIFY URL:",
+        `${import.meta.env.VITE_API_URL}/merchant/verify/`
       );
       // const res = await fetch(
       //   "http://localhost:8000/api/merchant/verify/",
