@@ -4,7 +4,7 @@ import "../../styles/seller/Register.css";
 import { useLanguage } from "../../context/LanguageContext";
 import useTranslations from "../../hooks/useTranslations";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 function SellerRegister({ lang }) {
   const { t, loading } = useTranslations("translations/register");
   const navigate = useNavigate();
