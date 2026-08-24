@@ -4,9 +4,11 @@ import "../../styles/seller/Register.css";
 import { useLanguage } from "../../context/LanguageContext";
 import useTranslations from "../../hooks/useTranslations";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function SellerRegister({ lang }) {
   const { t, loading } = useTranslations("translations/register");
   const navigate = useNavigate();
+  
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -60,8 +62,11 @@ function SellerRegister({ lang }) {
       setMessage("Verification email sent successfully");
 
       // ⏩ تحويل لصفحة التحقق
+      // setTimeout(() => {
+      //   window.location.href = "/seller/register/verify";
+      // }, 1500);
       setTimeout(() => {
-        window.location.href = "/seller/register/verify";
+        navigate("/seller/register/verify");
       }, 1500);
       // if (data.redirect_url) {
       //   navigate(data.redirect_url);
