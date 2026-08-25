@@ -493,7 +493,8 @@ def merchant_verify_api(request):
     try:
         print("VERIFY SESSION KEY:", request.session.session_key)
         print("VERIFY PENDING:", request.session.get("pending_merchant"))
-        
+        print("VERIFY SESSION:", request.session.session_key, flush=True)
+        print("VERIFY DATA:", dict(request.session), flush=True)
         pending = request.session.get("pending_merchant")
         if not pending:
             return Response(
@@ -848,6 +849,8 @@ def merchant_register_api(request):
         print("FINAL SESSION KEY:", request.session.session_key)
         print("FINAL SESSION DATA:", dict(request.session))
         print("RESPONSE COOKIES:", response.cookies)
+        print("REGISTER FINAL SESSION:", request.session.session_key, flush=True)
+        print("REGISTER FINAL DATA:", dict(request.session), flush=True)
 
         return response
     except Exception as e:
