@@ -80,7 +80,7 @@ function App() {
             <Route path="/seller/register" element={<SellerRegister lang={lang} />} />
             <Route path="/seller/register/verify" element={<VerifyAccount lang={lang} />} />
             <Route path="/seller/products/:id" element={<ProductDetails />} />
-            <Route path="/buyer/favorites" element={<FavoritesPage />} />
+            {/* <Route path="/buyer/favorites" element={<FavoritesPage />} /> */}
             <Route
                 path="/seller/orders/:orderNumber"
                 element={<SellerOrderDetails />}

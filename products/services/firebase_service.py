@@ -34,7 +34,7 @@ if not firebase_admin._apps:
         cred = credentials.Certificate(
             os.path.join(
                 settings.BASE_DIR,
-                "nadorex-90275-firebase-adminsdk-fbsvc-8a0d8dfb0a.json.json"
+                "nadorex-90275-firebase-adminsdk-fbsvc-8a0d8dfb0a.json"
             )
         )
 

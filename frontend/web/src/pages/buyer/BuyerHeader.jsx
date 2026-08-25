@@ -159,6 +159,7 @@ const getFavoritesCount = async (buyerPhone, instagramUsername) => {
     if (!buyerPhone) {
         return 0;
     }
+   
 
     const response = await fetch(
         `${API_URL}/buyer/favorites/?buyer_phone=${encodeURIComponent(
@@ -347,10 +348,11 @@ function BuyerHeader({
     // ==================================================
 
     useEffect(() => {
+        if (!instagramUsername) return;
 
         fetchFavoritesCount();
 
-    }, []);
+    }, [instagramUsername]);
 
 
     // ==================================================

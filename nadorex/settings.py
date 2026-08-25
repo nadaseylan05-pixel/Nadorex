@@ -201,6 +201,7 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = "None"
 
 CORS_ALLOW_CREDENTIALS = True
+
 from datetime import timedelta
 
 SIMPLE_JWT = {

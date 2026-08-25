@@ -3593,7 +3593,10 @@ def confirm_order_api(request):
         # ✅ تصحيح: طباعة النتيجة المسترجعة (result) بدلاً من إعادة استدعاء الدالة
         print(f"The confirmed order result is : {result}")
         
-        return JsonResponse(result)
+        return JsonResponse({
+            "result":result,
+            "translations":texts
+            })
 
     except Exception as e:
         print("❌ CONFIRM_ORDER API ERROR:", repr(e))

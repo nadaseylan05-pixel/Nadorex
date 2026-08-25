@@ -960,7 +960,7 @@ const removeEditingVariant = (index) => {
             {instagramUsername}
           </span>
         </div>
-        {/* {storeLink && (
+        {storeLink && (
             <div>
                 <span>رابط متجري:</span>
                 <a
@@ -971,7 +971,7 @@ const removeEditingVariant = (index) => {
                     {storeLink}
                 </a>
             </div>
-        )} */}
+        )}
         {storeLink && (
             <div
                 style={{
@@ -992,7 +992,7 @@ const removeEditingVariant = (index) => {
                         marginBottom: "10px",
                     }}
                 >
-                    <span
+                    {/* <span
                         style={{
                             width: "34px",
                             height: "34px",
@@ -1005,7 +1005,7 @@ const removeEditingVariant = (index) => {
                         }}
                     >
                         🔗
-                    </span>
+                    </span> */}
 
                     <div>
                         <div
@@ -1099,8 +1099,26 @@ const removeEditingVariant = (index) => {
                     {/* مشاركة */}
                     <button
                         type="button"
-                        onClick={handleShareStoreLink}
+                        onClick={(e) => {
+                          console.log("Share link is clicked!!");
+                          e.stopPropagation();
+                          // handleShareStoreLink();
+                        }}
+                        // style={{
+                        //     border: "1px solid #e2e8f0",
+                        //     background: "#fff",
+                        //     color: "#475569",
+                        //     borderRadius: "8px",
+                        //     padding: "8px 6px",
+                        //     cursor: "pointer",
+                        //     fontSize: "12px",
+                        //     fontWeight: "600",
+                        //     transition: "all 0.2s",
                         style={{
+                            position: "relative",
+                            zIndex: 9999,
+                            pointerEvents: "auto",
+                            display: "inline-block",
                             border: "1px solid #e2e8f0",
                             background: "#fff",
                             color: "#475569",
@@ -1109,7 +1127,7 @@ const removeEditingVariant = (index) => {
                             cursor: "pointer",
                             fontSize: "12px",
                             fontWeight: "600",
-                            transition: "all 0.2s",
+                        
                         }}
                     >
                         📤{t.share}
@@ -1486,7 +1504,7 @@ const removeEditingVariant = (index) => {
                         >
                           ⚙️ {t.edit_product}
                         </button>
-                        <button
+                        {/* <button
                             type="button"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -1504,7 +1522,7 @@ const removeEditingVariant = (index) => {
                             }}
                         >
                             🔗
-                        </button>
+                        </button> */}
                         <button type="button" onClick={(e) =>{e.stopPropagation();  handleDelete(item.id)}}style={{ background: "#fef2f2", color: "#ef4444", border: "none", padding: "6px 12px", borderRadius: "6px", cursor: "pointer" }}>🗑️</button>
                       </td>
                     </tr>

@@ -24,8 +24,8 @@ function FavoritesPage() {
             setLoading(false);
             return;
         }
-        fetch(`${import.meta.env.VITE_API_URL}/buyer/favorites/?buyer_phone=${buyerPhone} & instagram_username=${instagramUsername}`, {
-        // fetch(`http://127.0.0.1:8000/buyer/favorites/?buyer_phone=${buyerPhone} & instagram_username=${instagramUsername}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/buyer/favorites/?buyer_phone=${buyerPhone}& instagram_username=${instagramUsername}`, {
+        // fetch(`http://127.0.0.1:8000/buyer/favorites/?buyer_phone=${buyerPhone}& instagram_username=${instagramUsername}`, {
             credentials: "include"
         })
         .then((res) => res.json())
@@ -41,7 +41,7 @@ function FavoritesPage() {
             console.error("Error fetching favorites:", err);
             setLoading(false);
         });
-    }, [buyerPhone]);
+    }, [buyerPhone, instagramUsername]);
 
     const handleRemoveFromFavorites = (productId) => {
         setFavorites((prev) => prev.filter((item) => item.id !== productId));
