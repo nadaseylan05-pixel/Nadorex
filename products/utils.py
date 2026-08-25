@@ -262,6 +262,64 @@ import traceback
 #         traceback.print_exc()
 #         return False
 from products.services.translations import merchant_verify_translations
+# def send_verification_email(email, code, lang="en"):
+#     try:
+#         print("🔥 NEW EMAIL CODE RUNNING", flush=True)
+#         email_translations = merchant_verify_translations(lang)
+
+#         subject = email_translations["verification_email_subject"]
+
+#         message = email_translations["verification_email_body"].format(
+#             code=code
+#         )
+#         print("BEFORE SEND_MAIL")
+#         print("EMAIL HOST:", settings.EMAIL_HOST, flush=True)
+#         print("EMAIL PORT:", settings.EMAIL_PORT, flush=True)
+#         print("EMAIL TLS:", settings.EMAIL_USE_TLS, flush=True)
+#         print("EMAIL SSL:", settings.EMAIL_USE_SSL, flush=True)
+#         print("EMAIL USER:", settings.EMAIL_HOST_USER, flush=True)
+#         print("DEFAULT FROM:", settings.DEFAULT_FROM_EMAIL, flush=True)
+
+#         print("BEFORE SEND_MAIL", flush=True)
+#         # sent = send_mail(
+#         #     subject=subject,
+#         #     message=message,
+#         #     from_email=settings.DEFAULT_FROM_EMAIL,
+#         #     recipient_list=[email],
+#         #     fail_silently=False,
+#         # )
+#         print("BEFORE SEND_MAIL", flush=True)
+
+#         try:
+#             sent = send_mail(
+#                 subject=subject,
+#                 message=message,
+#                 from_email=settings.DEFAULT_FROM_EMAIL,
+#                 recipient_list=[email],
+#                 fail_silently=False,
+#             )
+
+#             print("AFTER SEND_MAIL", flush=True)
+#             print("SEND_MAIL RESULT:", sent, flush=True)
+
+#         except Exception as e:
+#             print("SEND_MAIL EXCEPTION:", type(e).__name__, flush=True)
+#             print("SEND_MAIL MESSAGE:", str(e), flush=True)
+#             raise
+#         print("SEND_MAIL RESULT:", sent)
+#         print("AFTER SEND_MAIL")
+#         print("SEND_MAIL RESULT:", sent)
+#         return sent > 0
+
+#     except Exception as e:
+#         print("EMAIL ERROR:", type(e).__name__)
+#         print("MESSAGE:", str(e))
+#         traceback.print_exc()
+#         return False
+
+import os
+import resend
+
 def send_verification_email(email, code, lang="en"):
     try:
         email_translations = merchant_verify_translations(lang)
@@ -271,48 +329,23 @@ def send_verification_email(email, code, lang="en"):
         message = email_translations["verification_email_body"].format(
             code=code
         )
-        print("BEFORE SEND_MAIL")
-        print("EMAIL HOST:", settings.EMAIL_HOST, flush=True)
-        print("EMAIL PORT:", settings.EMAIL_PORT, flush=True)
-        print("EMAIL TLS:", settings.EMAIL_USE_TLS, flush=True)
-        print("EMAIL SSL:", settings.EMAIL_USE_SSL, flush=True)
-        print("EMAIL USER:", settings.EMAIL_HOST_USER, flush=True)
-        print("DEFAULT FROM:", settings.DEFAULT_FROM_EMAIL, flush=True)
 
-        print("BEFORE SEND_MAIL", flush=True)
-        # sent = send_mail(
-        #     subject=subject,
-        #     message=message,
-        #     from_email=settings.DEFAULT_FROM_EMAIL,
-        #     recipient_list=[email],
-        #     fail_silently=False,
-        # )
-        print("BEFORE SEND_MAIL", flush=True)
+        resend.api_key = os.getenv("RESEND_API_KEY")
 
-        try:
-            sent = send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False,
-            )
+        response = resend.Emails.send({
+            "from": "onboarding@resend.dev",
+            "to": [email],
+            "subject": subject,
+            "text": message,
+        })
 
-            print("AFTER SEND_MAIL", flush=True)
-            print("SEND_MAIL RESULT:", sent, flush=True)
+        print("RESEND RESPONSE:", response, flush=True)
 
-        except Exception as e:
-            print("SEND_MAIL EXCEPTION:", type(e).__name__, flush=True)
-            print("SEND_MAIL MESSAGE:", str(e), flush=True)
-            raise
-        print("SEND_MAIL RESULT:", sent)
-        print("AFTER SEND_MAIL")
-        print("SEND_MAIL RESULT:", sent)
-        return sent > 0
+        return True
 
     except Exception as e:
-        print("EMAIL ERROR:", type(e).__name__)
-        print("MESSAGE:", str(e))
+        print("RESEND ERROR:", type(e).__name__, flush=True)
+        print("MESSAGE:", str(e), flush=True)
         traceback.print_exc()
         return False
 def register_merchant_in_iyzico(data):
