@@ -716,9 +716,9 @@ def merchant_register_api(request):
         
         existing_merchant = Merchants.objects.filter(email=email).first()
         print("EXISTING MERCHANT",existing_merchant)
-        
+        print("التحقق من البريد الإلكتروني")
         if existing_merchant and existing_merchant.user_id is not None:
-            print("التحقق من البريد الإلكتروني")
+            
             return Response(
                 {
                     "success": False,
@@ -746,11 +746,12 @@ def merchant_register_api(request):
             instagram_username=instagram_username
         ).first()
         print("EXISTING ONSTAGRAM", existing_instagram)
+        print("التحقق من اسم مستخدم إنستغرام 1")
         if existing_instagram and existing_instagram.email != email:####
     #############################
         #اخر شي اضفته 
         # if User.objects.filter(username=email).exists():
-            print("التحقق من اسم مستخدم إنستغرام")
+            print("التحقق من اسم مستخدم إنستغرام 2")
             return Response(
                 {
                     "success": False,
