@@ -715,7 +715,8 @@ def merchant_register_api(request):
 ###############################
         
         existing_merchant = Merchants.objects.filter(email=email).first()
-
+        print("EXISTING MERCHANT",existing_merchant)
+        
         if existing_merchant and existing_merchant.user_id is not None:
             print("التحقق من البريد الإلكتروني")
             return Response(
@@ -744,7 +745,7 @@ def merchant_register_api(request):
         existing_instagram = Merchants.objects.filter(
             instagram_username=instagram_username
         ).first()
-
+        print("EXISTING ONSTAGRAM", existing_instagram)
         if existing_instagram and existing_instagram.email != email:####
     #############################
         #اخر شي اضفته 
@@ -765,6 +766,7 @@ def merchant_register_api(request):
         # إنشاء كود التحقق
         # ==============================
         verification_code = generate_verification_code()
+        print("verification_code",verification_code)
         email_sent = send_verification_email(email, verification_code, lang)
         print("Generated code:", verification_code)
         print("EMAIL SENT ", email_sent)
