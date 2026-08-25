@@ -272,6 +272,14 @@ def send_verification_email(email, code, lang="en"):
             code=code
         )
         print("BEFORE SEND_MAIL")
+        print("EMAIL HOST:", settings.EMAIL_HOST, flush=True)
+        print("EMAIL PORT:", settings.EMAIL_PORT, flush=True)
+        print("EMAIL TLS:", settings.EMAIL_USE_TLS, flush=True)
+        print("EMAIL SSL:", settings.EMAIL_USE_SSL, flush=True)
+        print("EMAIL USER:", settings.EMAIL_HOST_USER, flush=True)
+        print("DEFAULT FROM:", settings.DEFAULT_FROM_EMAIL, flush=True)
+
+        print("BEFORE SEND_MAIL", flush=True)
         sent = send_mail(
             subject=subject,
             message=message,
