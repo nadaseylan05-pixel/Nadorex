@@ -280,14 +280,31 @@ def send_verification_email(email, code, lang="en"):
         print("DEFAULT FROM:", settings.DEFAULT_FROM_EMAIL, flush=True)
 
         print("BEFORE SEND_MAIL", flush=True)
-        sent = send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=False,
-        )
+        # sent = send_mail(
+        #     subject=subject,
+        #     message=message,
+        #     from_email=settings.DEFAULT_FROM_EMAIL,
+        #     recipient_list=[email],
+        #     fail_silently=False,
+        # )
+        print("BEFORE SEND_MAIL", flush=True)
 
+        try:
+            sent = send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+            print("AFTER SEND_MAIL", flush=True)
+            print("SEND_MAIL RESULT:", sent, flush=True)
+
+        except Exception as e:
+            print("SEND_MAIL EXCEPTION:", type(e).__name__, flush=True)
+            print("SEND_MAIL MESSAGE:", str(e), flush=True)
+            raise
         print("SEND_MAIL RESULT:", sent)
         print("AFTER SEND_MAIL")
         print("SEND_MAIL RESULT:", sent)
