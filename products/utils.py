@@ -271,7 +271,7 @@ def send_verification_email(email, code, lang="en"):
         message = email_translations["verification_email_body"].format(
             code=code
         )
-
+        print("BEFORE SEND_MAIL")
         sent = send_mail(
             subject=subject,
             message=message,
@@ -281,7 +281,8 @@ def send_verification_email(email, code, lang="en"):
         )
 
         print("SEND_MAIL RESULT:", sent)
-
+        print("AFTER SEND_MAIL")
+        print("SEND_MAIL RESULT:", sent)
         return sent > 0
 
     except Exception as e:
