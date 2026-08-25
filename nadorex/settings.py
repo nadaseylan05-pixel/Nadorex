@@ -203,7 +203,32 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
 }
+import smtplib
 
+try:
+    print("SMTP TEST START", flush=True)
+
+    server = smtplib.SMTP_SSL(
+        EMAIL_HOST,
+        EMAIL_PORT,
+        timeout=10
+    )
+
+    print("SMTP CONNECTION OK", flush=True)
+
+    server.login(
+        EMAIL_HOST_USER,
+        EMAIL_HOST_PASSWORD
+    )
+
+    print("SMTP LOGIN OK", flush=True)
+
+    server.quit()
+
+except Exception as e:
+    print("SMTP TEST ERROR:", type(e).__name__, flush=True)
+    print("SMTP TEST MESSAGE:", str(e), flush=True)
+    
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
