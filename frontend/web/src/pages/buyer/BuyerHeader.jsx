@@ -447,26 +447,36 @@ function BuyerHeader({
                     styles.logoSection
                 }
 
-                onClick={() =>
-                    navigate("/buyer")
-                }
+                // onClick={() =>
+                //     navigate("/buyer")
+                // }
             >
 
-                <div
+                {/* <div
                     className={
                         styles.logoIcon
                     }
                 >
                     M
-                </div>
-
+                </div> */}
+                <span
+                    style={{
+                    background: "#2563eb",
+                    color: "#fff",
+                    padding: "6px 10px",
+                    borderRadius: "8px",
+                    fontWeight: "bold"
+                    }}
+                >
+                    {instagramUsername?.charAt(0).toUpperCase()}
+                </span>
 
                 <div
                     className={
                         styles.logoText
                     }
                 >
-                    Marketplace
+                    {instagramUsername}
                 </div>
 
             </div>
@@ -621,11 +631,12 @@ function BuyerHeader({
                         styles.iconButton
                     }
 
-                    onClick={() =>
-                        navigate(
-                            "/buyer/cart"
-                        )
-                    }
+                    // onClick={() =>
+                    //     navigate(
+                    //         "/buyer/cart"
+                    //     )
+                    // }
+                    onClick={() => navigate(`/${instagramUsername}/cart`)}
 
                 >
 
@@ -653,7 +664,7 @@ function BuyerHeader({
                     Profile
                 ====================================== */}
 
-                <button
+                {/* <button
 
                     className={
                         styles.profileButton
@@ -669,7 +680,7 @@ function BuyerHeader({
 
                     <FiUser />
 
-                </button>
+                </button> */}
 
             </div>
 

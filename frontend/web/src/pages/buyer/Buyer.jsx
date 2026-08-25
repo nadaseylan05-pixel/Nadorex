@@ -182,13 +182,13 @@ function Buyer() {
             /> */}
 
             <main className={styles.mainLayout}>
-                <aside className={styles.sidebar}>
+                {/* <aside className={styles.sidebar}>
                     <h3>Filters</h3>
                     <div className={styles.filterCard}>Categories</div>
                     <div className={styles.filterCard}>Price</div>
                     <div className={styles.filterCard}>Color</div>
                     <div className={styles.filterCard}>Size</div>
-                </aside>
+                </aside> */}
 
                 <section className={styles.content}>
                     <div className={styles.hero}>

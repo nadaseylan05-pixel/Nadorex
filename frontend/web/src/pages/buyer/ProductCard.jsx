@@ -159,10 +159,10 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
                     {product.name}
                 </div>
 
-                <div className={styles.rating}>
+                {/* <div className={styles.rating}>
                     ⭐ 4.8
                     <span>(125)</span>
-                </div>
+                </div> */}
 
                 <div className={styles.priceRow}>
                     {product.old_price && (
@@ -176,9 +176,9 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
                     </span>
                 </div>
 
-                <div className={styles.shipping}>
+                {/* <div className={styles.shipping}>
                     🚚 Free Shipping
-                </div>
+                </div> */}
             </div>
         </div>
     );
