@@ -1261,7 +1261,7 @@ const removeEditingVariant = (index) => {
               </span>
           )}
       </button>
-        <button
+        {/* <button
           type="button"
           onClick={handleConnectInstagram}
           style={{
@@ -1275,7 +1275,7 @@ const removeEditingVariant = (index) => {
           }}
         >
           📸 Connect Instagram
-        </button>  
+        </button>   */}
         <button type="button" style={{ border: "none", background: activeTab === "products" || activeTab === "add" ? "#eff6ff" : "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#2563eb", fontWeight: "bold" }} onClick={() => setActiveTab("products")}>🏷️{t.products}</button>
         {/* <button type="button" style={{ border: "none", background: "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#475569" }}>📊 {t.inventory_management}</button>
         <button type="button" style={{ border: "none", background: "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#475569" }}>👥 {t.customers}</button> */}
