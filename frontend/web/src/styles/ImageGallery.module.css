@@ -46,6 +46,26 @@
    MAIN IMAGE IMG
 ========================================================= */
 
+/* .mainImage img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+    user-select: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.25s ease;
+} */
+
 .mainImage img {
     display: block;
 
@@ -65,7 +85,6 @@
         opacity 0.2s ease,
         transform 0.25s ease;
 }
-
 
 /* =========================================================
    NAVIGATION BUTTONS
@@ -272,7 +291,7 @@
 /* =========================================================
    MOBILE
 ========================================================= */
-
+/* 
 @media (max-width: 520px) {
 
     .wrapper {
@@ -321,8 +340,54 @@
         right: 9px;
     }
 
-}
+} */
+@media (max-width: 520px) {
 
+    .wrapper {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .mainImage {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+
+        padding: 4px;
+
+        border-radius: 14px;
+    }
+
+    .mainImage img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .thumbnails {
+        gap: 8px;
+        padding: 3px 1px 7px;
+    }
+
+    .thumbnail {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+    }
+
+    .navigationButton {
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+    }
+
+    .previousButton {
+        left: 8px;
+    }
+
+    .nextButton {
+        right: 8px;
+    }
+}
 
 /* =========================================================
    VERY SMALL MOBILE

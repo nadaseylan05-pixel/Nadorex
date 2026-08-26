@@ -149,7 +149,7 @@ function ProductDetail() {
 
     const currentDescription = selectedVariant
         ? (
-            selectedVariant.description ||
+            selectedVariant.describtion ||
             selectedVariant.describtion ||
             product?.describtion
         )

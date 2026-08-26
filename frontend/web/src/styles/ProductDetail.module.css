@@ -914,61 +914,61 @@
 @media (max-width: 820px) {
 
     .page {
-        padding: 16px 14px 50px;
-    }
-
-    .breadcrumb {
-        margin-bottom: 16px;
+        width: 100%;
+        max-width: none;
+        padding: 12px;
     }
 
     .productCard {
-        gap: 26px;
-
+        width: 100%;
         padding: 14px;
-
+        gap: 24px;
         border-radius: 18px;
     }
 
+    .gallerySection {
+        width: 100%;
+    }
+
     .galleryFrame {
+        width: 100%;
         padding: 8px;
-        border-radius: 15px;
+        border-radius: 16px;
+    }
+
+    .galleryFrame img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
     }
 
     .infoSection {
-        padding: 4px;
+        width: 100%;
+        padding: 4px 0;
     }
 
     .productTitle {
         font-size: 28px;
     }
 
+    .description {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
     .variantsSection {
+        width: 100%;
+        box-sizing: border-box;
         margin-top: 28px;
-
         padding: 18px;
-
         border-radius: 18px;
     }
 
-    .variantsHeader {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .clearSelection {
-        width: 100%;
-    }
-
     .variantsGrid {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
-
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
     }
-
 }
 
 
@@ -979,123 +979,40 @@
 @media (max-width: 520px) {
 
     .page {
-        padding: 12px 10px 40px;
-    }
-
-    .storeBackButton {
-        font-size: 13px;
-    }
-
-    .breadcrumb {
-        font-size: 12px;
-        margin-bottom: 12px;
+        padding: 8px;
     }
 
     .productCard {
         padding: 10px;
-
-        border-radius: 16px;
-
-        border-left: none;
-        border-right: none;
+        gap: 22px;
+        border-radius: 14px;
     }
 
     .galleryFrame {
-        padding: 6px;
-
-        border-radius: 13px;
+        padding: 5px;
+        border-radius: 12px;
     }
 
     .productTitle {
         font-size: 24px;
-
-        letter-spacing: -0.4px;
-    }
-
-    .descriptionBox {
-        margin-top: 15px;
-        padding-bottom: 17px;
     }
 
     .description {
         font-size: 14px;
-        line-height: 1.75;
+        line-height: 1.8;
     }
 
     .detailsCard {
         padding: 14px;
-
-        border-radius: 13px;
-    }
-
-    .attributeRow {
-        gap: 12px;
-    }
-
-    .attributeName {
-        font-size: 12px;
-    }
-
-    .attributeValue {
-        font-size: 13px;
-    }
-
-    .inventoryCard {
-        margin-top: 15px;
-    }
-
-    .inventoryItem {
-        padding: 12px;
     }
 
     .variantsSection {
-        padding: 14px;
-
-        border-radius: 16px;
-    }
-
-    .variantsHeader h2 {
-        font-size: 22px;
-    }
-
-    .variantsHeader p {
-        font-size: 13px;
-    }
-
-    .variantsGrid {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
-
-        gap: 10px;
+        padding: 12px;
     }
 
     .variantContent {
         padding: 11px;
     }
-
-    .variantTitle {
-        font-size: 13px;
-    }
-
-    .variantAttribute {
-        font-size: 11px;
-    }
-
-    .variantStock {
-        font-size: 11px;
-    }
-
-    .selectedOverlay {
-        top: 12px;
-        right: 12px;
-
-        width: 26px;
-        height: 26px;
-    }
-
 }
 
 

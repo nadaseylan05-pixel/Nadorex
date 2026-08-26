@@ -98,25 +98,25 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
             onClick={() => navigate(`/${instagramUsername}/product/detail/${product.id}`)}
         >
             <div className={styles.imageWrapper}>
-                { <img
+                <img
                     src={image}
                     alt={product.name}
                     className={styles.image}
-                /> }
+                /> 
                 {/* { <img
                 src={
                     product.image_url && !product.image_url.includes(":8080")
                     ? product.image_url
                     : "https://via.placeholder.com/200?text=No+Image"
                 } } */}
-                alt={product.name || "Product"}
+                {/* alt={product.name || "Product"}
                 className={styles.productImage}
                 onError={(e) => {
                     // التعامل مع فشل تحميل الصورة واستبدالها بصورة افتراضية لمنع توقف الصفحة
                     e.target.onerror = null;
                     e.target.src = "https://via.placeholder.com/200?text=No+Image";
                 }}
-                /
+                / */}
 
                 <button
                     type="button"

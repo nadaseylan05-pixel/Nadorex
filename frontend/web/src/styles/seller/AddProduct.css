@@ -337,3 +337,184 @@ select {
     transform: scale(1.1);
     background: white;
 }
+
+/* =========================================================
+   MOBILE RESPONSIVE FIX
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .seller-main {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        margin: 0;
+        padding: 14px;
+
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* Dashboard statistics */
+    .stats-grid {
+        width: 100%;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        min-width: 0;
+        width: 100%;
+
+        padding: 16px;
+
+        box-sizing: border-box;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+
+    /* Products */
+    .products-list {
+        width: 100%;
+        min-width: 0;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+    .product-card {
+        min-width: 0;
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 150px;
+
+        object-fit: cover;
+    }
+
+
+    /* Forms */
+    input,
+    textarea,
+    select {
+        width: 100%;
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+    .attribute-input,
+    .attribute-select {
+        width: 100%;
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Tables */
+    table {
+        width: 100%;
+        min-width: 0;
+
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 9px;
+    }
+
+
+    /* Color picker */
+    .preset-colors {
+        grid-template-columns: repeat(6, 28px);
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .seller-main {
+        padding: 10px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 13px;
+        border-radius: 12px;
+    }
+
+    .stat-title {
+        font-size: 12px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .products-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        border-radius: 12px;
+    }
+
+    .product-card img {
+        height: 130px;
+    }
+
+    .product-card h4 {
+        margin: 8px;
+        font-size: 14px;
+    }
+
+    .product-card p {
+        margin: 0 8px 8px;
+        font-size: 13px;
+    }
+
+    .save-btn {
+        font-size: 14px;
+        padding: 13px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .products-list {
+        grid-template-columns: 1fr;
+    }
+
+}
