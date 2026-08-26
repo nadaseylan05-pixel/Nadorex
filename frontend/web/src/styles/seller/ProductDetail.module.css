@@ -7,3 +7,87 @@
     border: 2px solid #ffffff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
+/* إطار احترافي وواضح للصور */
+
+.imageCard,
+.productImageCard,
+.galleryItem,
+.mainImageWrapper,
+.featuredImage,
+.productHeroImage {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #d6deea;
+  border-radius: 20px;
+  background: #f8fafc;
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.06),
+    0 12px 28px rgba(16, 24, 40, 0.10);
+}
+
+.imageCard img,
+.productImageCard img,
+.galleryItem img,
+.mainImageWrapper img,
+.featuredImage img,
+.productHeroImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  border: 6px solid #ffffff;
+  border-radius: inherit;
+  background: #f8fafc;
+}
+
+/* استخدم هذا الكلاس إذا أردت ظهور الصورة كاملة بلا قصّ */
+.imageCard.isContain img,
+.productImageCard.isContain img,
+.galleryItem.isContain img,
+.mainImageWrapper.isContain img,
+.featuredImage.isContain img,
+.productHeroImage.isContain img {
+  object-fit: contain;
+  padding: 12px;
+}
+
+.imageCard:hover,
+.productImageCard:hover,
+.galleryItem:hover,
+.mainImageWrapper:hover,
+.featuredImage:hover,
+.productHeroImage:hover {
+  border-color: #93b4f5;
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.10),
+    0 18px 40px rgba(16, 24, 40, 0.14);
+}
+
+@media (max-width: 640px) {
+  .imageCard,
+  .productImageCard,
+  .galleryItem,
+  .mainImageWrapper,
+  .featuredImage,
+  .productHeroImage {
+    border-width: 1.5px;
+    border-radius: 16px;
+  }
+
+  .imageCard img,
+  .productImageCard img,
+  .galleryItem img,
+  .mainImageWrapper img,
+  .featuredImage img,
+  .productHeroImage img {
+    min-height: 180px;
+    border-width: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}

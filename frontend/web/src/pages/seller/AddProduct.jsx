@@ -41,7 +41,7 @@ function AddProduct() {
     category: "",
     price: "",
     old_price: "",
-    currency: "ر.س",
+    currency: "₺",
     image_source: "file",
     image: null,
     instagram_image_url: "",
@@ -761,6 +761,7 @@ const removeEditingVariant = (index) => {
         index,
         v.attributes
       );
+     
       payload.append(`variants[${index}][id]`, v.id || "");
       payload.append(`variants[${index}][title]`, v.title || "");
       payload.append(`variants[${index}][color]`, v.color_hex || "");
@@ -809,9 +810,24 @@ const removeEditingVariant = (index) => {
       }
     });
 
+    console.log("🔥 IMAGE SOURCE:", editingProduct.image_source);
+    console.log("🔥 IMAGE:", editingProduct.image);
+    console.log(
+      "🔥 IS FILE:",
+      editingProduct.image instanceof File
+    );
+    console.log("🔥 FORM DATA:");
 
+    for (const [key, value] of payload.entries()) {
+      console.log(
+        key,
+        value instanceof File
+          ? `FILE: ${value.name}`
+          : value
+      );
+    }
 
-
+    
     try {
       // fetch(`http://localhost:8000/api/seller/products/update/${editingProduct.id}/`, {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/seller/products/update/${editingProduct.id}/`, {
@@ -1300,7 +1316,7 @@ const removeEditingVariant = (index) => {
           <div className="stat-card">
             <div className="stat-title">{t.total_sales}</div>
             <div className="stat-value">
-              {stats.totalSales.toLocaleString()} ر.س
+              {stats.totalSales.toLocaleString()} ₺
             </div>
             {/* <div className="stat-change">
               ⬆️ +23% {t.from_last_month}
@@ -1393,7 +1409,7 @@ const removeEditingVariant = (index) => {
                           {item.stock > 0 ? t.active : t.out_of_stock}
                         </span>
                       </td>
-                      <td style={{ fontWeight: "bold", color: "#0f172a" }}>{item.price} {item.currency || "ر.س"}</td>
+                      <td style={{ fontWeight: "bold", color: "#0f172a" }}>{item.price} {item.currency || "₺"}</td>
                       
                       <td style={{ textAlign: "center" }}>
                         <button 
@@ -1460,12 +1476,13 @@ const removeEditingVariant = (index) => {
                               name: item.name,
                               price: item.price,
                               old_price: item.old_price || "",
-                              currency: item.currency || "ر.س",
+                              currency: item.currency || "₺",
                               stock: item.stock,
                               describtion: item.describtion || "",
                               // category: item.category || "",
                               category: item.category_code || item.category || "",
                               image_source: item.image_source || "file",
+                              image_url: item.image_url || "",
                               instagram_image_url: item.instagram_image_url || "",
                               attributes: editingAttributes,
                               // variants: Array.isArray(item.variants)? item.variants.map(v => ({
@@ -1731,7 +1748,7 @@ const removeEditingVariant = (index) => {
               <div>
                 <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>{t.currency}</label>
                 <select name="currency" style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={formData.currency} onChange={handleBaseChange}>
-                  <option value="ر.س">ر.س </option>
+                  <option value="₺">₺ </option>
                   <option value="USD">USD </option>
                   <option value="TRY">TRY </option>
                 </select>
@@ -2350,7 +2367,7 @@ const removeEditingVariant = (index) => {
                     <div>
                       <label style={{ display: "block", marginBottom: "6px", fontSize: "14px", color: "#334155", fontWeight: "bold" }}>{t.currency}</label>
                       <select style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={editingProduct.currency} onChange={(e) => setEditingProduct({ ...editingProduct, currency: e.target.value })}>
-                        <option value="ر.س">ر.س (ريال سعودي)</option>
+                        <option value="₺">₺ (ريال سعودي)</option>
                         <option value="USD">USD (دولار أمريكي)</option>
                         <option value="TRY">TRY (ليرة تركية)</option>
                       </select>
@@ -2364,12 +2381,40 @@ const removeEditingVariant = (index) => {
                     <label style={{ fontWeight: "bold" }}>إدارة وتحديث الصور</label>
                     <div style={{ display: "flex", gap: "20px" }}>
                       <label><input type="radio" checked={editingProduct.image_source === "file"} onChange={() => setEditingProduct({ ...editingProduct, image_source: "file" })} /> ملف محلي</label>
-                      <label><input type="radio" checked={editingProduct.image_source === "url"} onChange={() => setEditingProduct({ ...editingProduct, image_source: "url" })} /> رابط خارجي / إنستغرام</label>
+                      {/* <label><input type="radio" checked={editingProduct.image_source === "url"} onChange={() => setEditingProduct({ ...editingProduct, image_source: "url" })} /> رابط خارجي / إنستغرام</label> */}
+                      <label>
+                        <input
+                          type="radio"
+                          checked={editingProduct.image_source === "url"}
+                          onChange={() =>
+                            setEditingProduct({
+                              ...editingProduct,
+                              image_source: "url"
+                            })
+                          }
+                        />
+                        رابط خارجي / إنستغرام
+                      </label>
                     </div>
                     {editingProduct.image_source === "url" ? (
                       <input type="text" style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={editingProduct.instagram_image_url} onChange={(e) => setEditingProduct({ ...editingProduct, instagram_image_url: e.target.value })} placeholder="https://instagram.com/p/..." />
                     ) : (
-                      <input type="file" accept="image/*" onChange={(e) => setEditingProduct ({ ... editingProduct, image: e.target.files[0],})}/>
+                      // <input type="file" accept="image/*" onChange={(e) => setEditingProduct ({ ... editingProduct, image: e.target.files[0],})}/>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+
+                          if (!file) return;
+
+                          setEditingProduct({
+                            ...editingProduct,
+                            image: file,
+                            image_source: "file",
+                          });
+                        }}
+                      />
                     )}
                   </div>
                 )}

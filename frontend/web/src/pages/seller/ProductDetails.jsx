@@ -125,7 +125,7 @@ function ProductDetails() {
         {/* ℹ️ المعلومات */}
         <div>
 
-          <h1 style={{ marginBottom: 10 }}>{product.name}</h1>
+          <h1 style={{ marginBottom: 10, color: "#7a6363" }}>{product.name}</h1>
 
           <div style={{ fontSize: 22, fontWeight: "bold", color: "#2563eb" }}>
             {product.price} {product.currency}
@@ -149,6 +149,7 @@ function ProductDetails() {
                 border: "1px solid #eee",
                 borderRadius: 10,
                 background: "#fafafa",
+                color: "#111"
               }}
             >
               <h3 style={{ marginBottom: 12 }}>
@@ -174,7 +175,7 @@ function ProductDetails() {
                     <span
                         className={styles.colorValue}
                         style={{
-                            backgroundColor: attr.value || "#ddd",
+                            backgroundColor: attr.value || "#1b1616",
                         }}
                         title={attr.value || ""}
                     />
@@ -188,24 +189,24 @@ function ProductDetails() {
             </div>
           )}
           {/* stock */}
-          <div style={{ marginTop: 15 }}>
+          <div style={{ marginTop: 15, color: "#111" }}>
             <b>المخزون:</b> {product.stock}
           </div>
 
-          <div style={{ marginTop: 5 }}>
+          <div style={{ marginTop: 5, color: "#111" }}>
             <b>الحالة:</b>{" "}
             {product.stock > 0 ? "🟢 متوفر" : "🔴 غير متوفر"}
           </div>
 
           {/* أزرار */}
           <div style={{ marginTop: 25, display: "flex", gap: 10 }}>
-            <button style={{ padding: 10, background: "#2563eb", color: "#fff", border: 0 }}>
+            {/* <button style={{ padding: 10, background: "#2563eb", color: "#fff", border: 0 }}>
               تعديل
             </button>
 
             <button style={{ padding: 10, background: "#ef4444", color: "#fff", border: 0 }}>
               حذف
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

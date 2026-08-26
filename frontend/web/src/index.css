@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -11,8 +11,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
+  color: #171717;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -34,10 +46,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
-h1 {
+/* h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
+} */
 
 button {
   border-radius: 8px;
@@ -57,8 +69,8 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-@media (prefers-color-scheme: light) {
+/* ************* */
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -69,8 +81,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-*,
+} */
+/* *,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -79,4 +91,68 @@ button:focus-visible {
 #root {
   width: 100%;
   min-height: 100vh;
+} */
+ /* =========================================================
+   GLOBAL RESPONSIVE BASE
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* الصور لا تتجاوز الحاوية */
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+/* العناصر الطويلة لا تكسر الصفحة */
+img {
+  height: auto;
+}
+
+/* النصوص الطويلة */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div {
+  overflow-wrap: break-word;
+}
+
+/* الحقول والأزرار لا تخرج من الشاشة */
+input,
+textarea,
+select,
+button {
+  max-width: 100%;
+  font: inherit;
 }

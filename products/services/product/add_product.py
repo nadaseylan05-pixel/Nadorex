@@ -390,7 +390,7 @@ def create_product(user, data, files):
     category_id = data.get('category')
     price = data.get('price')
     old_price = data.get('old_price') or None
-    currency = data.get('currency', 'ر.س')
+    currency = data.get('currency', '₺')
     stock = data.get('stock', 0)
     
     # 2. التعامل مع الصورة الأساسية للمنتج (ملف أو رابط)
@@ -477,7 +477,7 @@ def create_product(merchant, data, files):
     category_code = data.get('category_code') or data.get('category')
     price = data.get('price')
     old_price = data.get('old_price') or None
-    currency = data.get('currency', 'ر.س')
+    currency = data.get('currency', '₺')
     
     # التعامل مع الحقلين base_image و image_url للمنتج
     base_image = files.get('base_image') or files.get('image') or None

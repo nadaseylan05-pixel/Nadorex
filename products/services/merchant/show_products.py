@@ -342,17 +342,35 @@ def update_product_service(product_id, merchant_email, data, files):
     )
 
     merchant = product.merchant
-
+    if "image" in files:
+        product.base_image = files["image"]
+        product.save(update_fields=["base_image"])
     # لغة البائع التي اختارها عند التسجيل
     source_language = merchant.merchant_lang or "en"
     # ==========================================
     # تحديث بيانات المنتج الرئيسية
     # ==========================================
+    # # if "image" in files:
+    # #     product.image = files["image"]
+    # #     product.save(
+    # #         update_fields=["image"]
+    # #     )
+    # if "image" in files:
+    #     product.image_url = files["image"]
+    #     product.base_image = files["image"]
+
+    #     product.save(
+    #         update_fields=[
+    #             "image_url",
+    #             "base_image"
+    #         ]
+    #     )
 
     product_text_changed = False
 
     old_name = product.name
     old_description = product.describtion
+    
 
     if "name" in data:
         product.name = data.get("name")
