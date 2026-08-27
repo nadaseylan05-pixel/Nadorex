@@ -954,8 +954,20 @@ const removeEditingVariant = (index) => {
   console.log(t);
   console.log("🔥 About to RETURN AddProduct");
   return (
-    <div className="seller-container" style={{ display: "flex", background: "#f8fafc", minHeight: "100vh", direction: "rtl", fontFamily: "system-ui, sans-serif" }}>
-      
+    // <div className="seller-container" style={{ display: "flex", background: "#f8fafc", minHeight: "100vh", direction: "rtl", fontFamily: "system-ui, sans-serif" }}>
+    <div
+        className="seller-container"
+        style={{
+            display: "flex",
+            width: "100%",
+            maxWidth: "100%",
+            minHeight: "100vh",
+            background: "#f8fafc",
+            direction: "rtl",
+            fontFamily: "system-ui, sans-serif",
+            boxSizing: "border-box"
+        }}
+    >  
       {/* القائمة الجانبية (Sidebar) */}
       <div className="sidebar" style={{ width: "260px",boxSizing: "border-box", background: "#fff", borderLeft: "1px solid #e2e8f0", padding: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <div className="logo" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "22px", fontWeight: "bold", color: "#1e3a8a", marginBottom: "30px" }}>
