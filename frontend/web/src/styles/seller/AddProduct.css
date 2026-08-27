@@ -401,3 +401,41 @@ select {
     }
 
 }
+
+/* =========================================================
+   MOBILE SELLER LAYOUT
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .seller-container {
+        display: flex !important;
+        flex-direction: column !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        box-sizing: border-box !important;
+    }
+
+    .seller-main {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        flex: none !important;
+
+        box-sizing: border-box !important;
+
+        margin: 0 !important;
+        padding: 12px !important;
+    }
+}
