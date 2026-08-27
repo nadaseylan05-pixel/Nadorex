@@ -957,7 +957,7 @@ const removeEditingVariant = (index) => {
     <div className="seller-container" style={{ display: "flex", background: "#f8fafc", minHeight: "100vh", direction: "rtl", fontFamily: "system-ui, sans-serif" }}>
       
       {/* القائمة الجانبية (Sidebar) */}
-      <div className="sidebar" style={{ width: "260px",boxSizing: "border-box", background: "#fff", borderLeft: "1px solid #e2e8f0", padding: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div className="sidebar" style={{ width: "260px", background: "#fff", borderLeft: "1px solid #e2e8f0", padding: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <div className="logo" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "22px", fontWeight: "bold", color: "#1e3a8a", marginBottom: "30px" }}>
           {/* <span style={{ background: "#2563eb", color: "#fff", padding: "6px 10px", borderRadius: "8px" }}>M</span> متجري */}
           <span
