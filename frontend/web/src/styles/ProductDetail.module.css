@@ -906,7 +906,6 @@
 
 }
 
-
 /* =========================================================
    MOBILE / SMALL TABLET
 ========================================================= */
@@ -915,25 +914,68 @@
 
     .page {
         width: 100%;
-        max-width: none;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
         padding: 12px;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
-    .productCard {
+    .topBar {
         width: 100%;
+        min-width: 0;
+    }
+
+    .breadcrumb {
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .breadcrumbCurrent {
+        max-width: 65vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* =========================
+       MAIN PRODUCT
+    ========================= */
+
+    .productCard {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
         padding: 14px;
+        margin: 0;
+
         gap: 24px;
+
+        box-sizing: border-box;
+        overflow: hidden;
+
         border-radius: 18px;
     }
 
-    .gallerySection {
+    .gallerySection,
+    .galleryFrame,
+    .infoSection {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
     .galleryFrame {
-        width: 100%;
         padding: 8px;
         border-radius: 16px;
+        overflow: hidden;
     }
 
     .galleryFrame img {
@@ -941,39 +983,323 @@
         width: 100%;
         max-width: 100%;
         height: auto;
+        object-fit: contain;
     }
 
     .infoSection {
-        width: 100%;
-        padding: 4px 0;
+        padding: 0;
     }
 
+    /* =========================
+       TITLE
+    ========================= */
+
     .productTitle {
-        font-size: 28px;
+        width: 100%;
+        max-width: 100%;
+
+        font-size: 27px;
+        line-height: 1.3;
+
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    /* =========================
+       DESCRIPTION
+    ========================= */
+
+    .descriptionBox {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .description {
+        width: 100%;
+        max-width: 100%;
+
         font-size: 15px;
         line-height: 1.8;
+
+        overflow-wrap: anywhere;
+        word-break: normal;
     }
+
+    /* =========================
+       DETAILS
+    ========================= */
+
+    .detailsCard {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 14px;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+    .attributeRow {
+        width: 100%;
+        min-width: 0;
+
+        gap: 12px;
+    }
+
+    .attributeName {
+        flex: 0 1 45%;
+        min-width: 0;
+
+        overflow-wrap: anywhere;
+    }
+
+    .attributeValue {
+        flex: 1 1 auto;
+        min-width: 0;
+
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .colorValueWrapper {
+        min-width: 0;
+        max-width: 55%;
+    }
+
+    .colorCode {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* =========================
+       INVENTORY
+    ========================= */
+
+    .inventoryCard {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+    }
+
+    .inventoryItem {
+        min-width: 0;
+        padding: 13px;
+    }
+
+    /* =========================
+       PURCHASE
+    ========================= */
+
+    .purchaseBox {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* =========================
+       VARIANTS SECTION
+    ========================= */
 
     .variantsSection {
         width: 100%;
-        box-sizing: border-box;
+        max-width: 100%;
+        min-width: 0;
+
         margin-top: 28px;
-        padding: 18px;
+        padding: 16px;
+
+        box-sizing: border-box;
+        overflow: hidden;
+
         border-radius: 18px;
     }
 
+    /* =========================
+       VARIANTS HEADER
+    ========================= */
+
+    .variantsHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        width: 100%;
+        min-width: 0;
+
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .variantsHeader > div {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .variantsHeader h2 {
+        font-size: 24px;
+    }
+
+    .variantsHeader p {
+        font-size: 14px;
+    }
+
+    .clearSelection {
+        width: 100%;
+        max-width: 100%;
+
+        min-width: 0;
+
+        padding: 11px 14px;
+
+        white-space: nowrap;
+        word-break: keep-all;
+
+        text-align: center;
+
+        box-sizing: border-box;
+    }
+
+    /* =========================
+       VARIANTS GRID
+    ========================= */
+
     .variantsGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        display: grid;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        /*
+           مهم:
+           لا نضغط بطاقتين داخل شاشة الهاتف.
+        */
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        box-sizing: border-box;
+    }
+
+    /* =========================
+       VARIANT CARD
+    ========================= */
+
+    .variantCard {
+        display: flex;
+        flex-direction: row;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        text-align: left;
+
+        overflow: hidden;
+    }
+
+    .variantImageWrapper {
+        flex: 0 0 115px;
+
+        width: 115px;
+        height: 115px;
+
+        aspect-ratio: auto;
+
+        padding: 7px;
+
+        box-sizing: border-box;
+    }
+
+    .variantContent {
+        flex: 1 1 auto;
+
+        width: auto;
+        min-width: 0;
+
+        padding: 12px;
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+    .variantTitle {
+        width: 100%;
+        min-width: 0;
+
+        margin-bottom: 9px;
+
+        font-size: 14px;
+        line-height: 1.4;
+
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .variantColorRow {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .variantAttributes {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .variantAttribute {
+        width: 100%;
+        min-width: 0;
+
+        gap: 8px;
+    }
+
+    .variantAttribute span {
+        min-width: 0;
+        max-width: 50%;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .variantAttribute strong {
+        min-width: 0;
+        max-width: 50%;
+
+        overflow-wrap: anywhere;
+        word-break: normal;
+
+        text-align: right;
+    }
+
+    .variantStock {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .selectedOverlay {
+        top: 10px;
+        right: 10px;
+
+        width: 27px;
+        height: 27px;
     }
 }
 
 
 /* =========================================================
-   MOBILE
+   SMALL PHONES
 ========================================================= */
 
 @media (max-width: 520px) {
@@ -984,7 +1310,7 @@
 
     .productCard {
         padding: 10px;
-        gap: 22px;
+        gap: 20px;
         border-radius: 14px;
     }
 
@@ -1003,36 +1329,103 @@
     }
 
     .detailsCard {
-        padding: 14px;
+        padding: 13px;
+    }
+
+    .inventoryCard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .inventoryItem {
+        padding: 12px;
     }
 
     .variantsSection {
         padding: 12px;
+        border-radius: 14px;
+    }
+
+    .variantsHeader h2 {
+        font-size: 22px;
+    }
+
+    .variantImageWrapper {
+        flex: 0 0 105px;
+
+        width: 105px;
+        height: 105px;
     }
 
     .variantContent {
-        padding: 11px;
+        padding: 10px;
+    }
+
+    .variantTitle {
+        font-size: 14px;
+    }
+
+    .variantAttribute {
+        font-size: 12px;
     }
 }
 
 
 /* =========================================================
-   VERY SMALL SCREENS
+   VERY SMALL PHONES
 ========================================================= */
 
 @media (max-width: 360px) {
 
     .page {
-        padding-left: 7px;
-        padding-right: 7px;
+        padding: 6px;
     }
 
-    .variantsGrid {
-        grid-template-columns: 1fr;
+    .productCard {
+        padding: 8px;
     }
 
     .productTitle {
         font-size: 22px;
     }
 
+    .variantsSection {
+        padding: 10px;
+    }
+
+    .variantImageWrapper {
+        flex: 0 0 90px;
+
+        width: 90px;
+        height: 90px;
+    }
+
+    .variantContent {
+        padding: 9px;
+    }
+
+    .variantTitle {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   GLOBAL SAFETY FOR THIS PAGE
+========================================================= */
+
+.page *,
+.page *::before,
+.page *::after {
+    box-sizing: border-box;
+}
+
+.page button {
+    max-width: 100%;
+}
+
+.page img,
+.page video,
+.page canvas,
+.page iframe {
+    max-width: 100%;
 }
