@@ -114,7 +114,7 @@
    MAIN PRODUCT CARD
 ========================================================= */
 
-.productCard {
+/* .productCard {
     display: flex;
     flex-direction: column;
 
@@ -131,14 +131,30 @@
     box-sizing: border-box;
 
     gap: 32px;
-}
+} */
+.productCard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
 
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 28px;
+    gap: 32px;
+
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 24px;
+
+    box-sizing: border-box;
+}
 .gallerySection {
     width: 100%;
     min-width: 0;
 }
 
-.infoSection {
+/* .infoSection {
     width: 100%;
     min-width: 0;
 
@@ -146,8 +162,19 @@
     flex-direction: column;
 
     padding: 24px 0 0;
-}
+} */
+.infoSection {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px 0;
+
+    box-sizing: border-box;
+}
 /* =========================================================
    GALLERY
 ========================================================= */
@@ -916,152 +943,131 @@
     }
 
 }
-
 /* =========================================================
-   MOBILE / SMALL TABLET
+   REAL MOBILE FIX
 ========================================================= */
 
-@media (max-width: 820px) {
+@media (max-width: 600px) {
 
     .page {
         width: 100%;
         max-width: 100%;
         min-width: 0;
+
         margin: 0;
-        padding: 12px;
-        box-sizing: border-box;
+        padding: 8px;
+
         overflow-x: hidden;
+        box-sizing: border-box;
     }
 
-    .topBar {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .breadcrumb {
-        width: 100%;
-        min-width: 0;
-        overflow: hidden;
-    }
-
-    .breadcrumbCurrent {
-        max-width: 65vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* =========================
-       MAIN PRODUCT
-    ========================= */
+    /* ---------- Product ---------- */
 
     .productCard {
-        display: flex;
-        flex-direction: column;
-
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
-        padding: 14px;
-        margin: 0;
+        padding: 10px;
 
-        gap: 24px;
+        gap: 20px;
+
+        border-radius: 14px;
 
         box-sizing: border-box;
-        overflow: hidden;
-
-        border-radius: 18px;
     }
 
+    /* ---------- Gallery ---------- */
+
     .gallerySection,
-    .galleryFrame,
-    .infoSection {
+    .galleryFrame {
         width: 100%;
         max-width: 100%;
         min-width: 0;
+
         box-sizing: border-box;
     }
 
     .galleryFrame {
-        padding: 8px;
-        border-radius: 16px;
+        padding: 5px;
         overflow: hidden;
     }
 
-    .galleryFrame img {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
+    /* ---------- Information ---------- */
 
     .infoSection {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
         padding: 0;
+
+        box-sizing: border-box;
     }
 
-    /* =========================
-       TITLE
-    ========================= */
+    /* ---------- Title ---------- */
 
     .productTitle {
         width: 100%;
         max-width: 100%;
 
-        font-size: 27px;
-        line-height: 1.3;
+        font-size: 24px;
+        line-height: 1.35;
 
         overflow-wrap: anywhere;
-        word-break: normal;
     }
 
-    /* =========================
-       DESCRIPTION
-    ========================= */
+    /* ---------- Description ---------- */
 
-    .descriptionBox {
+    .descriptionBox,
+    .description {
         width: 100%;
         max-width: 100%;
+        min-width: 0;
+
         box-sizing: border-box;
     }
 
     .description {
-        width: 100%;
-        max-width: 100%;
-
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.8;
 
         overflow-wrap: anywhere;
-        word-break: normal;
     }
 
-    /* =========================
-       DETAILS
-    ========================= */
+    /* ---------- Details ---------- */
 
     .detailsCard {
         width: 100%;
         max-width: 100%;
+        min-width: 0;
 
-        padding: 14px;
+        padding: 13px;
 
         box-sizing: border-box;
 
         overflow: hidden;
     }
 
+    .attributesList {
+        width: 100%;
+        min-width: 0;
+    }
+
     .attributeRow {
+        display: flex;
+
         width: 100%;
         min-width: 0;
 
-        gap: 12px;
+        gap: 10px;
     }
 
     .attributeName {
-        flex: 0 1 45%;
+        flex: 0 0 40%;
         min-width: 0;
+
+        font-size: 12px;
 
         overflow-wrap: anywhere;
     }
@@ -1070,25 +1076,12 @@
         flex: 1 1 auto;
         min-width: 0;
 
+        font-size: 13px;
+
         overflow-wrap: anywhere;
-        word-break: normal;
     }
 
-    .colorValueWrapper {
-        min-width: 0;
-        max-width: 55%;
-    }
-
-    .colorCode {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* =========================
-       INVENTORY
-    ========================= */
+    /* ---------- Inventory ---------- */
 
     .inventoryCard {
         width: 100%;
@@ -1100,43 +1093,52 @@
 
     .inventoryItem {
         min-width: 0;
-        padding: 13px;
+
+        padding: 12px;
     }
 
-    /* =========================
-       PURCHASE
-    ========================= */
+    /* ---------- Price ---------- */
+
+    .priceSection {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+    }
+
+    /* ---------- Quantity / Purchase ---------- */
 
     .purchaseBox {
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
+        padding-top: 16px;
+
         box-sizing: border-box;
+
         overflow: hidden;
     }
 
-    /* =========================
-       VARIANTS SECTION
-    ========================= */
+    /* =====================================================
+       VARIANTS
+    ===================================================== */
 
     .variantsSection {
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
-        margin-top: 28px;
-        padding: 16px;
+        margin-top: 24px;
+        padding: 12px;
 
         box-sizing: border-box;
+
+        border-radius: 14px;
+
         overflow: hidden;
-
-        border-radius: 18px;
     }
-
-    /* =========================
-       VARIANTS HEADER
-    ========================= */
 
     .variantsHeader {
         display: flex;
@@ -1146,64 +1148,40 @@
         width: 100%;
         min-width: 0;
 
-        gap: 14px;
-        margin-bottom: 20px;
+        gap: 12px;
     }
 
     .variantsHeader > div {
-        min-width: 0;
         width: 100%;
-    }
-
-    .variantsHeader h2 {
-        font-size: 24px;
-    }
-
-    .variantsHeader p {
-        font-size: 14px;
+        min-width: 0;
     }
 
     .clearSelection {
         width: 100%;
         max-width: 100%;
 
-        min-width: 0;
-
-        padding: 11px 14px;
-
         white-space: nowrap;
-        word-break: keep-all;
-
-        text-align: center;
 
         box-sizing: border-box;
     }
 
-    /* =========================
-       VARIANTS GRID
-    ========================= */
+    /* =====================================================
+       ONE CARD PER ROW
+    ===================================================== */
 
     .variantsGrid {
         display: grid;
+
+        grid-template-columns: 1fr;
 
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
-        /*
-           مهم:
-           لا نضغط بطاقتين داخل شاشة الهاتف.
-        */
-        grid-template-columns: 1fr;
-
-        gap: 14px;
+        gap: 12px;
 
         box-sizing: border-box;
     }
-
-    /* =========================
-       VARIANT CARD
-    ========================= */
 
     .variantCard {
         display: flex;
@@ -1215,18 +1193,14 @@
 
         box-sizing: border-box;
 
-        text-align: left;
-
         overflow: hidden;
     }
 
     .variantImageWrapper {
-        flex: 0 0 115px;
+        flex: 0 0 105px;
 
-        width: 115px;
-        height: 115px;
-
-        aspect-ratio: auto;
+        width: 105px;
+        height: 105px;
 
         padding: 7px;
 
@@ -1239,153 +1213,42 @@
         width: auto;
         min-width: 0;
 
-        padding: 12px;
+        padding: 10px;
+
         box-sizing: border-box;
 
         overflow: hidden;
     }
 
     .variantTitle {
-        width: 100%;
         min-width: 0;
-
-        margin-bottom: 9px;
 
         font-size: 14px;
-        line-height: 1.4;
 
         overflow-wrap: anywhere;
-        word-break: normal;
-    }
-
-    .variantColorRow {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .variantAttributes {
-        width: 100%;
-        min-width: 0;
     }
 
     .variantAttribute {
-        width: 100%;
         min-width: 0;
 
         gap: 8px;
     }
 
-    .variantAttribute span {
-        min-width: 0;
-        max-width: 50%;
-
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
+    .variantAttribute span,
     .variantAttribute strong {
         min-width: 0;
         max-width: 50%;
 
         overflow-wrap: anywhere;
-        word-break: normal;
-
-        text-align: right;
-    }
-
-    .variantStock {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .selectedOverlay {
-        top: 10px;
-        right: 10px;
-
-        width: 27px;
-        height: 27px;
     }
 }
 
 
 /* =========================================================
-   SMALL PHONES
+   VERY SMALL PHONE
 ========================================================= */
 
-@media (max-width: 520px) {
-
-    .page {
-        padding: 8px;
-    }
-
-    .productCard {
-        padding: 10px;
-        gap: 20px;
-        border-radius: 14px;
-    }
-
-    .galleryFrame {
-        padding: 5px;
-        border-radius: 12px;
-    }
-
-    .productTitle {
-        font-size: 24px;
-    }
-
-    .description {
-        font-size: 14px;
-        line-height: 1.8;
-    }
-
-    .detailsCard {
-        padding: 13px;
-    }
-
-    .inventoryCard {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .inventoryItem {
-        padding: 12px;
-    }
-
-    .variantsSection {
-        padding: 12px;
-        border-radius: 14px;
-    }
-
-    .variantsHeader h2 {
-        font-size: 22px;
-    }
-
-    .variantImageWrapper {
-        flex: 0 0 105px;
-
-        width: 105px;
-        height: 105px;
-    }
-
-    .variantContent {
-        padding: 10px;
-    }
-
-    .variantTitle {
-        font-size: 14px;
-    }
-
-    .variantAttribute {
-        font-size: 12px;
-    }
-}
-
-
-/* =========================================================
-   VERY SMALL PHONES
-========================================================= */
-
-@media (max-width: 360px) {
+@media (max-width: 380px) {
 
     .page {
         padding: 6px;
@@ -1393,10 +1256,6 @@
 
     .productCard {
         padding: 8px;
-    }
-
-    .productTitle {
-        font-size: 22px;
     }
 
     .variantsSection {
@@ -1411,32 +1270,10 @@
     }
 
     .variantContent {
-        padding: 9px;
+        padding: 8px;
     }
 
     .variantTitle {
         font-size: 13px;
     }
-}
-
-
-/* =========================================================
-   GLOBAL SAFETY FOR THIS PAGE
-========================================================= */
-
-.page *,
-.page *::before,
-.page *::after {
-    box-sizing: border-box;
-}
-
-.page button {
-    max-width: 100%;
-}
-
-.page img,
-.page video,
-.page canvas,
-.page iframe {
-    max-width: 100%;
 }
