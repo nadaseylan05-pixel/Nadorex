@@ -18,6 +18,10 @@ function ProductDetail() {
     const [product, setProduct] = useState(null);
     const [selectedVariant, setSelectedVariant] = useState(null);
 
+    // =========================================================
+    // FETCH PRODUCT
+    // =========================================================
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -40,7 +44,6 @@ function ProductDetail() {
 
                 setProduct(data);
                 setSelectedVariant(null);
-
             } catch (error) {
                 console.error("PRODUCT FETCH ERROR:", error);
             }
@@ -49,19 +52,112 @@ function ProductDetail() {
         fetchProduct();
     }, [id, lang, instagramUsername]);
 
+    // =========================================================
+    // ACTIVE VARIANTS
+    // =========================================================
+
     const variants = useMemo(() => {
         return (product?.variants || []).filter(
             (variant) => variant.is_active
         );
     }, [product]);
 
-    const currentTitle =
-        selectedVariant?.title ||
-        product?.name;
+    // =========================================================
+    // MAIN PRODUCT IMAGES
+    // =========================================================
 
-    const currentDescription =
-        selectedVariant?.describtion ||
-        product?.describtion;
+    const productImages = useMemo(() => {
+        if (!product) return [];
+
+        const images = [];
+
+        const addImage = (url) => {
+            if (!url) return;
+
+            const exists = images.some(
+                (image) =>
+                    (image.image_url || image.image) === url
+            );
+
+            if (!exists) {
+                images.push({
+                    image_url: url,
+                });
+            }
+        };
+
+        addImage(product.base_image);
+        addImage(product.image_url);
+
+        (product.images || []).forEach((image) => {
+            addImage(image.image_url || image.image);
+        });
+
+        return images;
+    }, [product]);
+
+    // =========================================================
+    // SELECTED VARIANT IMAGES
+    // =========================================================
+
+    const selectedVariantImages = useMemo(() => {
+        if (!selectedVariant) return [];
+
+        const images = [];
+
+        const addImage = (url) => {
+            if (!url) return;
+
+            const exists = images.some(
+                (image) =>
+                    (image.image || image.image_url) === url
+            );
+
+            if (!exists) {
+                images.push({
+                    image: url,
+                });
+            }
+        };
+
+        addImage(
+            selectedVariant.image ||
+            selectedVariant.image_url
+        );
+
+        (selectedVariant.images || []).forEach((image) => {
+            addImage(
+                image.image ||
+                image.image_url
+            );
+        });
+
+        return images;
+    }, [selectedVariant]);
+
+    // =========================================================
+    // CURRENT DATA
+    // =========================================================
+
+    const currentImages = selectedVariant
+        ? selectedVariantImages
+        : productImages;
+
+    const currentTitle = selectedVariant
+        ? selectedVariant.title || product?.name
+        : product?.name;
+
+    const currentDescription = selectedVariant
+        ? (
+            selectedVariant.describtion ||
+            selectedVariant.describtion ||
+            product?.describtion
+        )
+        : product?.describtion;
+
+    // =========================================================
+    // VARIANT HELPERS
+    // =========================================================
 
     const getVariantColor = (variant) => {
         const colorAttribute =
@@ -87,6 +183,10 @@ function ProductDetail() {
         );
     };
 
+    // =========================================================
+    // VARIANT SELECT
+    // =========================================================
+
     const handleVariantSelect = (variant) => {
         setSelectedVariant(variant);
 
@@ -95,6 +195,10 @@ function ProductDetail() {
             behavior: "smooth",
         });
     };
+
+    // =========================================================
+    // BACK TO PRODUCT
+    // =========================================================
 
     const handleBackToProduct = () => {
         setSelectedVariant(null);
@@ -105,6 +209,10 @@ function ProductDetail() {
         });
     };
 
+    // =========================================================
+    // ADD TO CART
+    // =========================================================
+
     const handleAddToCart = (quantity) => {
         if (!product) return;
 
@@ -114,6 +222,10 @@ function ProductDetail() {
             quantity
         );
     };
+
+    // =========================================================
+    // LOADING
+    // =========================================================
 
     if (!product) {
         return (
@@ -126,17 +238,15 @@ function ProductDetail() {
         );
     }
 
-    const stock =
-        selectedVariant?.stock ??
-        product.stock ??
-        0;
-
     return (
         <main className={styles.page}>
 
-            {/* BACK */}
+            {/* =====================================================
+                TOP NAVIGATION
+            ===================================================== */}
 
             <div className={styles.topBar}>
+
                 <button
                     type="button"
                     className={styles.storeBackButton}
@@ -152,9 +262,12 @@ function ProductDetail() {
                         Back to store
                     </span>
                 </button>
+
             </div>
 
-            {/* BREADCRUMB */}
+            {/* =====================================================
+                BREADCRUMB
+            ===================================================== */}
 
             <div className={styles.breadcrumb}>
                 <button
@@ -169,35 +282,42 @@ function ProductDetail() {
                 <span>/</span>
 
                 <span className={styles.breadcrumbCurrent}>
-                    {currentTitle}
+                    {product.name}
                 </span>
             </div>
 
-            {/* PRODUCT */}
+            {/* =====================================================
+                MAIN PRODUCT
+            ===================================================== */}
 
             <section className={styles.productCard}>
 
-                {/* GALLERY */}
+                {/* =================================================
+                    GALLERY
+                ================================================= */}
 
                 <div className={styles.gallerySection}>
 
                     <div className={styles.galleryFrame}>
-
                         <ImageGallery
-                            product={product}
+                            product={{
+                                ...product,
+                                images: currentImages,
+                                variants: selectedVariant ? [] : product.variants,
+                            }}
                             variant={selectedVariant}
-                            onVariantChange={
-                                handleVariantSelect
-                            }
                         />
-
                     </div>
 
                 </div>
 
-                {/* INFORMATION */}
+                {/* =================================================
+                    PRODUCT INFORMATION
+                ================================================= */}
 
                 <div className={styles.infoSection}>
+
+                    {/* Selected variant */}
 
                     {selectedVariant && (
                         <div className={styles.selectedBadge}>
@@ -209,9 +329,13 @@ function ProductDetail() {
                         </div>
                     )}
 
+                    {/* Title */}
+
                     <h1 className={styles.productTitle}>
                         {currentTitle}
                     </h1>
+
+                    {/* Description */}
 
                     {currentDescription && (
                         <div className={styles.descriptionBox}>
@@ -221,7 +345,9 @@ function ProductDetail() {
                         </div>
                     )}
 
-                    {/* PRODUCT DETAILS */}
+                    {/* =================================================
+                        MAIN PRODUCT ATTRIBUTES
+                    ================================================= */}
 
                     {!selectedVariant &&
                         product.attributes?.length > 0 && (
@@ -251,9 +377,7 @@ function ProductDetail() {
                                         return (
                                             <div
                                                 key={attr.id}
-                                                className={
-                                                    styles.attributeRow
-                                                }
+                                                className={styles.attributeRow}
                                             >
                                                 <span
                                                     className={
@@ -279,6 +403,7 @@ function ProductDetail() {
                                                                 backgroundColor:
                                                                     value,
                                                             }}
+                                                            title={value}
                                                         />
 
                                                         <span
@@ -299,6 +424,7 @@ function ProductDetail() {
                                                     >
                                                         {value}
                                                     </span>
+
                                                 )}
                                             </div>
                                         );
@@ -308,7 +434,9 @@ function ProductDetail() {
                             </div>
                         )}
 
-                    {/* VARIANT DETAILS */}
+                    {/* =================================================
+                        SELECTED VARIANT ATTRIBUTES
+                    ================================================= */}
 
                     {selectedVariant &&
                         selectedVariant.attributes?.length > 0 && (
@@ -349,9 +477,7 @@ function ProductDetail() {
                                                             styles.attributeName
                                                         }
                                                     >
-                                                        {
-                                                            attr.attribute_name
-                                                        }
+                                                        {attr.attribute_name}
                                                     </span>
 
                                                     {attr.attribute_type ===
@@ -371,6 +497,10 @@ function ProductDetail() {
                                                                         attr.value ||
                                                                         "#ddd",
                                                                 }}
+                                                                title={
+                                                                    attr.value ||
+                                                                    ""
+                                                                }
                                                             />
 
                                                             <span
@@ -393,6 +523,7 @@ function ProductDetail() {
                                                         >
                                                             {value}
                                                         </span>
+
                                                     )}
                                                 </div>
                                             );
@@ -403,7 +534,9 @@ function ProductDetail() {
                             </div>
                         )}
 
-                    {/* INVENTORY */}
+                    {/* =================================================
+                        INVENTORY
+                    ================================================= */}
 
                     <div className={styles.inventoryCard}>
 
@@ -413,7 +546,9 @@ function ProductDetail() {
                             </span>
 
                             <strong>
-                                {stock}
+                                {selectedVariant
+                                    ? selectedVariant.stock
+                                    : product.stock}
                             </strong>
                         </div>
 
@@ -431,18 +566,20 @@ function ProductDetail() {
 
                     </div>
 
-                    {/* PRICE */}
+                    {/* =================================================
+                        PRICE
+                    ================================================= */}
 
                     <div className={styles.priceSection}>
-
                         <PriceBox
                             product={product}
                             variant={selectedVariant}
                         />
-
                     </div>
 
-                    {/* QUANTITY */}
+                    {/* =================================================
+                        PURCHASE
+                    ================================================= */}
 
                     <div className={styles.purchaseBox}>
 
@@ -455,10 +592,11 @@ function ProductDetail() {
                     </div>
 
                 </div>
-
             </section>
 
-            {/* VARIANTS */}
+            {/* =====================================================
+                VARIANTS
+            ===================================================== */}
 
             {variants.length > 0 && (
 
@@ -497,6 +635,10 @@ function ProductDetail() {
 
                     </div>
 
+                    {/* =================================================
+                        VARIANT GRID
+                    ================================================= */}
+
                     <div className={styles.variantsGrid}>
 
                         {variants.map((variant) => {
@@ -533,6 +675,8 @@ function ProductDetail() {
                                         )
                                     }
                                 >
+
+                                    {/* IMAGE */}
 
                                     <div
                                         className={
@@ -579,6 +723,8 @@ function ProductDetail() {
 
                                     </div>
 
+                                    {/* CONTENT */}
+
                                     <div
                                         className={
                                             styles.variantContent
@@ -593,6 +739,8 @@ function ProductDetail() {
                                             {variant.title ||
                                                 "Option"}
                                         </strong>
+
+                                        {/* COLOR */}
 
                                         {color && (
                                             <div
@@ -612,16 +760,18 @@ function ProductDetail() {
                                                         backgroundColor:
                                                             color,
                                                     }}
+                                                    title={color}
                                                 />
                                             </div>
                                         )}
+
+                                        {/* ATTRIBUTES */}
 
                                         <div
                                             className={
                                                 styles.variantAttributes
                                             }
                                         >
-
                                             {(variant.attributes || [])
                                                 .filter(
                                                     (attr) =>
@@ -636,7 +786,9 @@ function ProductDetail() {
                                                         );
 
                                                     if (
-                                                        !value
+                                                        value === null ||
+                                                        value === undefined ||
+                                                        value === ""
                                                     ) {
                                                         return null;
                                                     }
@@ -660,8 +812,9 @@ function ProductDetail() {
                                                         </div>
                                                     );
                                                 })}
-
                                         </div>
+
+                                        {/* STOCK */}
 
                                         <div
                                             className={

@@ -1,39 +1,38 @@
 /* =========================================================
-   PRODUCT DETAIL
-   FLEXIBLE / RESPONSIVE
+   PAGE
 ========================================================= */
 
 .page {
     width: 100%;
-    max-width: 1440px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 24px;
     box-sizing: border-box;
 
-    background: #fff;
     color: #171717;
+    background: #fff;
 
     overflow-x: hidden;
 }
 
+.page *,
+.page *::before,
+.page *::after {
+    box-sizing: border-box;
+}
 
 /* =========================================================
-   TOP BAR
+   TOP
 ========================================================= */
 
 .topBar {
-    width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .storeBackButton {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-
     gap: 8px;
-
-    min-width: max-content;
 
     padding: 10px 14px;
 
@@ -47,15 +46,15 @@
     font-weight: 600;
 
     cursor: pointer;
+}
 
-    white-space: nowrap;
+.storeBackButton:hover {
+    background: #f8fafc;
 }
 
 .backIcon {
-    flex-shrink: 0;
     font-size: 18px;
 }
-
 
 /* =========================================================
    BREADCRUMB
@@ -64,25 +63,21 @@
 .breadcrumb {
     display: flex;
     align-items: center;
-
     gap: 8px;
 
-    width: 100%;
-    min-width: 0;
-
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 
     color: #64748b;
     font-size: 14px;
+
+    min-width: 0;
 }
 
 .breadcrumb button {
-    flex-shrink: 0;
-
-    border: none;
-    background: transparent;
-
     padding: 0;
+
+    border: 0;
+    background: transparent;
 
     color: #2563eb;
 
@@ -97,174 +92,90 @@
     white-space: nowrap;
 }
 
-
 /* =========================================================
    MAIN PRODUCT
 ========================================================= */
 
 .productCard {
-    display: flex;
+    display: grid;
 
-    align-items: stretch;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 30px;
 
     width: 100%;
     min-width: 0;
 
-    gap: 35px;
-
-    padding: 28px;
-
-    box-sizing: border-box;
-
-    background: #fff;
+    padding: 24px;
 
     border: 1px solid #e5e7eb;
     border-radius: 20px;
 
-    box-shadow: 0 8px 25px rgba(0,0,0,.06);
-}
+    background: #fff;
 
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, .06);
+}
 
 /* =========================================================
    GALLERY
 ========================================================= */
 
 .gallerySection {
-    flex: 1 1 52%;
-    min-width: 0;
     width: 100%;
+    min-width: 0;
 }
 
 .galleryFrame {
-    position: relative;
-
     width: 100%;
     min-width: 0;
 
     padding: 10px;
 
-    box-sizing: border-box;
-
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
+    border: 1px solid #d6deea;
+    border-radius: 18px;
 
     background: #f8fafc;
 
     overflow: hidden;
 }
 
-.galleryFrame img {
-    display: block;
-
-    width: 100%;
-    max-width: 100%;
-
-    height: auto;
-
-    object-fit: contain;
-}
-
-
 /* =========================================================
-   INFORMATION
+   INFO
 ========================================================= */
 
 .infoSection {
-    flex: 1 1 48%;
-
-    width: 100%;
-    min-width: 0;
-
     display: flex;
     flex-direction: column;
 
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.productTitle {
     width: 100%;
     min-width: 0;
-
-    margin: 0;
-
-    color: #111827;
-
-    font-size: clamp(24px, 3vw, 40px);
-    line-height: 1.2;
-
-    font-weight: 750;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
 }
-
 
 /* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.descriptionBox {
-    width: 100%;
-    min-width: 0;
-
-    margin-top: 18px;
-    padding-bottom: 18px;
-
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.description {
-    width: 100%;
-    min-width: 0;
-
-    margin: 0;
-
-    color: #64748b;
-
-    font-size: 15px;
-    line-height: 1.8;
-
-    white-space: pre-line;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-
-/* =========================================================
-   SELECTED BADGE
+   SELECTED
 ========================================================= */
 
 .selectedBadge {
     display: inline-flex;
     align-items: center;
+    gap: 7px;
 
     align-self: flex-start;
-
-    width: max-content;
-    max-width: 100%;
-
-    gap: 7px;
 
     margin-bottom: 12px;
     padding: 7px 12px;
 
+    border: 1px solid #bbf7d0;
     border-radius: 999px;
 
     background: #ecfdf5;
-    border: 1px solid #bbf7d0;
-
     color: #15803d;
 
     font-size: 12px;
     font-weight: 700;
-
-    white-space: nowrap;
 }
 
 .badgeCheck {
@@ -275,14 +186,49 @@
     width: 18px;
     height: 18px;
 
-    flex-shrink: 0;
-
     border-radius: 50%;
 
     background: #16a34a;
     color: #fff;
 }
 
+/* =========================================================
+   TITLE
+========================================================= */
+
+.productTitle {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: clamp(25px, 3vw, 40px);
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.descriptionBox {
+    margin-top: 17px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.description {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 15px;
+    line-height: 1.8;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
 
 /* =========================================================
    DETAILS
@@ -292,23 +238,17 @@
     width: 100%;
     min-width: 0;
 
-    margin-top: 20px;
-
-    padding: 18px;
-
-    box-sizing: border-box;
-
-    background: #f8fafc;
+    margin-top: 18px;
+    padding: 15px;
 
     border: 1px solid #e2e8f0;
     border-radius: 14px;
 
-    overflow: hidden;
+    background: #f8fafc;
 }
 
 .sectionHeading {
-    width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .sectionHeading h2 {
@@ -317,32 +257,25 @@
     color: #111827;
 
     font-size: 16px;
-    line-height: 1.4;
 }
-
 
 /* =========================================================
    ATTRIBUTES
 ========================================================= */
 
 .attributesList {
-    display: flex;
-    flex-direction: column;
-
     width: 100%;
-    min-width: 0;
 }
 
 .attributeRow {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
+    gap: 14px;
+
     width: 100%;
     min-width: 0;
-
-    gap: 15px;
 
     padding: 10px 0;
 
@@ -350,12 +283,10 @@
 }
 
 .attributeRow:last-child {
-    border-bottom: none;
+    border-bottom: 0;
 }
 
 .attributeName {
-    flex: 0 1 45%;
-
     min-width: 0;
 
     color: #64748b;
@@ -364,12 +295,9 @@
     font-weight: 600;
 
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
 
 .attributeValue {
-    flex: 0 1 55%;
-
     min-width: 0;
 
     color: #111827;
@@ -380,24 +308,16 @@
     text-align: right;
 
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
-
-
-/* =========================================================
-   COLOR
-========================================================= */
 
 .colorValueWrapper {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
-    flex: 0 1 55%;
+    gap: 7px;
 
     min-width: 0;
-
-    gap: 7px;
 }
 
 .colorValue {
@@ -406,24 +326,22 @@
 
     flex-shrink: 0;
 
-    border-radius: 50%;
+    display: inline-block;
 
     border: 2px solid #fff;
+    border-radius: 50%;
 
-    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, .2);
 }
 
 .colorCode {
-    min-width: 0;
-
     color: #64748b;
 
     font-size: 11px;
 
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
-
 
 /* =========================================================
    INVENTORY
@@ -436,7 +354,6 @@
         repeat(2, minmax(0, 1fr));
 
     width: 100%;
-    min-width: 0;
 
     margin-top: 18px;
 
@@ -444,19 +361,17 @@
     border-radius: 12px;
 
     overflow: hidden;
-
-    background: #fff;
 }
 
 .inventoryItem {
-    min-width: 0;
-
     display: flex;
     flex-direction: column;
 
     gap: 5px;
 
-    padding: 14px;
+    min-width: 0;
+
+    padding: 13px;
 }
 
 .inventoryItem + .inventoryItem {
@@ -470,12 +385,10 @@
 
 .inventoryItem strong {
     color: #111827;
-
     font-size: 15px;
 
     overflow-wrap: anywhere;
 }
-
 
 /* =========================================================
    PRICE
@@ -485,9 +398,8 @@
     width: 100%;
     min-width: 0;
 
-    margin-top: 20px;
+    margin-top: 18px;
 }
-
 
 /* =========================================================
    PURCHASE
@@ -497,57 +409,37 @@
     width: 100%;
     min-width: 0;
 
-    margin-top: 18px;
-    padding-top: 18px;
+    margin-top: 17px;
+    padding-top: 17px;
 
     border-top: 1px solid #e5e7eb;
 }
 
-
 /* =========================================================
-   VARIANTS
+   VARIANTS SECTION
 ========================================================= */
 
 .variantsSection {
     width: 100%;
     min-width: 0;
 
-    margin-top: 35px;
-
-    padding: 25px;
-
-    box-sizing: border-box;
-
-    background: #f8fafc;
+    margin-top: 30px;
+    padding: 22px;
 
     border: 1px solid #e5e7eb;
     border-radius: 20px;
 
-    overflow: hidden;
+    background: #f8fafc;
 }
-
-
-/* =========================================================
-   VARIANT HEADER
-========================================================= */
 
 .variantsHeader {
     display: flex;
-
     align-items: flex-end;
     justify-content: space-between;
 
     gap: 20px;
 
-    width: 100%;
-    min-width: 0;
-
-    margin-bottom: 22px;
-}
-
-.variantsHeader > div {
-    min-width: 0;
-    flex: 1 1 auto;
+    margin-bottom: 20px;
 }
 
 .eyebrow {
@@ -560,8 +452,8 @@
     font-size: 11px;
     font-weight: 800;
 
-    text-transform: uppercase;
     letter-spacing: .7px;
+    text-transform: uppercase;
 }
 
 .variantsHeader h2 {
@@ -570,25 +462,19 @@
     color: #111827;
 
     font-size: clamp(21px, 3vw, 30px);
-
-    overflow-wrap: anywhere;
 }
 
 .variantsHeader p {
-    margin: 7px 0 0;
+    margin: 6px 0 0;
 
     color: #64748b;
 
     font-size: 14px;
     line-height: 1.6;
-
-    overflow-wrap: anywhere;
 }
 
 .clearSelection {
-    flex: 0 1 auto;
-
-    min-width: max-content;
+    flex-shrink: 0;
 
     padding: 10px 14px;
 
@@ -603,13 +489,10 @@
     font-weight: 600;
 
     cursor: pointer;
-
-    white-space: nowrap;
 }
 
-
 /* =========================================================
-   VARIANT GRID
+   VARIANTS GRID
 ========================================================= */
 
 .variantsGrid {
@@ -618,18 +501,14 @@
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(
-                min(210px, 100%),
-                1fr
-            )
+            minmax(190px, 1fr)
         );
 
-    gap: 16px;
+    gap: 15px;
 
     width: 100%;
     min-width: 0;
 }
-
 
 /* =========================================================
    VARIANT CARD
@@ -643,8 +522,6 @@
     min-width: 0;
 
     padding: 0;
-
-    box-sizing: border-box;
 
     border: 1px solid #e2e8f0;
     border-radius: 15px;
@@ -667,7 +544,7 @@
     border-color: #94a3b8;
 
     box-shadow:
-        0 8px 20px rgba(0,0,0,.07);
+        0 8px 22px rgba(0, 0, 0, .07);
 
     transform: translateY(-2px);
 }
@@ -675,7 +552,6 @@
 .variantSelected {
     border: 2px solid #2563eb;
 }
-
 
 /* =========================================================
    VARIANT IMAGE
@@ -689,8 +565,6 @@
     aspect-ratio: 1 / 1;
 
     padding: 8px;
-
-    box-sizing: border-box;
 
     background: #f8fafc;
 
@@ -723,9 +597,8 @@
     font-size: 13px;
 }
 
-
 /* =========================================================
-   OVERLAY
+   SELECTED OVERLAY
 ========================================================= */
 
 .selectedOverlay {
@@ -749,7 +622,6 @@
     font-weight: 700;
 }
 
-
 /* =========================================================
    VARIANT CONTENT
 ========================================================= */
@@ -761,18 +633,13 @@
     width: 100%;
     min-width: 0;
 
-    padding: 14px;
-
-    box-sizing: border-box;
+    padding: 12px;
 }
 
 .variantTitle {
     display: block;
 
-    width: 100%;
-    min-width: 0;
-
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 
     color: #111827;
 
@@ -780,9 +647,7 @@
     line-height: 1.4;
 
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
-
 
 /* =========================================================
    VARIANT COLOR
@@ -792,9 +657,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    width: 100%;
-    min-width: 0;
 
     gap: 10px;
 
@@ -811,13 +673,12 @@
 
     flex-shrink: 0;
 
+    border: 2px solid #fff;
     border-radius: 50%;
 
-    border: 2px solid #fff;
-
-    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, .2);
 }
-
 
 /* =========================================================
    VARIANT ATTRIBUTES
@@ -835,7 +696,6 @@
 
 .variantAttribute {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
@@ -850,8 +710,6 @@
 }
 
 .variantAttribute span {
-    flex: 1 1 50%;
-
     min-width: 0;
 
     overflow: hidden;
@@ -860,8 +718,6 @@
 }
 
 .variantAttribute strong {
-    flex: 1 1 50%;
-
     min-width: 0;
 
     color: #111827;
@@ -869,24 +725,21 @@
     text-align: right;
 
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
 
-
 /* =========================================================
-   VARIANT STOCK
+   STOCK
 ========================================================= */
 
 .variantStock {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
     gap: 10px;
 
-    margin-top: 13px;
-    padding-top: 11px;
+    margin-top: 12px;
+    padding-top: 10px;
 
     border-top: 1px solid #e5e7eb;
 
@@ -899,7 +752,6 @@
     color: #111827;
 }
 
-
 /* =========================================================
    LOADING
 ========================================================= */
@@ -910,10 +762,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 30px;
-
-    box-sizing: border-box;
 }
 
 .loadingCard {
@@ -944,46 +792,22 @@
     }
 }
 
-
 /* =========================================================
    TABLET
 ========================================================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
 
     .page {
-        padding: 20px;
-    }
-
-    .productCard {
-        gap: 24px;
-        padding: 22px;
-    }
-
-    .variantsSection {
-        padding: 20px;
-    }
-}
-
-
-/* =========================================================
-   TABLET / MOBILE
-========================================================= */
-
-@media (max-width: 800px) {
-
-    .productCard {
-        flex-direction: column;
-
-        gap: 25px;
-
         padding: 18px;
     }
 
-    .gallerySection,
-    .infoSection {
-        width: 100%;
-        flex: 1 1 100%;
+    .productCard {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+
+        padding: 18px;
     }
 
     .galleryFrame {
@@ -993,32 +817,40 @@
     .variantsGrid {
         grid-template-columns:
             repeat(
-                auto-fit,
-                minmax(
-                    min(190px, 100%),
-                    1fr
-                )
+                3,
+                minmax(0, 1fr)
             );
     }
 }
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
 
     .page {
-        padding: 10px;
+        padding: 8px;
+    }
+
+    .topBar {
+        margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+        margin-bottom: 12px;
+
+        font-size: 12px;
     }
 
     .productCard {
-        padding: 12px;
+        width: 100%;
 
-        gap: 22px;
+        padding: 10px;
 
-        border-radius: 16px;
+        gap: 18px;
+
+        border-radius: 15px;
     }
 
     .galleryFrame {
@@ -1028,142 +860,60 @@
     }
 
     .productTitle {
-        font-size: clamp(22px, 7vw, 28px);
+        font-size: 24px;
     }
 
     .description {
         font-size: 14px;
-        line-height: 1.8;
+        line-height: 1.7;
     }
 
     .detailsCard {
-        padding: 14px;
+        padding: 12px;
     }
 
     .attributeRow {
         gap: 10px;
     }
 
-    .attributeName {
-        flex: 0 1 42%;
-    }
-
-    .attributeValue,
-    .colorValueWrapper {
-        flex: 0 1 58%;
-    }
-
     .inventoryCard {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr 1fr;
     }
 
     .variantsSection {
-        margin-top: 25px;
-        padding: 14px;
+        margin-top: 20px;
+        padding: 12px;
 
-        border-radius: 16px;
+        border-radius: 15px;
     }
 
     .variantsHeader {
         align-items: flex-start;
-
         flex-direction: column;
-
-        gap: 12px;
-    }
-
-    .clearSelection {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .variantsGrid {
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(
-                    min(170px, 100%),
-                    1fr
-                )
-            );
-
-        gap: 12px;
-    }
-
-    .variantContent {
-        padding: 12px;
-    }
-}
-
-
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media (max-width: 430px) {
-
-    .page {
-        padding: 7px;
-    }
-
-    .productCard {
-        padding: 10px;
-
-        gap: 20px;
-
-        border-radius: 14px;
-    }
-
-    .productTitle {
-        font-size: 22px;
-    }
-
-    .description {
-        font-size: 14px;
-    }
-
-    .detailsCard {
-        padding: 12px;
-    }
-
-    .attributeRow {
-        align-items: flex-start;
-    }
-
-    .attributeName,
-    .attributeValue {
-        font-size: 13px;
-    }
-
-    .inventoryCard {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-    .variantsSection {
-        padding: 10px;
-    }
-
-    .variantsGrid {
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(
-                    min(145px, 100%),
-                    1fr
-                )
-            );
 
         gap: 10px;
     }
 
+    .clearSelection {
+        width: 100%;
+    }
+
+    .variantsGrid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 9px;
+    }
+
     .variantContent {
-        padding: 10px;
+        padding: 9px;
     }
 
     .variantTitle {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .variantAttribute {
@@ -1175,15 +925,41 @@
     }
 }
 
-
 /* =========================================================
-   VERY SMALL PHONES
+   SMALL PHONES
 ========================================================= */
 
-@media (max-width: 350px) {
+@media (max-width: 430px) {
 
-    .variantsGrid {
-        grid-template-columns: 1fr;
+    .page {
+        padding: 6px;
+    }
+
+    .productCard {
+        padding: 8px;
+
+        border-radius: 13px;
+    }
+
+    .productTitle {
+        font-size: 22px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .detailsCard {
+        padding: 10px;
+    }
+
+    .attributeRow {
+        align-items: flex-start;
+    }
+
+    .attributeName,
+    .attributeValue {
+        font-size: 12px;
     }
 
     .inventoryCard {
@@ -1191,22 +967,61 @@
     }
 
     .inventoryItem + .inventoryItem {
-        border-left: none;
+        border-left: 0;
         border-top: 1px solid #e5e7eb;
+    }
+
+    .variantsSection {
+        padding: 9px;
+    }
+
+    .variantsGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .variantContent {
+        padding: 8px;
+    }
+
+    .variantTitle {
+        font-size: 12px;
+    }
+
+    .variantColorRow {
+        font-size: 11px;
+    }
+
+    .variantAttribute {
+        font-size: 10px;
+    }
+
+    .variantStock {
+        font-size: 10px;
     }
 }
 
-
 /* =========================================================
-   GLOBAL SAFETY
+   VERY SMALL
 ========================================================= */
 
-.page *,
-.page *::before,
-.page *::after {
-    box-sizing: border-box;
+@media (max-width: 340px) {
+
+    .variantsGrid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.page img {
-    max-width: 100%;
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page *,
+    .page *::before,
+    .page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }
