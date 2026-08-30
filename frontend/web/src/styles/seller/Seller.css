@@ -1,13 +1,19 @@
-.container {
+/* .container {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
   font-family: "Poppins", sans-serif;
   background: #f6f8fc;
+} */
+.seller-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
 /* ===== HEADER ===== */
-.seller-header {
+/* .seller-header {
   text-align: center;
   margin-bottom: 35px;
   padding: 25px;
@@ -15,8 +21,11 @@
   color: white;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(79,70,229,0.25);
+} */
+.seller-header {
+    text-align: center;
+    margin-bottom: 25px;
 }
-
 .seller-header h1 {
   margin: 0;
   font-size: 1.8rem;
@@ -140,16 +149,25 @@
     align-items: center;
   }
 }
-.seller-main {
+/* .seller-main {
     min-height: calc(100vh - 70px);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
     background: #f8fafc;
+} */
+.seller-main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(30px, 6vw, 70px) 20px;
+    box-sizing: border-box;
+    background: #f8fafc;
 }
-
-.seller-auth-card {
+/* .seller-auth-card {
     width: 100%;
     max-width: 420px;
     background: white;
@@ -157,14 +175,27 @@
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     text-align: center;
+} */
+.seller-auth-card {
+    width: 100%;
+    box-sizing: border-box;
+    background: white;
+    padding: clamp(24px, 5vw, 40px);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
 }
-
-.seller-title {
+/* .seller-title {
     margin: 0 0 10px;
     font-size: 30px;
     color: #0f172a;
+} */
+.seller-title {
+    margin: 0 0 10px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #0f172a;
 }
-
 .seller-subtitle {
     margin-bottom: 30px;
     color: #64748b;
@@ -195,4 +226,42 @@
     margin: 20px 0;
     color: #94a3b8;
     font-size: 14px;
+}
+
+.seller-content {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+
+.seller-description {
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+    .seller-main {
+        align-items: flex-start;
+        padding: 35px 16px;
+    }
+
+    .seller-title {
+        font-size: 26px;
+    }
+
+    .seller-description {
+        font-size: 14px;
+    }
+
+    .seller-auth-card {
+        padding: 28px 20px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        max-width: 320px;
+    }
 }

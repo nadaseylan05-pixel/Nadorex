@@ -1,0 +1,1027 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+
+    color: #171717;
+    background: #fff;
+
+    overflow-x: hidden;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.topBar {
+    margin-bottom: 14px;
+}
+
+.storeBackButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.storeBackButton:hover {
+    background: #f8fafc;
+}
+
+.backIcon {
+    font-size: 18px;
+}
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+    color: #64748b;
+    font-size: 14px;
+
+    min-width: 0;
+}
+
+.breadcrumb button {
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #2563eb;
+
+    cursor: pointer;
+}
+
+.breadcrumbCurrent {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   MAIN PRODUCT
+========================================================= */
+
+.productCard {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 30px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 24px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+
+    background: #fff;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, .06);
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallerySection {
+    width: 100%;
+    min-width: 0;
+}
+
+.galleryFrame {
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px;
+
+    border: 1px solid #d6deea;
+    border-radius: 18px;
+
+    background: #f8fafc;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.infoSection {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* =========================================================
+   SELECTED
+========================================================= */
+
+.selectedBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    align-self: flex-start;
+
+    margin-bottom: 12px;
+    padding: 7px 12px;
+
+    border: 1px solid #bbf7d0;
+    border-radius: 999px;
+
+    background: #ecfdf5;
+    color: #15803d;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badgeCheck {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+    color: #fff;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.productTitle {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: clamp(25px, 3vw, 40px);
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.descriptionBox {
+    margin-top: 17px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.description {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 15px;
+    line-height: 1.8;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.detailsCard {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 18px;
+    padding: 15px;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    background: #f8fafc;
+}
+
+.sectionHeading {
+    margin-bottom: 8px;
+}
+
+.sectionHeading h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 16px;
+}
+
+/* =========================================================
+   ATTRIBUTES
+========================================================= */
+
+.attributesList {
+    width: 100%;
+}
+
+.attributeRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.attributeRow:last-child {
+    border-bottom: 0;
+}
+
+.attributeName {
+    min-width: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+.attributeValue {
+    min-width: 0;
+
+    color: #111827;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+.colorValueWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.colorValue {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+
+    display: inline-block;
+
+    border: 2px solid #fff;
+    border-radius: 50%;
+
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, .2);
+}
+
+.colorCode {
+    color: #64748b;
+
+    font-size: 11px;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+.inventoryCard {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.inventoryItem {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+
+    padding: 13px;
+}
+
+.inventoryItem + .inventoryItem {
+    border-left: 1px solid #e5e7eb;
+}
+
+.inventoryItem span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.inventoryItem strong {
+    color: #111827;
+    font-size: 15px;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.priceSection {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 18px;
+}
+
+/* =========================================================
+   PURCHASE
+========================================================= */
+
+.purchaseBox {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 17px;
+    padding-top: 17px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+/* =========================================================
+   VARIANTS SECTION
+========================================================= */
+
+.variantsSection {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 30px;
+    padding: 22px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+
+    background: #f8fafc;
+}
+
+.variantsHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #64748b;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+.variantsHeader h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: clamp(21px, 3vw, 30px);
+}
+
+.variantsHeader p {
+    margin: 6px 0 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.clearSelection {
+    flex-shrink: 0;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #fff;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+/* =========================================================
+   VARIANTS GRID
+========================================================= */
+
+.variantsGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(190px, 1fr)
+        );
+
+    gap: 15px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* =========================================================
+   VARIANT CARD
+========================================================= */
+
+.variantCard {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 0;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+
+    background: #fff;
+
+    overflow: hidden;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.variantCard:hover {
+    border-color: #94a3b8;
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, .07);
+
+    transform: translateY(-2px);
+}
+
+.variantSelected {
+    border: 2px solid #2563eb;
+}
+
+/* =========================================================
+   VARIANT IMAGE
+========================================================= */
+
+.variantImageWrapper {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    padding: 8px;
+
+    background: #f8fafc;
+
+    overflow: hidden;
+}
+
+.variantImage {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.noVariantImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   SELECTED OVERLAY
+========================================================= */
+
+.selectedOverlay {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: #fff;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   VARIANT CONTENT
+========================================================= */
+
+.variantContent {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px;
+}
+
+.variantTitle {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #111827;
+
+    font-size: 15px;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   VARIANT COLOR
+========================================================= */
+
+.variantColorRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.variantColor {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    border: 2px solid #fff;
+    border-radius: 50%;
+
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, .2);
+}
+
+/* =========================================================
+   VARIANT ATTRIBUTES
+========================================================= */
+
+.variantAttributes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.variantAttribute {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.variantAttribute span {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.variantAttribute strong {
+    min-width: 0;
+
+    color: #111827;
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+.variantStock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 12px;
+    padding-top: 10px;
+
+    border-top: 1px solid #e5e7eb;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.variantStock strong {
+    color: #111827;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loadingPage {
+    min-height: 60vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadingCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #64748b;
+}
+
+.loadingSpinner {
+    width: 30px;
+    height: 30px;
+
+    border: 3px solid #e5e7eb;
+    border-top-color: #2563eb;
+
+    border-radius: 50%;
+
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .page {
+        padding: 18px;
+    }
+
+    .productCard {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+
+        padding: 18px;
+    }
+
+    .galleryFrame {
+        padding: 8px;
+    }
+
+    .variantsGrid {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .page {
+        padding: 8px;
+    }
+
+    .topBar {
+        margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+        margin-bottom: 12px;
+
+        font-size: 12px;
+    }
+
+    .productCard {
+        width: 100%;
+
+        padding: 10px;
+
+        gap: 18px;
+
+        border-radius: 15px;
+    }
+
+    .galleryFrame {
+        padding: 6px;
+
+        border-radius: 13px;
+    }
+
+    .productTitle {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .detailsCard {
+        padding: 12px;
+    }
+
+    .attributeRow {
+        gap: 10px;
+    }
+
+    .inventoryCard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .variantsSection {
+        margin-top: 20px;
+        padding: 12px;
+
+        border-radius: 15px;
+    }
+
+    .variantsHeader {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .clearSelection {
+        width: 100%;
+    }
+
+    .variantsGrid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 9px;
+    }
+
+    .variantContent {
+        padding: 9px;
+    }
+
+    .variantTitle {
+        font-size: 13px;
+    }
+
+    .variantAttribute {
+        font-size: 11px;
+    }
+
+    .variantStock {
+        font-size: 11px;
+    }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .page {
+        padding: 6px;
+    }
+
+    .productCard {
+        padding: 8px;
+
+        border-radius: 13px;
+    }
+
+    .productTitle {
+        font-size: 22px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .detailsCard {
+        padding: 10px;
+    }
+
+    .attributeRow {
+        align-items: flex-start;
+    }
+
+    .attributeName,
+    .attributeValue {
+        font-size: 12px;
+    }
+
+    .inventoryCard {
+        grid-template-columns: 1fr;
+    }
+
+    .inventoryItem + .inventoryItem {
+        border-left: 0;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .variantsSection {
+        padding: 9px;
+    }
+
+    .variantsGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .variantContent {
+        padding: 8px;
+    }
+
+    .variantTitle {
+        font-size: 12px;
+    }
+
+    .variantColorRow {
+        font-size: 11px;
+    }
+
+    .variantAttribute {
+        font-size: 10px;
+    }
+
+    .variantStock {
+        font-size: 10px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL
+========================================================= */
+
+@media (max-width: 340px) {
+
+    .variantsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page *,
+    .page *::before,
+    .page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -16,30 +16,7 @@ function Seller({ lang }) {
 
   return (
     <div className="seller-container">
-      <header>
-        <h1 className="seller-title">{t.seller_page_title}</h1>
-        <p className="seller-description">{t.seller_page_description}</p>
-
-        <div className="lang-selector">
-          <select
-            value={lang}
-            onChange={(e) => {
-              const newLang = e.target.value;
-              localStorage.setItem("lang_detected", "true");
-              window.location.href = `/set_language/${newLang}?next=/seller`;
-            }}
-          >
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-            <option value="tr">Türkçe</option>
-          </select>
-        </div>
-
-        {/* <div className="nav-links">
-          <Link to="/">{t.back_to_home}</Link>
-          <Link to="/stores">{t.stores}</Link>
-        </div> */}
-      </header>
+      
 
       {/* <main className="seller-main"> */}
         {/* زر التسجيل */}
@@ -78,6 +55,31 @@ function Seller({ lang }) {
         </div> */}
       {/* </main> */}
       <main className="seller-main">
+        <div className="seller-content">
+        <header className="seller-header">
+        <h1 className="seller-title">{t.seller_page_title}</h1>
+          <p className="seller-description">{t.seller_page_description}</p>
+
+          {/* <div className="lang-selector">
+            <select
+              value={lang}
+              onChange={(e) => {
+                const newLang = e.target.value;
+                localStorage.setItem("lang_detected", "true");
+                window.location.href = `/set_language/${newLang}?next=/seller`;
+              }}
+            >
+              <option value="ar">العربية</option>
+              <option value="en">English</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </div> */}
+
+          {/* <div className="nav-links">
+            <Link to="/">{t.back_to_home}</Link>
+            <Link to="/stores">{t.stores}</Link>
+          </div> */}
+        </header>
           <div className="seller-auth-card">
 
               {/* <h1 className="seller-title">
@@ -106,6 +108,7 @@ function Seller({ lang }) {
                   {t.merchant_register_title}
               </Link>
 
+          </div>
           </div>
       </main>
     </div>
