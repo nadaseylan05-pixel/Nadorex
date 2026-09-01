@@ -286,7 +286,7 @@ function OrderDetailsModal({ order, onClose }) {
                                     "#222",
                             }}
                         >
-                            تفاصيل الطلب
+                           {t.order_id}
                         </h3>
 
                         <span
@@ -708,7 +708,7 @@ function OrderDetailsModal({ order, onClose }) {
                                         "15px",
                                 }}
                             >
-                                خصائص النسخة
+                                {t.variant_properties}
                             </h4>
 
                             {renderAttributes(

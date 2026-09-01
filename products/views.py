@@ -10,7 +10,7 @@ import os, uuid
 import requests
 #from rest_framework.response import Response
 from django.db.models import Sum, Avg
-from .models import Products, Orders, ProductReviews  # تأكدي من مسميات الموديلز لديكِ
+from .models import Products, Orders, ProductReviews, Translations # تأكدي من مسميات الموديلز لديكِ
 from .services.merchant.login import validate_merchant_login  # الدالة اللي تتحقق من البائع
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -266,7 +266,7 @@ def seller_dashboard_api(request):
         print("LANG:", lang)
 
         test_translations = get_translations(
-            ["seller", "common", "products", "orders", "returns"],
+            ["seller", "commun", "products", "orders", "returns"],
             lang,
         )
 
@@ -286,7 +286,7 @@ def seller_dashboard_api(request):
             "translations": get_translations(
                 [
                     "seller",
-                    "common",
+                    "commun",
                     "products",
                     "orders",
                     "returns",
@@ -350,10 +350,11 @@ def seller_orders_api(request):
             {
                 "success": False,
                 "message": f"Server Error: {str(e)}",
-                "translations": get_translations(["orders", "commun"], lang)
+                "translations": get_translations(["orders", "commun","seller","products"], lang)
             },
             status=500
         )
+
 
 from django.db import transaction
 from rest_framework.response import Response
@@ -2252,45 +2253,131 @@ from django.http import JsonResponse
 from .models import Products
 from products.serializers.product_serializer import ProductDetailSerializer
 
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def product_detail_api(request, product_id):
+#     try:
+#         print("PRODUCT ID:", product_id)
+#         print("USER:", request.user)
+#         print(request.user)
+#         print(request.user.merchant)
+#         '''
+#         product = (
+#             Products.objects
+#             .select_related()
+#             .prefetch_related("variants", "productimages_set")
+#             .get(id=product_id, merchant=request.user)
+#         )
+#         '''
+#         lang = request.GET.get(
+#             "lang",
+#             "en"
+#         )
+#         print("=============== EBUGGING IN DETAILS =================")
+#         print("LANG:", lang)
+
+#         print(
+#             list(
+#                 Translations.objects
+#                 .filter(text_key__in=["stock", "piece"])
+#                 .values("text_key", "english", "turkish")
+#             )
+#         )
+#         merchant = request.user.merchant
+
+#         product = (
+#             Products.objects
+#             .select_related()
+#             .prefetch_related("variants", "images")
+#             .get(id=product_id, merchant=merchant)
+#         )
+#         serializer = ProductDetailSerializer(
+#             product,
+#             context={
+#                 "lang":lang
+#             })
+        
+#         #print(Products.objects.filter(id=product_id).exists())
+#         print("product found",serializer.data)
+             
+#         # translations = get_translations(
+#         #     ["products", "commun"],
+#         #     lang
+#         # )
+
+#         print("LANG:", lang)
+#         print("TRANSLATIONS:", translations)
+#         print("STOCK:", translations.get("stock"))
+
+#         # return JsonResponse({
+#         #     "success": True,
+#         #     "product": serializer.data,
+#         #     "translations": translations
+#         # })
+        
+
+#         return JsonResponse({
+#             "success": True,
+#             "product": serializer.data,
+#             "translations": get_translations(["products", "commun"], lang)
+#         })
+
+#     except Products.DoesNotExist:
+#         return JsonResponse({
+#             "success": False,
+#             "error": "المنتج غير موجود أو ليس لديك صلاحية"
+#         }, status=404)
+
+#     except Exception as e:
+#         return JsonResponse({
+#             "success": False,
+#             "error": str(e)
+#         }, status=400)
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def product_detail_api(request, product_id):
     try:
         print("PRODUCT ID:", product_id)
         print("USER:", request.user)
-        print(request.user)
-        print(request.user.merchant)
-        '''
-        product = (
-            Products.objects
-            .select_related()
-            .prefetch_related("variants", "productimages_set")
-            .get(id=product_id, merchant=request.user)
-        )
-        '''
-        lang = request.GET.get(
-            "lang",
-            "en"
-        )
+
+        lang = request.GET.get("lang", "en")
+        print("=============== DEBUGGING IN DETAILS ===============")
+        print("LANG:", lang)
+
         merchant = request.user.merchant
 
         product = (
             Products.objects
             .select_related()
             .prefetch_related("variants", "images")
-            .get(id=product_id, merchant=merchant)
+            .get(
+                id=product_id,
+                merchant=merchant
+            )
         )
+
         serializer = ProductDetailSerializer(
             product,
             context={
-                "lang":lang
-            })
-        
-        #print(Products.objects.filter(id=product_id).exists())
-        print("product found",serializer.data)
+                "request": request,
+                "lang": lang,
+            }
+        )
+
+        translations = get_translations(
+            ["products", "commun"],
+            lang
+        )
+
+        print("TRANSLATIONS:", translations)
+        print("STOCK:", translations.get("stock"))
+        print("PIECE:", translations.get("piece"))
+
         return JsonResponse({
             "success": True,
-            "product": serializer.data
+            "product": serializer.data,
+            "translations": translations
         })
 
     except Products.DoesNotExist:
@@ -2300,10 +2387,15 @@ def product_detail_api(request, product_id):
         }, status=404)
 
     except Exception as e:
+        print("========== ERROR ==========")
+        import traceback
+        print(traceback.format_exc())
+
         return JsonResponse({
             "success": False,
             "error": str(e)
         }, status=400)
+
 
 import re
 from django.http import JsonResponse
@@ -2381,7 +2473,7 @@ def add_product_api(request):
         return JsonResponse({
             "success": True,
             "product_id": product.id,
-            "translations": get_translations(["products","common"], lang)
+            "translations": get_translations(["products","commun"], lang)
             
         })
 
@@ -2572,7 +2664,7 @@ def buyer_products_api(request):
     )
     '''
     data = get_products(request)
-    data["translations"]=get_translations(["products","cart","common","search"] ,lang)
+    data["translations"]=get_translations(["products","cart","commun","search"] ,lang)
     return JsonResponse(data, json_dumps_params={"ensure_ascii": False})
 from django.shortcuts import render
 from .models import CartItems, Products, Merchants 
@@ -3762,7 +3854,7 @@ def get_seller_products_api(request):
             "products": products,
             "products_length":len(products),
             "total_stock":total_stock,
-            "translations": get_translations(["seller","common"], lang),
+            "translations": get_translations(["seller","commun","products"], lang),
         })
         # return JsonResponse({
         #     "success": True,
@@ -3894,7 +3986,7 @@ def update_product_api(request, pk):
         # 6. تمرير البيانات للخدمة (Service)
         update_product_service(pk, request.user.email, product_data, product_files)
         
-        return JsonResponse({"success": True,"translations":get_translations(["products","common"], lang), "message": "Product updated successfully"}, status=200)
+        return JsonResponse({"success": True,"translations":get_translations(["products","commun"], lang), "message": "Product updated successfully"}, status=200)
         
     except Exception as err:
         print("ERROR IS :", err)
@@ -3917,7 +4009,7 @@ def update_order_status_api(request, pk):
         # تمرير المعرف وإيميل التاجر والبيانات المرسلة
         update_order_status_service(pk, request.user.email, request.data)
         
-        return JsonResponse({"success": True, "message": "Order status updated successfully","translations":get_translations(["orders","common","products","returns"], lang)}, status=200)
+        return JsonResponse({"success": True, "message": "Order status updated successfully","translations":get_translations(["orders","commun","products","returns","seller"], lang)}, status=200)
 
     except Orders.DoesNotExist:
         return JsonResponse({"success": False, "error": "Order not found"}, status=404)
@@ -3959,7 +4051,14 @@ def product_detail(request, product_id):
 
         print(serializer.data)   # <-- سيطبع هنا إذا نجح
 
-        return Response(serializer.data)
+        # return Response(serializer.data)
+    
+        
+        return Response({
+            **serializer.data,
+            "translations": get_translations(["products"], lang)
+        })
+        
 
     except Exception as e:
         import traceback
@@ -3996,6 +4095,7 @@ from products.services.buyer.search_products_service import search_products_serv
 from products.serializers.product_serializer import SearchProductSerializer, CategorySerializer
 @api_view(['GET'])
 def get_buyer_favorites(request):
+    lang =request.GET.get("lang","en")
     try:
         buyer_phone = request.GET.get('buyer_phone', '')
         instagram_username=request.GET.get('instagram_username', '')
@@ -4034,7 +4134,10 @@ def get_buyer_favorites(request):
                     "is_favorite": True
                 })
 
-        return JsonResponse({'favorites': data})
+        return JsonResponse({
+                        'favorites': data,
+                        'translations':get_translations(['products'], lang)
+                    })
 
     except Exception as e:
         print("====== ERROR IN GET_BUYER_FAVORITES ======")
@@ -4106,7 +4209,7 @@ def cart_translations_api(request):
     lang = request.GET.get("lang", "en")
 
     return JsonResponse(
-        get_translations(["cart","common"], lang)
+        get_translations(["cart","commun"], lang)
     )
 @api_view(["GET", "POST"])
 def login_translations_api(request):
@@ -4131,7 +4234,7 @@ def buyer_translations_api(request):
     
     if request.method=="GET":
         return response({
-            "translations":get_translations(["search", "common","products"], lang)
+            "translations":get_translations(["search", "commun","products"], lang)
         })
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -4214,7 +4317,7 @@ def get_order_details_api(request, order_number):
 
                 "items": items,
             },
-            "translations":get_translations(["orders","common","returns"], lang),
+            "translations":get_translations(["orders","commun","returns"], lang),
 
         })
 
@@ -4618,7 +4721,7 @@ def seller_order_details_api(request, order_number):
                 "total_price": total_order_price,
                 
             },
-            "translations":get_translations(["common","orders","returns"], lang),
+            "translations":get_translations(["commun","orders","returns","seller"], lang),
         })
 
     except Exception as e:
@@ -4700,7 +4803,7 @@ def seller_archived_orders_api(request):
             "success": True,
             "orders": orders_list,
             "translations": get_translations(
-                ["orders", "common"],
+                ["orders", "commun","seller"],
                 lang
             )
         })

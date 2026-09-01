@@ -224,7 +224,7 @@ TRANSLATION_GROUPS = {
     # =========================
     # Common
     # =========================
-    "common": [
+    "commun": [
         "action",
         "address",
         "back_to_home",
@@ -252,7 +252,20 @@ TRANSLATION_GROUPS = {
         "total_products",
         "active_products",
         "basic_information",
-        "confirm_order"
+        "confirm_order",
+        "stock",
+        "piece",
+        "choose_your_option",
+        "select_option_to_view_photos_and_details",
+        "loading",
+        "no_favorite_products",
+        "add_products_to_continue_shopping",
+        "loading_order_details",
+        "customer_information",
+        "product_attributes",
+        "order_details",
+        "loading_notifications",
+        
     ],
 
     # =========================
@@ -349,6 +362,11 @@ TRANSLATION_GROUPS = {
         "inventory_management",
         "variants",
         "variant_name",
+        "loading_product",
+        "stock",
+        "back_to_shopping",
+        "my_favorites",
+        "no_products_add_first",
     ],
 
     # =========================
@@ -423,7 +441,8 @@ TRANSLATION_GROUPS = {
         "no_orders",
         "color_key",
         "size_key",
-        "book_language_key"
+        "book_language_key",
+        "order_id",
     ],
 
     # =========================
@@ -490,6 +509,26 @@ TRANSLATION_GROUPS = {
         "select",
         "optional",
         "archived_orders",
+        "back_to_order",
+        "loading_archived_orders",
+        "no_archived_orders",
+        "refresh",
+        "selected_variant",
+        "variant_properties",
+        "order_total",
+        "total_quantity",
+        "quantity",
+        "unit_price",
+        "product_total",
+        "customer_information",
+        "back_to_orders",
+        "optional",
+        "upload_image_file",
+        "image_url",
+        "unread_notifications_count",
+        "return_period_allowed",
+        "day",
+        
 
     ],
 
@@ -540,6 +579,13 @@ def get_translations(groups, lang):
     """
 
     translations = load_translations()
+    print("========== TRANSLATION DEBUG ==========")
+    print("LANG:", lang)
+    print("STOCK:", translations.get(lang, {}).get("stock"))
+    print("PIECE:", translations.get(lang, {}).get("piece"))
+    print("PRODUCT:", translations.get(lang, {}).get("product"))
+    print("PRICE:", translations.get(lang, {}).get("price"))
+    print("========================================")
 
     if isinstance(groups, str):
         groups = [groups]

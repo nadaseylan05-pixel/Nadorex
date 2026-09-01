@@ -3,6 +3,7 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 import styles from "../../styles/Buyer.module.css";
 import { useParams } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 // const API_URL = "http://127.0.0.1:8000/api";
 const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 export const toggleFavoriteApi = async (buyerPhone, productId) => {
@@ -19,12 +20,14 @@ function FavoritesPage() {
 
     const buyerPhone = localStorage.getItem("buyer_phone") || "";
     const {instagramUsername} =useParams();
+    const { lang } = useLanguage();
+    const [t,setT] =useState({});
     useEffect(() => {
         if (!buyerPhone) {
             setLoading(false);
             return;
         }
-        fetch(`${import.meta.env.VITE_API_URL}/buyer/favorites/?buyer_phone=${buyerPhone}& instagram_username=${instagramUsername}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/buyer/favorites/?buyer_phone=${buyerPhone}& instagram_username=${instagramUsername}&lang=${lang}`, {
         // fetch(`http://127.0.0.1:8000/buyer/favorites/?buyer_phone=${buyerPhone}& instagram_username=${instagramUsername}`, {
             credentials: "include"
         })
@@ -35,25 +38,26 @@ function FavoritesPage() {
                 is_favorite: true,
             }));
             setFavorites(items);
+            setT(data.translations)
             setLoading(false);
         })
         .catch((err) => {
             console.error("Error fetching favorites:", err);
             setLoading(false);
         });
-    }, [buyerPhone, instagramUsername]);
+    }, [buyerPhone, instagramUsername, lang]);
 
     const handleRemoveFromFavorites = (productId) => {
         setFavorites((prev) => prev.filter((item) => item.id !== productId));
     };
 
-    if (loading) return <p style={{ textAlign: "center", padding: "40px" }}>جاري التحميل...</p>;
+    if (loading) return <p style={{ textAlign: "center", padding: "40px" }}>{t.loading} ...</p>;
 
     if (!buyerPhone) return <p style={{ textAlign: "center", padding: "40px" }}>يرجى إدخال رقم الهاتف لعرض المفضلات.</p>;
 
     return (
         <div style={{ padding: "20px" }}>
-            <h2>❤️ قائمة مفضلاتي ({favorites.length})</h2>
+            <h2>❤️{t.my_favorites} ({favorites.length})</h2>
 
             {favorites.length === 0 ? (
                 <p style={{ marginTop: "20px", color: "#666" }}>

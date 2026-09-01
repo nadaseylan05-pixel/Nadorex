@@ -18,8 +18,9 @@ def load_translations():
     }
 
     translations = {lang: {} for lang in langs}
+    
     all_translations = Translations.objects.all()
-
+    
     for item in all_translations:
         for lang in langs:
             translations[lang][item.text_key] = getattr(item, field_map[lang])

@@ -25,7 +25,7 @@ function ProductDetail() {
     // =========================================================
     // STATE
     // =========================================================
-
+    const [t,setT] =useState({});
     const [product, setProduct] = useState(null);
 
     const [selectedVariant, setSelectedVariant] =
@@ -63,9 +63,9 @@ function ProductDetail() {
 
                 const data = await response.json();
 
-
+                
                 setProduct(data);
-
+                setT(data.translations)
                 // عند تحميل المنتج نبدأ دائمًا
                 // بالمنتج الرئيسي
                 setSelectedVariant(null);
@@ -257,7 +257,7 @@ function ProductDetail() {
                     navigate(`/${instagramUsername}`)
                 }
             >
-                ← Back to store
+                ← {t.back_to_shopping}
             </button>
 
 
@@ -630,7 +630,7 @@ function ProductDetail() {
                         <div>
 
                             <span>
-                                Stock
+                                {t.Stock}
                             </span>
 
 
@@ -1022,7 +1022,7 @@ function ProductDetail() {
                                             >
 
                                                 <span>
-                                                    Stock
+                                                    {t.Stock}
                                                 </span>
 
 

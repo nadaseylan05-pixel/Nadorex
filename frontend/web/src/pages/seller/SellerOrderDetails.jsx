@@ -227,7 +227,7 @@ function SellerOrderDetails() {
             <div className={styles.page}>
 
                 <div className={styles.loading}>
-                    جاري تحميل تفاصيل الطلب...
+                   {t.loading_order_details}
                 </div>
 
             </div>
@@ -285,13 +285,13 @@ function SellerOrderDetails() {
                     className={styles.backButton}
                     onClick={() => navigate(-1)}
                 >
-                    ← العودة للطلبات
+                    ← {t.back_to_orders}
                 </button>
 
                 <div>
 
                     <h1>
-                        تفاصيل الطلب
+                       {t.order_id}
                     </h1>
 
                     <span className={styles.orderNumber}>
@@ -310,13 +310,13 @@ function SellerOrderDetails() {
             <section className={styles.card}>
 
                 <h2>
-                    بيانات العميل
+                    {t.customer_information}
                 </h2>
 
                 <div className={styles.infoGrid}>
 
                     <Info
-                        label="الاسم"
+                        label={t.name}
                         value={order.buyer?.name}
                     />
 
@@ -329,14 +329,18 @@ function SellerOrderDetails() {
                         label="البريد الإلكتروني"
                         value={order.buyer?.email}
                     /> */}
-                    <Info
-                        label="الهاتف"
+                    {/* <Info
+                        label={t.phone_number}
                         value={order.buyer?.phone}
                         type="phone"
-                    />
-
+                    /> */}
                     <Info
-                        label="البريد الإلكتروني"
+                        label={t.phone_number && t.phone_number !== "phone_number" ? t.phone_number : "رقم الهاتف"}
+                        value={order?.buyer?.phone || "-"}
+                        type="phone"
+                    />
+                    <Info
+                        label={t.email}
                         value={order.buyer?.email}
                         type="email"
                     />
@@ -377,7 +381,7 @@ function SellerOrderDetails() {
                     <div className={styles.address}>
 
                         <strong>
-                            العنوان:
+                             {t.address}:
                         </strong>
 
                         <span>
@@ -407,11 +411,11 @@ function SellerOrderDetails() {
                 >
 
                     <h2 style={{ margin: 0 }}>
-                        المنتجات
+                        {t.products}
                     </h2>
 
                     <span>
-                        {order.products_count} منتج
+                        {order.products_count} {t.product}
                     </span>
 
                 </div>
@@ -458,7 +462,7 @@ function SellerOrderDetails() {
                                 >
 
                                     <h3 style={{ margin: 0 }}>
-                                        المنتج #{index + 1}
+                                       {t.product} #{index + 1}
                                     </h3>
 
                                     <span
@@ -475,7 +479,7 @@ function SellerOrderDetails() {
                                 <div className={styles.statusSection}>
 
                                     <span className={styles.statusLabel}>
-                                        حالة المنتج
+                                        {t.status}
                                     </span>
 
                                     <select
@@ -527,7 +531,7 @@ function SellerOrderDetails() {
                                         <div className={styles.returnDaysBox}>
 
                                             <label>
-                                                {t.return_days_allowed ||
+                                                {t.return_period_allowed ||
                                                     "مدة الإرجاع المسموح بها"}
                                             </label>
 
@@ -546,7 +550,7 @@ function SellerOrderDetails() {
                                                 />
 
                                                 <span>
-                                                    {t.days || "يوم"}
+                                                    {t.day || "يوم"}
                                                 </span>
 
                                                 <button
@@ -575,12 +579,12 @@ function SellerOrderDetails() {
                                         <div className={styles.returnDaysInfo}>
 
                                             <span>
-                                                {t.return_days_allowed ||
+                                                {t.return_period_allowed ||
                                                     "مدة الإرجاع المسموح بها"}:
                                             </span>
 
                                             <strong>
-                                                {item.return_days} {t.days || "يوم"}
+                                                {item.return_days} {t.day || "يوم"}
                                             </strong>
 
                                         </div>
@@ -597,7 +601,7 @@ function SellerOrderDetails() {
                                             </span>
 
                                             <strong>
-                                                {item.return_days_remaining} {t.days || "يوم"}
+                                                {item.return_days_remaining} {t.day || "يوم"}
                                             </strong>
 
                                         </div>
@@ -705,7 +709,7 @@ function SellerOrderDetails() {
                                     <div style={{ marginTop: "20px" }}>
 
                                         <h4>
-                                            النسخة المختارة
+                                            {t.selected_variant}
                                         </h4>
 
                                         <div
@@ -773,7 +777,7 @@ function SellerOrderDetails() {
                                     <div style={{ marginTop: "20px" }}>
 
                                         <h4>
-                                            خصائص النسخة
+                                           {t.variant_properties}
                                         </h4>
 
                                         <div
@@ -821,7 +825,7 @@ function SellerOrderDetails() {
                 <div>
 
                     <span>
-                        عدد المنتجات
+                        {t.total_products}
                     </span>
 
                     <strong>
@@ -833,7 +837,7 @@ function SellerOrderDetails() {
                 <div>
 
                     <span>
-                        إجمالي الكمية
+                        {t.total_quantity}
                     </span>
 
                     <strong>
@@ -845,7 +849,7 @@ function SellerOrderDetails() {
                 <div>
 
                     <span>
-                        إجمالي الطلب
+                       {t.order_total}
                     </span>
 
                     <strong>

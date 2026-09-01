@@ -918,7 +918,7 @@ function Notifications({onUnreadCountChange}) {
                     textAlign: "center",
                 }}
             >
-                جاري تحميل الإشعارات...
+               {t.loading_notifications}
             </div>
         );
     }

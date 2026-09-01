@@ -990,7 +990,7 @@ const removeEditingVariant = (index) => {
         </div>
         {storeLink && (
             <div>
-                <span>رابط متجري:</span>
+                {/* <span>رابط متجري:</span> */}
                 <a
                     href={storeLink}
                     target="_blank"
@@ -1382,7 +1382,7 @@ const removeEditingVariant = (index) => {
               <tbody>
                 {productsList.length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ padding: "30px", textAlign: "center", color: "#64748b" }}>لا يوجد منتجات حالياً. أضف منتجك الأول الآن!</td>
+                    <td colSpan="5" style={{ padding: "30px", textAlign: "center", color: "#64748b" }}>{t.no_products_add_first}</td>
                   </tr>
                 ) : (
                   productsList.map((item) => (
@@ -1415,7 +1415,7 @@ const removeEditingVariant = (index) => {
                           <div style={{ fontSize: "12px", color: "#94a3b8" }}>ID: #{item.id}</div>
                         </div>
                       </td>
-                      <td style={{ color: "#334155" }}>{item.stock} قطعة</td>
+                      <td style={{ color: "#334155" }}>{item.stock} {t.piece}</td>
                       <td>
                         <span style={{ padding: "4px 8px", borderRadius: "6px", fontSize: "13px", background: item.stock > 0 ? "#ecfdf5" : "#fef2f2", color: item.stock > 0 ? "#10b981" : "#ef4444" }}>
                           {item.stock > 0 ? t.active : t.out_of_stock}
@@ -2482,7 +2482,7 @@ const removeEditingVariant = (index) => {
                                   color: "#334155",
                                 }}
                               >
-                                خصائص النسخة
+                               {t.variant_properties}
                               </label>
 
                               {categoryAttributes.map((attr) => (
@@ -2749,7 +2749,7 @@ const removeEditingVariant = (index) => {
                         >
 
                           <label style={{fontWeight:"bold"}}>
-                            خصائص النسخة
+                            {t.variant_properties}
                           </label>
 
 
