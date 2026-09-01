@@ -565,7 +565,7 @@ select {
    MOBILE
 ========================================================= */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 
     .seller-container {
         display: block !important;
@@ -591,8 +591,87 @@ select {
         box-sizing: border-box !important;
         overflow-x: hidden !important;
     }
-}
+} */
+/* =========================================================
+   MOBILE SIDEBAR / MENU
+========================================================= */
 
+/* @media (max-width: 768px) {
+
+    .sidebar {
+        display: flex !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+
+        flex-direction: row !important;
+        align-items: center !important;
+
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+
+        padding: 8px !important;
+        gap: 8px !important;
+
+        white-space: nowrap !important;
+
+        scrollbar-width: none;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar > * {
+        flex: 0 0 auto !important;
+        min-width: max-content !important;
+    }
+} */
+
+@media (max-width: 768px) {
+  .seller-container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .sidebar {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding: 15px !important;
+    flex-direction: column !important;
+    overflow-x: hidden !important;
+  }
+
+  .sidebar > * {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar button,
+  .sidebar a {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding: 15px !important;
+    overflow-x: hidden !important;
+  }
+}
 
 /* =========================================================
    PREVENT CHILDREN FROM BREAKING MOBILE WIDTH
