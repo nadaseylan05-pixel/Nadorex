@@ -12,10 +12,10 @@
 //   const [t, setT] = useState({});
 //   useEffect(() => {
 //     const fetchProduct = async () => {
-      
+
 //       const token = localStorage.getItem("access_token");
 //       console.log("TOKEN:", token);
-      
+
 //       const res = await fetch(
 //         `${import.meta.env.VITE_API_URL}/api/products/details/${id}/?lang=${lang}`,
 //         // `http://localhost:8000/api/products/details/${id}/?lang=${lang}`,
@@ -26,17 +26,17 @@
 //         }
 //       );
 //       console.log(res.status);
-      
+
 //       const data = await res.json();
 //       setT(data.translations);
 //       if (!data.success) {
 //         console.log(data.error);
 //       }
-      
+
 //       if (data.success) {
-        
+
 //         setProduct(data.product);
-        
+
 //         // أول صورة تلقائياً
 //         const firstImage =
 //           data.product.base_image ||
@@ -95,7 +95,7 @@
 
 //           {/* thumbnails */}
 //           <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
-            
+
 //             {currentImages.map((img, i) => (
 //               <img
 //                 key={i}
@@ -118,7 +118,7 @@
 //                 }}
 //               />
 //             ))}
-              
+
 //           </div>
 //         </div>
 
@@ -274,7 +274,7 @@
 //                     justifyContent: "center",
 //                     marginBottom: "8px",
 //                   }}
-                  
+
 
 //                 >
 //                   <div
@@ -552,8 +552,8 @@ function ProductDetails() {
 
           <div style={{ marginTop: 5, color: "#111" }}>
             <b>{t.status && t.status !== "status" ? t.status : "الحالة"}:</b>{" "}
-            {product.stock > 0 
-              ? `🟢 ${t.available && t.available !== "available" ? t.available : "متوفر"}` 
+            {product.stock > 0
+              ? `🟢 ${t.available && t.available !== "available" ? t.available : "متوفر"}`
               : `🔴 ${t.unavailable && t.unavailable !== "unavailable" ? t.unavailable : "غير متوفر"}`}
           </div>
         </div>

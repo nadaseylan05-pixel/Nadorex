@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { getCsrfToken } from "./utils";
 import OrderCard from "./OrderCard";
 import styles from "../../styles/Buyer.module.css";
@@ -8,41 +8,41 @@ import { useLanguage } from "../../context/LanguageContext";
 // تم التعديل لتعريف الدالة بشكل صحيح باستخدام function بدلاً من def الخاصة ببايثون
 function BuyerOrders() {
     const [confirmedOrders, setConfirmedOrders] = useState([]);
-    const navigate = useNavigate(); 
-    const {lang} =useLanguage();
-    const [t, testT] = useState ({});
-    
-    
+    const navigate = useNavigate();
+    const { lang } = useLanguage();
+    const [t, testT] = useState({});
+
+
     // const { t, loading } = useTranslations("translations/cart", lang);
     const fetchOrders = () => {
         console.log("BuyerOrder RENDERED");
         // const phone = localStorage.getItem("buyer_phone");
         // داخل ملف BuyerOrders.jsx تأكدي من تعديل سطر جلب رقم الهاتف ليكون نظيفاً:
         const phone = localStorage.getItem("buyer_phone") ? localStorage.getItem("buyer_phone").trim() : "";
-        
+
         if (!phone) {
             console.warn("⚠️ [BuyerOrders] لم يتم العثور على رقم هاتف العميل في الـ localStorage.");
             return;
         }
         fetch(`${import.meta.env.VITE_API_URL}/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
-        // fetch(`http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
+            // fetch(`http://127.0.0.1:8000/api/buyer/orders/confirmed/?phone=${phone}&lang=${lang}`, {
             credentials: "include"
         })
-        .then((res) => {
-            if (!res.ok) throw new Error(`سيرفر Django أرجع خطأ بحالة: ${res.status}`);
-            return res.json();
-        })
-        .then((data) => {
-            console.log(data);
-            // التحقق من أن البيانات قادمة على شكل مصفوفة داخل orders أو تعيين مصفوفة فارغة
-            setConfirmedOrders(data.orders || []);
-            setT (data.translations || {});
-            
-        })
-        
-        .catch((error) => {
-            console.error("❌ [BuyerOrders Error]:", error);
-        });
+            .then((res) => {
+                if (!res.ok) throw new Error(`سيرفر Django أرجع خطأ بحالة: ${res.status}`);
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                // التحقق من أن البيانات قادمة على شكل مصفوفة داخل orders أو تعيين مصفوفة فارغة
+                setConfirmedOrders(data.orders || []);
+                setT(data.translations || {});
+
+            })
+
+            .catch((error) => {
+                console.error("❌ [BuyerOrders Error]:", error);
+            });
     };
 
     useEffect(() => {
@@ -81,14 +81,14 @@ function BuyerOrders() {
             alert("عذراً، فشل تنفيذ الإجراء.");
         }
     };
-    console.log("t in BuyerOrders :",t);
+    console.log("t in BuyerOrders :", t);
     return (
         <div className={styles.ordersPageContainer} style={{ direction: "rtl", padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
             <div className={styles.pageHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
                 <h2>{t.orders_list} ({confirmedOrders.length})</h2>
-                <button 
-                    className={styles.backButton} 
-                    onClick={() => navigate("/buyer")} 
+                <button
+                    className={styles.backButton}
+                    onClick={() => navigate("/buyer")}
                     style={{ padding: "8px 16px", cursor: "pointer", borderRadius: "5px" }}
                 >
                     ⬅ {t.back_to_home}
@@ -104,10 +104,10 @@ function BuyerOrders() {
                     </p>
                 ) : (
                     confirmedOrders.map((order) => (
-                        <OrderCard 
-                            key={order.order_id}  
-                            order={order} 
-                            onAction={orderAction} 
+                        <OrderCard
+                            key={order.order_id}
+                            order={order}
+                            onAction={orderAction}
                             t={t}
                         />
                     ))

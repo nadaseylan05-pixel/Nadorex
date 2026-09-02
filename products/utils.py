@@ -1,6 +1,8 @@
 
 from .models import Translations
 from django.db import transaction
+
+
 def load_translations():
     langs = ['ar', 'en', 'tr', 'de', 'fr', 'es', 'zh', 'ja', 'ko', 'sv', 'it']
     field_map = {
@@ -26,7 +28,10 @@ def load_translations():
             translations[lang][item.text_key] = getattr(item, field_map[lang])
     
     return translations
+
+
 import uuid
+
 
 def t(key_name, lang, translations, fallback=None):
     """
@@ -51,45 +56,50 @@ def get_or_create_session_id(request):
         request.session[session_key] = generate_session_id()
     return request.session[session_key]
 
+
 def get_currency_symbol(currency):
     """
     إرجاع رمز العملة بناءً على رمز العملة النصي (مثل 'USD', 'EUR', 'SAR'...).
     إذا لم تكن العملة موجودة في القاموس، يتم إرجاع نفس الإدخال.
     """
     symbols = {
-        'USD': '$',      # الدولار الأمريكي
-        'EUR': '€',      # اليورو
-        'GBP': '£',      # الجنيه الإسترليني
-        'JPY': '¥',      # الين الياباني
-        'CNY': '¥',      # اليوان الصيني
-        'TRY': '₺',      # الليرة التركية
-        'SAR': '﷼',      # الريال السعودي
-        'AED': 'د.إ',     # الدرهم الإماراتي
-        'KWD': 'ك.د',     # الدينار الكويتي
-        'QAR': 'ر.ق',     # الريال القطري
-        'OMR': 'ر.ع',     # الريال العماني
-        'BHD': 'د.ب',     # الدينار البحريني
-        'EGP': 'ج.م',     # الجنيه المصري
-        'INR': '₹',      # الروبية الهندية
-        'PKR': '₨',      # الروبية الباكستانية
-        'RUB': '₽',      # الروبل الروسي
-        'AUD': 'A$',     # الدولار الأسترالي
-        'CAD': 'C$',     # الدولار الكندي
-        'CHF': 'CHF',    # الفرنك السويسري
-        'ZAR': 'R',      # الراند الجنوب أفريقي
-        'IDR': 'Rp',     # الروبية الإندونيسية
-        'MYR': 'RM',     # الرينغيت الماليزي
-        'THB': '฿',      # البات التايلندي
-        'KRW': '₩',      # الوون الكوري الجنوبي
-        'SGD': 'S$',     # الدولار السنغافوري
-        'NGN': '₦',      # النيرة النيجيرية
+        'USD': '$',  # الدولار الأمريكي
+        'EUR': '€',  # اليورو
+        'GBP': '£',  # الجنيه الإسترليني
+        'JPY': '¥',  # الين الياباني
+        'CNY': '¥',  # اليوان الصيني
+        'TRY': '$',  # الليرة التركية
+        'SAR': '﷼',  # الريال السعودي
+        'AED': 'د.إ',  # الدرهم الإماراتي
+        'KWD': 'ك.د',  # الدينار الكويتي
+        'QAR': 'ر.ق',  # الريال القطري
+        'OMR': 'ر.ع',  # الريال العماني
+        'BHD': 'د.ب',  # الدينار البحريني
+        'EGP': 'ج.م',  # الجنيه المصري
+        'INR': '₹',  # الروبية الهندية
+        'PKR': '₨',  # الروبية الباكستانية
+        'RUB': '₽',  # الروبل الروسي
+        'AUD': 'A$',  # الدولار الأسترالي
+        'CAD': 'C$',  # الدولار الكندي
+        'CHF': 'CHF',  # الفرنك السويسري
+        'ZAR': 'R',  # الراند الجنوب أفريقي
+        'IDR': 'Rp',  # الروبية الإندونيسية
+        'MYR': 'RM',  # الرينغيت الماليزي
+        'THB': '฿',  # البات التايلندي
+        'KRW': '₩',  # الوون الكوري الجنوبي
+        'SGD': 'S$',  # الدولار السنغافوري
+        'NGN': '₦',  # النيرة النيجيرية
     }
 
     cleaned = currency.strip().upper()
     symbol = symbols.get(cleaned, currency)
     print(f"Currency: '{currency}' -> Cleaned: '{cleaned}' -> Symbol: '{symbol}'")
     return symbol
+
+
 from .models import Products
+
+
 def get_product_by_id(product_id):
     try:
         product = Products.objects.values(
@@ -99,7 +109,10 @@ def get_product_by_id(product_id):
         return product
     except Products.DoesNotExist:
         return None
+
+
 from .models import Categories, CategoryTranslations
+
 
 def load_category_translations(lang):
     """
@@ -118,24 +131,27 @@ def load_category_translations(lang):
 
     return category_translations    
 
+
 import os
 import base64
 import time
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import EmailMessage
-#from langdetect import detect
-#from deep_translator import GoogleTranslator
+# from langdetect import detect
+# from deep_translator import GoogleTranslator
 
 from .models import RequestTranslations
 
 SUPPORTED_LANGUAGES = ['ar', 'en', 'tr', 'de', 'fr', 'es', 'zh-CN', 'ja', 'ko', 'sv', 'it']
+
 
 def detect_language(text, fallback='en'):
     try:
         return detect(text)
     except Exception:
         return fallback
+
 
 def translate_text_to_all(desc, source_lang):
     translations = {}
@@ -147,6 +163,7 @@ def translate_text_to_all(desc, source_lang):
             # سجّلي الخطأ ولكن تابعي
             print(f"Translation error {source_lang}->{target}: {e}")
     return translations
+
 
 def save_base64_image_to_field(base64_string, model_instance, field_name='image'):
     # data:image/png;base64,AAAA...
@@ -161,6 +178,7 @@ def save_base64_image_to_field(base64_string, model_instance, field_name='image'
     getattr(model_instance, field_name).save(filename, content)
     model_instance.save()
     return getattr(model_instance, field_name).url if hasattr(getattr(model_instance, field_name), 'url') else None
+
 
 def send_product_match_email(to_email, product_name, product_description, product_category, product_url, lang, translations_texts=None):
     # translations_texts: dict of translation keys if you use t()
@@ -181,16 +199,18 @@ def send_product_match_email(to_email, product_name, product_description, produc
         print("Email send error:", e)
         return False
 
+
 import uuid
 import hashlib
 import base64
 import json
-#import requests
+# import requests
 import random
 import string
-#import bcrypt
+# import bcrypt
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 def generate_verification_code():
     return ''.join(random.choices(string.digits, k=6))
@@ -216,6 +236,7 @@ def generate_verification_code():
 #             fail_silently=False,
 #         )
 #         return True
+
 
 #     except Exception as e:
 #         print("EMAIL ERROR:", e)
@@ -321,6 +342,7 @@ from products.services.translations import merchant_verify_translations
 import os
 import resend
 
+
 def send_verification_email(email, code, lang="en"):
     try:
         email_translations = merchant_verify_translations(lang)
@@ -349,6 +371,8 @@ def send_verification_email(email, code, lang="en"):
         print("MESSAGE:", str(e), flush=True)
         traceback.print_exc()
         return False
+
+
 def register_merchant_in_iyzico(data):
     api_url = "https://sandbox-api.iyzipay.com/onboarding/submerchant"
     api_key = "sandbox-q85BSeIRNpseeE8Z37wmRoNRqZlCoCXW"
@@ -403,6 +427,7 @@ def register_merchant_in_iyzico(data):
          
 # utils.py
 
+
 def get_available_colors():
     """
     تُرجع قائمة بالألوان مع كل تدرجاتها.
@@ -418,9 +443,11 @@ def get_available_colors():
     ]
     return colors
 
+
 def get_available_sizes():
     """إرجاع أحجام قياسية للملابس"""
     return ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+
 
 def calculate_commission(price, currency, commission_rates):
     """حساب العمولة والسعر النهائي"""

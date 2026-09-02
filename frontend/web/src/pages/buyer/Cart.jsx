@@ -22,7 +22,7 @@ function Cart() {
 
 
     const navigate = useNavigate();
-    const {instagramUsername}= useParams();
+    const { instagramUsername } = useParams();
 
 
 
@@ -66,7 +66,7 @@ function Cart() {
                 itemsCount={itemsCount}
 
                 onBack={() => navigate(-1)}
-               
+
 
             />
 
@@ -89,55 +89,55 @@ function Cart() {
 
                             cartItems.length === 0
 
-                            ?
+                                ?
 
 
-                            <div className={styles.empty}>
+                                <div className={styles.empty}>
 
 
-                                <h2>
+                                    <h2>
 
-                                    {t.empty_cart}
+                                        {t.empty_cart}
 
-                                </h2>
-
-
-                                <p>
-
-                                    Add some products to continue shopping.
-
-                                </p>
+                                    </h2>
 
 
-                            </div>
+                                    <p>
+
+                                        Add some products to continue shopping.
+
+                                    </p>
 
 
-                            :
+                                </div>
 
 
-                            <CartList
-
-                                cartItems={cartItems}
+                                :
 
 
-                                onUpdateQuantity={(id, quantity) =>
+                                <CartList
 
-                                    changeQuantity(
-                                        id,
-                                        quantity
-                                    )
-
-                                }
+                                    cartItems={cartItems}
 
 
-                                onRemove={(id) =>
+                                    onUpdateQuantity={(id, quantity) =>
 
-                                    removeItem(id)
+                                        changeQuantity(
+                                            id,
+                                            quantity
+                                        )
 
-                                }
+                                    }
 
 
-                            />
+                                    onRemove={(id) =>
+
+                                        removeItem(id)
+
+                                    }
+
+
+                                />
 
 
                         }

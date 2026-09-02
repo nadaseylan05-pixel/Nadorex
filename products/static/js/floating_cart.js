@@ -35,22 +35,22 @@ function updateCartCount() {
     <div style="position: relative;">
       <span style="font-size: 24px;">🛒</span>
       ${window.cartCount > 0 ? `
-      <span style="
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background: red;
-        color: white;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 50%;
-        padding: 2px 6px;
-        min-width: 20px;
-        text-align: center;
-        display: inline-block;
-      ">${window.cartCount}</span>` : ''}
-    </div>
-  `;
+    < span style = "
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  font - size: 14px;
+  font - weight: bold;
+  border - radius: 50 %;
+  padding: 2px 6px;
+  min - width: 20px;
+  text - align: center;
+  display: inline - block;
+  ">${window.cartCount}</span>` : ''}
+    </div >
+    `;
 
   updatePageCartCount();
 }
@@ -82,17 +82,17 @@ function addToCart(productId, lang) {
       lang: lang
     })
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      alert(data.message);
-      window.cartCount = data.cart_count;
-      updateCartCount();
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(() => alert("حدث خطأ أثناء إضافة المنتج."));
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        window.cartCount = data.cart_count;
+        updateCartCount();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(() => alert("حدث خطأ أثناء إضافة المنتج."));
 }
 
 

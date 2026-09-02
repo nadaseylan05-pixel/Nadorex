@@ -25,7 +25,7 @@ function ProductDetail() {
     // =========================================================
     // STATE
     // =========================================================
-    const [t,setT] =useState({});
+    const [t, setT] = useState({});
     const [product, setProduct] = useState(null);
 
     const [selectedVariant, setSelectedVariant] =
@@ -63,7 +63,7 @@ function ProductDetail() {
 
                 const data = await response.json();
 
-                
+
                 setProduct(data);
                 setT(data.translations)
                 // عند تحميل المنتج نبدأ دائمًا
@@ -269,7 +269,7 @@ function ProductDetail() {
             <div className={styles.productHeader}>
 
 
-               
+
 
                 {/* <div className={styles.breadcrumb}>
 
@@ -461,7 +461,7 @@ function ProductDetail() {
 
 
                                                     {attr.attribute_type ===
-                                                    "color" ? (
+                                                        "color" ? (
 
                                                         <span
                                                             className={
@@ -571,7 +571,7 @@ function ProductDetail() {
 
 
                                                     {attr.attribute_type ===
-                                                    "color" ? (
+                                                        "color" ? (
 
                                                         <span
                                                             className={
@@ -805,10 +805,9 @@ function ProductDetail() {
                                         type="button"
                                         className={`
                                             ${styles.variantCard}
-                                            ${
-                                                isSelected
-                                                    ? styles.variantSelected
-                                                    : ""
+                                            ${isSelected
+                                                ? styles.variantSelected
+                                                : ""
                                             }
                                         `}
                                         onClick={() =>

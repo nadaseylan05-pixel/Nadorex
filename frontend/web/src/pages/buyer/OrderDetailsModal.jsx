@@ -28,7 +28,7 @@
 //                                 <p style={{ margin: "0", fontSize: "12px", color: "#666" }}>
 //                                     الكمية: {item.quantity} | السعر: {item.price} $
 //                                 </p>
-                                
+
 //                                 {/* التحقق من المتغيرات الفرعية وعرضها في حال وجودها */}
 //                                 <div style={{ display: "flex", gap: "8px", marginTop: "4px", fontSize: "11px", color: "#999" }}>
 //                                     {item.color && <span>اللون: {item.color}</span>}
@@ -187,7 +187,7 @@ function OrderDetailsModal({ order, onClose }) {
                                     "11px 13px",
                                 borderBottom:
                                     index !==
-                                    validAttributes.length -
+                                        validAttributes.length -
                                         1
                                         ? "1px solid #f1f1f1"
                                         : "none",
@@ -286,7 +286,7 @@ function OrderDetailsModal({ order, onClose }) {
                                     "#222",
                             }}
                         >
-                           {t.order_id}
+                            {t.order_id}
                         </h3>
 
                         <span
@@ -546,30 +546,30 @@ function OrderDetailsModal({ order, onClose }) {
                     {productAttributes.length >
                         0 && (
 
-                        <div
-                            style={{
-                                marginTop:
-                                    "20px",
-                            }}
-                        >
-
-                            <h4
+                            <div
                                 style={{
-                                    margin:
-                                        "0 0 10px",
-                                    fontSize:
-                                        "15px",
+                                    marginTop:
+                                        "20px",
                                 }}
                             >
-                                خصائص المنتج
-                            </h4>
 
-                            {renderAttributes(
-                                productAttributes
-                            )}
+                                <h4
+                                    style={{
+                                        margin:
+                                            "0 0 10px",
+                                        fontSize:
+                                            "15px",
+                                    }}
+                                >
+                                    خصائص المنتج
+                                </h4>
 
-                        </div>
-                    )}
+                                {renderAttributes(
+                                    productAttributes
+                                )}
+
+                            </div>
+                        )}
 
 
                     {/* =================================================
@@ -693,30 +693,30 @@ function OrderDetailsModal({ order, onClose }) {
                     {variantAttributes.length >
                         0 && (
 
-                        <div
-                            style={{
-                                marginTop:
-                                    "20px",
-                            }}
-                        >
-
-                            <h4
+                            <div
                                 style={{
-                                    margin:
-                                        "0 0 10px",
-                                    fontSize:
-                                        "15px",
+                                    marginTop:
+                                        "20px",
                                 }}
                             >
-                                {t.variant_properties}
-                            </h4>
 
-                            {renderAttributes(
-                                variantAttributes
-                            )}
+                                <h4
+                                    style={{
+                                        margin:
+                                            "0 0 10px",
+                                        fontSize:
+                                            "15px",
+                                    }}
+                                >
+                                    {t.variant_properties}
+                                </h4>
 
-                        </div>
-                    )}
+                                {renderAttributes(
+                                    variantAttributes
+                                )}
+
+                            </div>
+                        )}
 
 
                     {/* =================================================

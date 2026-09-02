@@ -117,7 +117,7 @@
 //             </div>
 
 //         </header>
-        
+
 //     );
 // }
 
@@ -159,7 +159,7 @@ const getFavoritesCount = async (buyerPhone, instagramUsername) => {
     if (!buyerPhone) {
         return 0;
     }
-   
+
 
     const response = await fetch(
         `${API_URL}/buyer/favorites/?buyer_phone=${encodeURIComponent(
@@ -169,7 +169,7 @@ const getFavoritesCount = async (buyerPhone, instagramUsername) => {
             method: "GET",
             credentials: "include",
         }
-        
+
     );
 
 
@@ -205,9 +205,9 @@ function BuyerHeader({
 
     setSelectedCategory,
     instagramUsername,
-    availableCategories =[],
-    
-    
+    availableCategories = [],
+
+
 
 }) {
 
@@ -236,7 +236,7 @@ function BuyerHeader({
     const {
         cartItems,
     } = useCart();
-    const [ordersCount, setOrdersCount]=useState(0);
+    const [ordersCount, setOrdersCount] = useState(0);
     const fetchOrdersCount = async () => {
         try {
             const phone =
@@ -274,7 +274,7 @@ function BuyerHeader({
     };
     useEffect(() => {
         fetchOrdersCount();
-    }, [lang,instagramUsername]);
+    }, [lang, instagramUsername]);
     // ==================================================
     // القائمة
     // ==================================================
@@ -300,7 +300,7 @@ function BuyerHeader({
     // ==================================================
 
     const fetchFavoritesCount = async () => {
-        
+
         try {
 
             const buyerPhone =
@@ -323,11 +323,11 @@ function BuyerHeader({
                 await getFavoritesCount(
                     buyerPhone,
                     instagramUsername
-                    
+
                 );
-                console.log("favorites count:", count);
-                setFavoritesCount(count);
-            
+            console.log("favorites count:", count);
+            setFavoritesCount(count);
+
 
         } catch (error) {
 
@@ -447,9 +447,9 @@ function BuyerHeader({
                     styles.logoSection
                 }
 
-                // onClick={() =>
-                //     navigate("/buyer")
-                // }
+            // onClick={() =>
+            //     navigate("/buyer")
+            // }
             >
 
                 {/* <div
@@ -461,11 +461,11 @@ function BuyerHeader({
                 </div> */}
                 <span
                     style={{
-                    background: "#2563eb",
-                    color: "#fff",
-                    padding: "6px 10px",
-                    borderRadius: "8px",
-                    fontWeight: "bold"
+                        background: "#2563eb",
+                        color: "#fff",
+                        padding: "6px 10px",
+                        borderRadius: "8px",
+                        fontWeight: "bold"
                     }}
                 >
                     {instagramUsername?.charAt(0).toUpperCase()}
@@ -603,7 +603,7 @@ function BuyerHeader({
                 >
 
                     <FiPackage />
-                    
+
                     {ordersCount > 0 && (
                         <span
                             className={
@@ -611,12 +611,12 @@ function BuyerHeader({
                             }
                         >
                             {ordersCount}
-                            
+
                         </span>
 
-                    ) }
+                    )}
 
-                    
+
 
                 </button>
 

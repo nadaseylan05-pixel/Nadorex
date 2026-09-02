@@ -526,7 +526,7 @@ function ProductVariants({ product, onVariantChange }) {
     // ==================================================
     // 13. العرض
     // ==================================================
-    console.log("ATTR FOR MAIN:",attributes);
+    console.log("ATTR FOR MAIN:", attributes);
     console.log(
         "VARIANTS:",
         JSON.stringify(variants, null, 2)
@@ -615,15 +615,13 @@ function ProductVariants({ product, onVariantChange }) {
                                             }
                                             className={`
                                                 ${styles.colorButton}
-                                                ${
-                                                    isSelected
-                                                        ? styles.colorSelected
-                                                        : ""
+                                                ${isSelected
+                                                    ? styles.colorSelected
+                                                    : ""
                                                 }
-                                                ${
-                                                    !hasStock
-                                                        ? styles.colorDisabled
-                                                        : ""
+                                                ${!hasStock
+                                                    ? styles.colorDisabled
+                                                    : ""
                                                 }
                                             `}
                                             title={option.label}
@@ -703,15 +701,13 @@ function ProductVariants({ product, onVariantChange }) {
                                         }
                                         className={`
                                             ${styles.optionButton}
-                                            ${
-                                                isSelected
-                                                    ? styles.optionSelected
-                                                    : ""
+                                            ${isSelected
+                                                ? styles.optionSelected
+                                                : ""
                                             }
-                                            ${
-                                                !hasStock
-                                                    ? styles.optionDisabled
-                                                    : ""
+                                            ${!hasStock
+                                                ? styles.optionDisabled
+                                                : ""
                                             }
                                         `}
                                     >

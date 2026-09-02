@@ -11,7 +11,7 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
     // 1. مزامنة حالة القلب مع بيانات المنتج مباشرةً
     const [isFavorite, setIsFavorite] = useState(Boolean(product.is_favorite));
     const [loading, setLoading] = useState(false);
-    
+
     // تحديث الحالة محلية إذا تغيرت الخصائص (props) القادمة من الأب
     useEffect(() => {
         setIsFavorite(Boolean(product.is_favorite));
@@ -43,7 +43,7 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
 
         try {
             setLoading(true);
-            
+
             // إرسال الطلب للـ Backend
             const res = await toggleFavoriteApi(buyerPhone, product.id);
 
@@ -102,7 +102,7 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
                     src={image}
                     alt={product.name}
                     className={styles.image}
-                /> 
+                />
                 {/* { <img
                 src={
                     product.image_url && !product.image_url.includes(":8080")
@@ -167,12 +167,12 @@ function ProductCard({ product, onFavoriteToggle, instagramUsername }) {
                 <div className={styles.priceRow}>
                     {product.old_price && (
                         <span className={styles.oldPrice}>
-                            {product.old_price} ₺
+                            {product.old_price} $
                         </span>
                     )}
 
                     <span className={styles.price}>
-                        {product.price} ₺
+                        {product.price} $
                     </span>
                 </div>
 

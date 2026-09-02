@@ -44,36 +44,36 @@ export async function requestNotificationPermission() {
     console.log("Service Worker registered:", registration);
 
     const token = await getToken(messaging, {
-        vapidKey: VAPID_KEY,
-        serviceWorkerRegistration: registration,
-        });
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: registration,
+    });
 
-        console.log("FCM TOKEN:", token);
+    console.log("FCM TOKEN:", token);
 
-        if (token) {
-        const accessToken = localStorage.getItem("access_token");
+    if (token) {
+      const accessToken = localStorage.getItem("access_token");
 
-        const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/notifications/register-token/`,
-            // "http://localhost:8000/api/notifications/register-token/",
-            {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
-                fcm_token: token,
-            }),
-            }
-        );
-
-        const data = await response.json();
-
-        console.log("FCM TOKEN REGISTER:", data);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/notifications/register-token/`,
+        // "http://localhost:8000/api/notifications/register-token/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            fcm_token: token,
+          }),
         }
+      );
 
-        return token;
+      const data = await response.json();
+
+      console.log("FCM TOKEN REGISTER:", data);
+    }
+
+    return token;
   } catch (error) {
     console.error("FCM ERROR:", error);
     return null;

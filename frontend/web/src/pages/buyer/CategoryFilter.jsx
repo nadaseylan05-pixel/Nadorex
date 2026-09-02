@@ -20,7 +20,7 @@ function CategoryFilter({
     selectedCategory,
     setSelectedCategory,
     // products =[],
-    availableCategories =[],
+    availableCategories = [],
 }) {
 
     const [categories, setCategories] = useState([]);
@@ -37,7 +37,7 @@ function CategoryFilter({
     // }, [lang]);
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/api/categories/?lang=${lang}`)
-        // fetch(`http://localhost:8000/api/categories/?lang=${lang}`)
+            // fetch(`http://localhost:8000/api/categories/?lang=${lang}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log("ALL CATEGORIES FROM API:", data.categories);
@@ -50,7 +50,7 @@ function CategoryFilter({
                 //     category =>
                 //         availableCategories.includes(category.code)
                 // );
-                
+
                 // setCategories(filteredCategories);
                 const allCategories = data.categories || [];
 
@@ -73,7 +73,7 @@ function CategoryFilter({
                 console.error(err);
             });
     }, [lang, availableCategories]);
-    
+
     const getCategoryIcon = (code) => {
         switch (code) {
             case "clothing":
@@ -170,11 +170,10 @@ function CategoryFilter({
                     <button
                         key={category.code}
                         type="button"
-                        className={`${styles.categoryCard} ${
-                            selectedCategory === category.code
+                        className={`${styles.categoryCard} ${selectedCategory === category.code
                                 ? styles.active
                                 : ""
-                        }`}
+                            }`}
                         onClick={() =>
                             setSelectedCategory(category.code)
                         }

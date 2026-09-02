@@ -7,15 +7,15 @@ function Home({ lang }) {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}api/index/?lang=${lang}`, {
-    // fetch(`http://127.0.0.1:8000/api/index/?lang=${lang}`, {
-        method:"GET",
-        credentials: "include", // مهم إذا كنت تستخدم session/cookies
+      // fetch(`http://127.0.0.1:8000/api/index/?lang=${lang}`, {
+      method: "GET",
+      credentials: "include", // مهم إذا كنت تستخدم session/cookies
     })
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error(err));
   }, [lang]); // سيعاد الجلب عند تغيير اللغة
-  
+
 
   const { t, loading } = useTranslations("index", lang);
 
@@ -29,8 +29,8 @@ function Home({ lang }) {
         <Link to="/buyer">
           <button className="btn">{t.buyer || "Buyer"}</button>
         </Link>
-        
-        
+
+
         <Link to="/seller">
           <button className="btn">{t.seller || "Seller"}</button>
         </Link>

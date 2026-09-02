@@ -83,7 +83,7 @@ def create_product(*, data, files):
 
     return product
 '''
-from products.models import Products,Categories  # تأكد من استيراد الموديل بالاسم الصحيح المجموع
+from products.models import Products, Categories  # تأكد من استيراد الموديل بالاسم الصحيح المجموع
 '''
 def create_product(*, data, files):
     price = float(data.get("price") or 0)
@@ -377,7 +377,7 @@ def create_product(*, user, data, files):
 
     return product
 '''
-from products.models import Products, ProductVariants, ProductVariantImages # تأكدي من استيراد الموديلات الخاصة بكِ
+from products.models import Products, ProductVariants, ProductVariantImages  # تأكدي من استيراد الموديلات الخاصة بكِ
 '''
 def create_product(user, data, files):
     """
@@ -390,7 +390,7 @@ def create_product(user, data, files):
     category_id = data.get('category')
     price = data.get('price')
     old_price = data.get('old_price') or None
-    currency = data.get('currency', '₺')
+    currency = data.get('currency', '$')
     stock = data.get('stock', 0)
     
     # 2. التعامل مع الصورة الأساسية للمنتج (ملف أو رابط)
@@ -457,6 +457,8 @@ def create_product(user, data, files):
 
 from django.db.models import Sum
 from products.services.product_translation import translate_product, save_product_translations
+
+
 def update_product_total_stock(product):
     variants_stock = (
         ProductVariants.objects
@@ -469,7 +471,11 @@ def update_product_total_stock(product):
     Products.objects.filter(pk=product.pk).update(total_stock=total_stock)
 
     product.total_stock = total_stock
+
+
 from products.models import ProductVariantAttributes    
+
+
 def create_product(merchant, data, files):
     # استخراج البيانات الأساسية للمنتج بحقول الموديل الصحيحة
     name = data.get('name')
@@ -477,19 +483,22 @@ def create_product(merchant, data, files):
     category_code = data.get('category_code') or data.get('category')
     price = data.get('price')
     old_price = data.get('old_price') or None
-    currency = data.get('currency', '₺')
+    currency = data.get('currency', '$')
     
     # التعامل مع الحقلين base_image و image_url للمنتج
     base_image = files.get('base_image') or files.get('image') or None
     image_url = data.get('image_url', '')
-    #merchant = Merchants.objects.get(email=user.email)
+    print("========== IMAGE URL ==========")
+    print("IMAGE URL RECEIVED:", image_url)
+    
+    # merchant = Merchants.objects.get(email=user.email)
     # إنشاء المنتج الأساسي
     print("CATEGORY RECEIVED:", data.get("category"))
     product = Products.objects.create(
         merchant=merchant,
         merchant_email=merchant.email,
      #   merchant=merchant,
-        #user=user,
+        # user=user,
         name=name,
         describtion=describtion,
         category_code=category_code,
@@ -502,8 +511,8 @@ def create_product(merchant, data, files):
         base_image=base_image,
         image_url=image_url,
        # merchant=user.username, 
-        #merchant_email=user.email,
-        #merchant = Merchants.objects.get(email=request.user.email),
+        # merchant_email=user.email,
+        # merchant = Merchants.objects.get(email=request.user.email),
         created_at=timezone.now()
     )
     # ==========================================
@@ -598,7 +607,7 @@ def create_product(merchant, data, files):
                     value=str(attr_value)
                 )
     # إنشاء الصور الإضافية للمنتج إن وجدت (ProductImages)
-    ##extra_images = data.get('extra_images', [])
+    # #extra_images = data.get('extra_images', [])
     extra_images = files.getlist('extra_images')
     for img_file in extra_images:
         ProductImages.objects.create(product=product, image=img_file)
@@ -620,7 +629,7 @@ def create_product(merchant, data, files):
         
         v_image = v.get('image', None)
         v_image_url = v.get('image_url', '')
-        color_hex=v.get("color_hex")
+        color_hex = v.get("color_hex")
         # إنشاء كائن الـ Variant
         variant = ProductVariants.objects.create(
             product=product,
@@ -633,7 +642,7 @@ def create_product(merchant, data, files):
             image_url=v_image_url,
             sort_order=v_sort_order,
             is_active=v_is_active,
-            color_hex =color_hex
+            color_hex=color_hex
         )
         # ==========================================
         # ترجمة اسم الـVariant
@@ -720,18 +729,16 @@ def create_product(merchant, data, files):
                     value=str(attr_value)
                 )
         # إضافة المخزون للمجموع
-        ##total_stock += v_stock
+        # #total_stock += v_stock
 
         # إنشاء صور الـ Variant الإضافية إن وجدت (ProductVariantImages)
         v_extra_images = v.get('extra_images', [])
         for v_img_file in v_extra_images:
             ProductVariantImages.objects.create(variant=variant, image=v_img_file)
-
    
     # حفظ إجمالي المخزون
     # product.total_stock = total_stock
     # product.save(update_fields=["total_stock"])
     update_product_total_stock(product)
-
 
     return product

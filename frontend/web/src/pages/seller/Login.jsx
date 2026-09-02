@@ -1,5 +1,5 @@
 // src/pages/seller/Login.jsx
- 
+
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ function SellerLogin({ lang }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {t, loading} =useTranslations("translations/login");
+  const { t, loading } = useTranslations("translations/login");
   // const t = {
   //   merchant_login: "Login",
   //   your_email_label: "Your Email",
@@ -20,7 +20,7 @@ function SellerLogin({ lang }) {
   //   account_not_verified: "Don't have an account?",
   //   register: "Register",
   // };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

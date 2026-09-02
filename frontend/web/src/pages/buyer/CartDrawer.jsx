@@ -106,18 +106,18 @@ function CartDrawer({
 
                     {/* عرض الطلبات المؤكدة عند الضغط على تبويب orders */}
                     {activeTab === "orders" && (
-                        confirmedOrders && confirmedOrders.length > 0 
-                        ? 
-                        <div className={styles.ordersList}>
-                            {confirmedOrders.map((order, idx) => (
-                                <div key={order.order_id || order.id || idx} style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
-                                    <p>طلب رقم: #{order.order_id || order.id}</p>
-                                    <p>الحالة: {order.status || "قيد المعالجة"}</p>
-                                </div>
-                            ))}
-                        </div>
-                        : 
-                        <p>No confirmed orders</p>
+                        confirmedOrders && confirmedOrders.length > 0
+                            ?
+                            <div className={styles.ordersList}>
+                                {confirmedOrders.map((order, idx) => (
+                                    <div key={order.order_id || order.id || idx} style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
+                                        <p>طلب رقم: #{order.order_id || order.id}</p>
+                                        <p>الحالة: {order.status || "قيد المعالجة"}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            :
+                            <p>No confirmed orders</p>
                     )}
                 </div>
             </div>

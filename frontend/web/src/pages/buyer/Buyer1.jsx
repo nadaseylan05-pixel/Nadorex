@@ -55,7 +55,7 @@ function Buyer({ lang = "en" }) {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/buyer/products/?lang=${lang}`, {
-    // fetch(`http://127.0.0.1:8000/api/buyer/products/?lang=${lang}`, {
+      // fetch(`http://127.0.0.1:8000/api/buyer/products/?lang=${lang}`, {
       credentials: "include",
     })
       .then((res) => {
@@ -76,7 +76,7 @@ function Buyer({ lang = "en" }) {
     // فحص قاعدة البيانات كل 5 ثوانٍ لمزامنة تعديلات البائع لحظياً
     const interval = setInterval(() => {
       fetchConfirmedOrders();
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [lang]);
@@ -241,7 +241,7 @@ function Buyer({ lang = "en" }) {
 
   return (
     <div className={styles.container} style={{ position: "relative", minHeight: "100vh" }}>
-      
+
       {/* FLOATING CART BUTTON */}
       <div
         className={styles.floatingCartIcon}
@@ -270,7 +270,7 @@ function Buyer({ lang = "en" }) {
       {/* PRODUCTS GRID */}
       <div className={styles.productsGrid}>
         {products.map((product) => (
-          
+
           <div key={product.id} className={styles.card}>
             {!product.stock || product.stock <= 0 ? (
               <div className={styles.outOfStock}>OUT OF STOCK</div>
@@ -431,7 +431,7 @@ function Buyer({ lang = "en" }) {
                       مدة الإرجاع:
                       {selectedOrder.return_days} يوم
                     </p>
-                )}
+                  )}
               </div>
             </div>
           )}
@@ -449,12 +449,12 @@ function Buyer({ lang = "en" }) {
             boxSizing: "border-box",
             direction: lang === "ar" ? "rtl" : "ltr"
           }}>
-            
+
             {/* Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
               <h2 style={{ margin: 0, fontSize: "24px" }}>{lang === "ar" ? "التسوق" : "Shopping"}</h2>
-              <button 
-                onClick={() => setViewCartPage(false)} 
+              <button
+                onClick={() => setViewCartPage(false)}
                 style={{ background: "none", border: "none", fontSize: "24px", cursor: "pointer" }}
               >
                 ❌
@@ -463,7 +463,7 @@ function Buyer({ lang = "en" }) {
 
             {/* Navigation Tabs */}
             <div style={{ display: "flex", borderBottom: "2px solid #f3f4f6", marginBottom: "20px" }}>
-              <button 
+              <button
                 onClick={() => setActiveTab("cart")}
                 style={{
                   flex: 1,
@@ -478,7 +478,7 @@ function Buyer({ lang = "en" }) {
               >
                 {lang === "ar" ? "🛒 السلة الحالية" : "🛒 Active Cart"} ({cartCount})
               </button>
-              <button 
+              <button
                 onClick={() => setActiveTab("orders")}
                 style={{
                   flex: 1,
@@ -497,7 +497,7 @@ function Buyer({ lang = "en" }) {
 
             {/* Tab Contents */}
             <div style={{ flex: 1, overflowY: "auto", paddingBottom: "20px" }}>
-              
+
               {/* Active Cart Tab */}
               {activeTab === "cart" && (
                 cartItems.length === 0 ? (
@@ -521,7 +521,7 @@ function Buyer({ lang = "en" }) {
                         <p style={{ margin: 0, color: "#2563eb", fontWeight: "bold" }}>{item.price}$</p>
                         <small style={{ color: "#6b7280" }}>{lang === "ar" ? "اللون" : "Color"}: {item.color}</small>
                       </div>
-                      
+
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", border: "1px solid #d1d5db", borderRadius: "4px" }}>
                           <button onClick={() => changeQty(i, -1)} style={{ padding: "2px 8px", background: "#f3f4f6", border: "none", cursor: "pointer" }}>-</button>
@@ -554,10 +554,10 @@ function Buyer({ lang = "en" }) {
                     const currentStatus = (o.status || "processing").toLowerCase().trim();
 
                     // 1. زر إلغاء الطلب: معلق أو قيد المعالجة
-                    const showCancel = currentStatus === "processing" || currentStatus === "pending"; 
-                    
+                    const showCancel = currentStatus === "processing" || currentStatus === "pending";
+
                     // 2. زر تأكيد الاستلام: يظهر عندما يغير البائع الحالة إلى تم الشحن (shipped)
-                    const showDelivered = currentStatus === "shipped"; 
+                    const showDelivered = currentStatus === "shipped";
 
                     // 3. زر طلب إرجاع: يظهر بعد التسليم مباشرة بشرط وجود مهلة زمنية متبقية
                     const returnDaysAllowed = Number(o.return_days || 0);
@@ -574,12 +574,12 @@ function Buyer({ lang = "en" }) {
                     }
 
                     const showReturn =
-                        currentStatus === "delivered" &&
-                        returnDaysAllowed > 0 &&
-                        isReturnPeriodValid;
+                      currentStatus === "delivered" &&
+                      returnDaysAllowed > 0 &&
+                      isReturnPeriodValid;
 
                     // 4. زر إلغاء طلب الإرجاع: يظهر فقط طالما الحالة معلقة عند البائع (return_requested)
-                    const showCancelReturn = currentStatus === "return_requested"; 
+                    const showCancelReturn = currentStatus === "return_requested";
 
                     const getBadgeStyles = (status) => {
                       if (status === "delivered") return { bg: "#d1fae5", text: "#065f46" };
@@ -608,13 +608,13 @@ function Buyer({ lang = "en" }) {
                           <span style={{ fontWeight: "bold", fontSize: "15px" }}>
                             #{orderId} - {o.name || (lang === "ar" ? "طلب مشترك" : "Order")}
                           </span>
-                          <span style={{ 
+                          <span style={{
                             backgroundColor: badge.bg,
                             color: badge.text,
                             padding: "4px 10px",
                             borderRadius: "50px",
-                            fontSize: "12px", 
-                            fontWeight: "bold" 
+                            fontSize: "12px",
+                            fontWeight: "bold"
                           }}>
                             {o.status === "processing" && (lang === "ar" ? "قيد المعالجة" : "Processing")}
                             {o.status === "shipped" && (lang === "ar" ? "تم الشحن 🚚" : "Shipped")}
@@ -627,26 +627,26 @@ function Buyer({ lang = "en" }) {
                         <p style={{ margin: "0 0 12px 0", fontSize: "14px", color: "#4b5563" }}>
                           {lang === "ar" ? "الإجمالي:" : "Total:"} <strong style={{ color: "#111827" }}>{o.total_price || o.total}$</strong>
                         </p>
-                        
+
                         {/* Actions Section */}
                         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", borderTop: "1px dashed #e5e7eb", paddingTop: "10px" }}>
                           {showCancel && (
-                            <button onClick={(e) => {e.stopPropagation();onActionButtonClick("cancel", orderId)}} style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
+                            <button onClick={(e) => { e.stopPropagation(); onActionButtonClick("cancel", orderId) }} style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
                               {lang === "ar" ? "إلغاء وحذف الطلب" : "Cancel Order"}
                             </button>
                           )}
                           {showDelivered && (
-                            <button onClick={(e) => {e.stopPropagation();onActionButtonClick("delivered", orderId)}} style={{ padding: "6px 12px", background: "#10b981", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
+                            <button onClick={(e) => { e.stopPropagation(); onActionButtonClick("delivered", orderId) }} style={{ padding: "6px 12px", background: "#10b981", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
                               {lang === "ar" ? "تأكيد الاستلام" : "Mark as Delivered"}
                             </button>
                           )}
                           {showReturn && (
-                            <button onClick={(e) => {e.stopPropagation();onActionButtonClick("return", orderId)}} style={{ padding: "6px 12px", background: "#f59e0b", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
+                            <button onClick={(e) => { e.stopPropagation(); onActionButtonClick("return", orderId) }} style={{ padding: "6px 12px", background: "#f59e0b", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
                               {lang === "ar" ? "طلب إرجاع" : "Request Return"}
                             </button>
                           )}
                           {showCancelReturn && (
-                            <button onClick={(e) => {e.stopPropagation();onActionButtonClick("cancel_return", orderId)}} style={{ padding: "6px 12px", background: "#6b7280", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
+                            <button onClick={(e) => { e.stopPropagation(); onActionButtonClick("cancel_return", orderId) }} style={{ padding: "6px 12px", background: "#6b7280", color: "#fff", border: "none", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}>
                               {lang === "ar" ? "إلغاء الإرجاع" : "Cancel Return"}
                             </button>
                           )}

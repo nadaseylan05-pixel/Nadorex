@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useCallback, useMemo} from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "./context/CartContext";
 import ProductCard from "./ProductCard";
@@ -11,25 +11,25 @@ import useTranslations from "../../hooks/useTranslations";
 
 function Buyer() {
     const navigate = useNavigate();
-    const {instagramUsername} =useParams();
+    const { instagramUsername } = useParams();
     const { cartItems, addToCart } = useCart();
-    const {lang} =useLanguage();
+    const { lang } = useLanguage();
     // const { t } = useTranslations("translations/buyer");
-    
+
     const [products, setProducts] = useState([]);
     const [error, setError] = useState("");
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
     const filteredProducts = category === "all"
-    ? products
-    : products.filter(
-        product => product.category_code === category
-    );
+        ? products
+        : products.filter(
+            product => product.category_code === category
+        );
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
     const [bookLanguage, setBookLanguage] = useState("");
     const [sort, setSort] = useState("");
-    const [t,setT] =useState({});
+    const [t, setT] = useState({});
     // const availableCategories = useMemo(() => {
     //     return [
     //         ...new Set(
@@ -144,17 +144,17 @@ function Buyer() {
             setError("Server Error");
         }
     }, [lang, search, category, color, size, bookLanguage, sort, fetchAllProducts, instagramUsername]);
-    
+
     // جلب المنتجات عند التحميل الأول أو تغير اللغة
     useEffect(() => {
         fetchAllProducts();
     }, [fetchAllProducts]);
     const displayedProducts =
-    category === "all"
-        ? products
-        : products.filter(
-            product => product.category_code === category
-        );
+        category === "all"
+            ? products
+            : products.filter(
+                product => product.category_code === category
+            );
     console.log("BUYER instagramUsername:", instagramUsername);
     return (
         <div className={styles.page}>
@@ -207,7 +207,7 @@ function Buyer() {
                         <p className={styles.error}>{error}</p>
                     ) : (
                         <div className={styles.productsGrid}>
-                            
+
                             {displayedProducts.map((product) => (
                                 <ProductCard
                                     key={product.id}
@@ -216,7 +216,7 @@ function Buyer() {
                                     instagramUsername={instagramUsername}
                                 />
                             ))}
-                        
+
                             {/* {products.map((product) => (
                                 <ProductCard
                                     key={product.id}
@@ -225,7 +225,7 @@ function Buyer() {
                                     instagramUsername={instagramUsername}
                                 />
                             ))} */}\
-                            
+
                         </div>
                     )}
                 </section>

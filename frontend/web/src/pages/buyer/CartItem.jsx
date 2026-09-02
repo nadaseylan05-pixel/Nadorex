@@ -71,18 +71,18 @@ function CartItem({
             /> */}
             {/* معالجة رابط الصورة والتأكد من وجود صورة افتراضية عند الفشل */}
             <img
-            src={
-                item.image_url && !item.image_url.includes("localhost:8080")
-                ? item.image_url
-                : "https://via.placeholder.com/150?text=No+Image"
-            }
-            alt={item.name || "Product"}
-            className={styles.image}
-            onError={(e) => {
-                // إذا فشل تحميل الصورة، يتم استبدالها بصورة افتراضية فوراً لتجنب الأخطاء
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/150?text=No+Image";
-            }}
+                src={
+                    item.image_url && !item.image_url.includes("localhost:8080")
+                        ? item.image_url
+                        : "https://via.placeholder.com/150?text=No+Image"
+                }
+                alt={item.name || "Product"}
+                className={styles.image}
+                onError={(e) => {
+                    // إذا فشل تحميل الصورة، يتم استبدالها بصورة افتراضية فوراً لتجنب الأخطاء
+                    e.target.onerror = null;
+                    e.target.src = "https://via.placeholder.com/150?text=No+Image";
+                }}
             />
 
 
@@ -137,13 +137,13 @@ function CartItem({
 
                                 item.short_description.length > 80
 
-                                ?
+                                    ?
 
-                                item.short_description.slice(0,80) + "..."
+                                    item.short_description.slice(0, 80) + "..."
 
-                                :
+                                    :
 
-                                item.short_description
+                                    item.short_description
 
                             }
 
@@ -276,15 +276,15 @@ function CartItem({
                         <button
 
 
-                            onClick={(e)=>{
+                            onClick={(e) => {
 
 
                                 e.stopPropagation();
 
 
                                 // onUpdateQuantity(-1);
-                               onDecrease (); 
-                                
+                                onDecrease();
+
 
                             }}
 
@@ -314,7 +314,7 @@ function CartItem({
                         <button
 
 
-                            onClick={(e)=>{
+                            onClick={(e) => {
 
 
                                 e.stopPropagation();
@@ -349,7 +349,7 @@ function CartItem({
                         className={styles.remove}
 
 
-                        onClick={(e)=>{
+                        onClick={(e) => {
 
 
                             e.stopPropagation();

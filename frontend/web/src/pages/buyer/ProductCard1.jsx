@@ -13,22 +13,22 @@ function ProductCard({
 
     product,
     onAddToCart,
-    
+
 }) {
 
-    console.log("CART LOADED",product.id);
+    console.log("CART LOADED", product.id);
     console.log("PRODUCT CARD", product);
     const [selectedVariant, setSelectedVariant] = useState(null);
     const navigate = useNavigate();
     return (
 
- 
-        <div className={styles.card} onClick={() =>{console.log("PRODUCT DETAILS"); navigate(`/buyer/product/detail/${product.id}`)} } >
-            
-            <ImageGallery 
+
+        <div className={styles.card} onClick={() => { console.log("PRODUCT DETAILS"); navigate(`/buyer/product/detail/${product.id}`) }} >
+
+            <ImageGallery
                 product={product}
                 variant={selectedVariant}
-                
+
             />
 
             <h3>

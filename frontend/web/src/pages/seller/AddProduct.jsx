@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/seller/AddProduct.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HexColorPicker } from "react-colorful";
 import { useLanguage } from "../../context/LanguageContext";
 import Notifications from "./Notifications"
@@ -8,12 +8,12 @@ import SellerArchivedOrders from "./sellerArchivesdOrders";
 import { requestNotificationPermission } from "../../notifications";
 function AddProduct() {
   console.log("🔥 AddProduct component started");
-  const {lang} = useLanguage();
+  const { lang } = useLanguage();
   const [t, setT] = useState({});
   const [instagramUsername, setInstagramUsername] = useState("");
-  const [activeTab, setActiveTab] = useState("products"); 
+  const [activeTab, setActiveTab] = useState("products");
   const [modalTab, setModalTab] = useState("basic"); // التبويب الداخلي لنافذة التعديل
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalSales: 45231,
     pendingOrders: 0,
@@ -21,7 +21,7 @@ function AddProduct() {
     totalStock: 2450,
     totalProducts: 248
   });
-  
+
   const [orders, setOrders] = useState([]);
   const [productsList, setProductsList] = useState([]);
   const [archivedOrders, setArchivedOrders] = useState([]);
@@ -62,9 +62,9 @@ function AddProduct() {
       prev.map((v, i) =>
         i === index
           ? {
-              ...v,
-              extra_images: [...v.extra_images, ...Array.from(files)],
-            }
+            ...v,
+            extra_images: [...v.extra_images, ...Array.from(files)],
+          }
           : v
       )
     );
@@ -72,7 +72,7 @@ function AddProduct() {
 
   const addEditingVariantImages = (variantIndex, files) => {
     if (!files || files.length === 0) return;
-    
+
     const newFilesArray = Array.from(files); // تحويل FileList إلى Array
 
     setEditingProduct((prev) => {
@@ -113,8 +113,8 @@ function AddProduct() {
   //         totalStock: dashboardData.stats.totalStock || prev.totalStock,
   //         totalProducts: dashboardData.stats.totalProducts || prev.totalProducts,
   //       }));
-        
-       
+
+
   //       console.log("Orders:", dashboardData.orders);
   //       setOrders(dashboardData.orders || []);
   //       setT(dashboardData.translations || {});
@@ -128,61 +128,61 @@ function AddProduct() {
   const fetchDashboardData = async () => {
     const token = localStorage.getItem("access_token");
 
-      try {
-          const dashboardRes = await fetch(
-              `${import.meta.env.VITE_API_URL}/api/seller/dashboard/?lang=${lang}`,
-              // `http://localhost:8000/api/seller/dashboard/?lang=${lang}`,
-              {
-                  headers: {
-                      Authorization: `Bearer ${token}`
-                  }
-              }
-          );
-
-          const dashboardData = await dashboardRes.json();
-
-          console.log("Dashboard Response:", dashboardData);
-
-          if (dashboardData.success) {
-
-              setInstagramUsername(
-                  dashboardData.instagram_username || ""
-              );
-
-              setStats(prev => ({
-                  ...prev,
-                  totalSales:
-                      dashboardData.stats.totalSales ||
-                      prev.totalSales,
-
-                  activeProducts:
-                      dashboardData.stats.activeProducts ||
-                      prev.activeProducts,
-
-                  totalStock:
-                      dashboardData.stats.totalStock ||
-                      prev.totalStock,
-
-                  totalProducts:
-                      dashboardData.stats.totalProducts ||
-                      prev.totalProducts,
-              }));
-
-              setOrders(
-                  dashboardData.orders || []
-              );
-
-              setT(
-                  dashboardData.translations || {}
-              );
+    try {
+      const dashboardRes = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/seller/dashboard/?lang=${lang}`,
+        // `http://localhost:8000/api/seller/dashboard/?lang=${lang}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
+        }
+      );
 
-      } catch (error) {
-          console.error(
-              "Error loading dashboard data:",
-              error
-          );
+      const dashboardData = await dashboardRes.json();
+
+      console.log("Dashboard Response:", dashboardData);
+
+      if (dashboardData.success) {
+
+        setInstagramUsername(
+          dashboardData.instagram_username || ""
+        );
+
+        setStats(prev => ({
+          ...prev,
+          totalSales:
+            dashboardData.stats.totalSales ||
+            prev.totalSales,
+
+          activeProducts:
+            dashboardData.stats.activeProducts ||
+            prev.activeProducts,
+
+          totalStock:
+            dashboardData.stats.totalStock ||
+            prev.totalStock,
+
+          totalProducts:
+            dashboardData.stats.totalProducts ||
+            prev.totalProducts,
+        }));
+
+        setOrders(
+          dashboardData.orders || []
+        );
+
+        setT(
+          dashboardData.translations || {}
+        );
       }
+
+    } catch (error) {
+      console.error(
+        "Error loading dashboard data:",
+        error
+      );
+    }
   };
   // const fetchArchivedOrders = async () => {
   //     try {
@@ -206,49 +206,49 @@ function AddProduct() {
   //     }
   // };
   const createEmptyVariant = () => ({
-  id: null,
-  title: "",
-  color: "",
-  size: "",
-  book_language: "",
-  stock: 0,
-  image_source: "file",
-  image: null,
-  extra_images: [],
-  image_url: "",
-  is_active: true,
-  attributes:{},
-});
+    id: null,
+    title: "",
+    color: "",
+    size: "",
+    book_language: "",
+    stock: 0,
+    image_source: "file",
+    image: null,
+    extra_images: [],
+    image_url: "",
+    is_active: true,
+    attributes: {},
+  });
 
 
-const addEditingVariant = () => {
-  console.log("قبل الاضافه ", editingProduct.variants)
-  setEditingProduct((prev) => ({
-    ...prev,
-    variants: [
-      ...(prev.variants || []),
-      createEmptyVariant(),
-    ],
-  }));
-};
+  const addEditingVariant = () => {
+    console.log("قبل الاضافه ", editingProduct.variants)
+    setEditingProduct((prev) => ({
+      ...prev,
+      variants: [
+        ...(prev.variants || []),
+        createEmptyVariant(),
+      ],
+    }));
+  };
 
 
-const updateEditingVariant = (index, field, value) => {
-  setEditingProduct((prev) => ({
-    ...prev,
-    variants: prev.variants.map((v, i) =>
-      i === index ? { ...v, [field]: value } : v
-    ),
-  }));
-};
+  const updateEditingVariant = (index, field, value) => {
+    setEditingProduct((prev) => ({
+      ...prev,
+      variants: prev.variants.map((v, i) =>
+        i === index ? { ...v, [field]: value } : v
+      ),
+    }));
+  };
 
 
-const removeEditingVariant = (index) => {
-  setEditingProduct((prev) => ({
-    ...prev,
-    variants: prev.variants.filter((_, i) => i !== index),
-  }));
-};
+  const removeEditingVariant = (index) => {
+    setEditingProduct((prev) => ({
+      ...prev,
+      variants: prev.variants.filter((_, i) => i !== index),
+    }));
+  };
 
   // const fetchProducts = async () => {
   //   const token = localStorage.getItem("access_token");
@@ -299,48 +299,48 @@ const removeEditingVariant = (index) => {
     requestNotificationPermission();
   }, []);
   useEffect(() => {
-    
-    
-  const fetchData = async () => {
-    const token = localStorage.getItem("access_token");
 
-    try {
-      await fetchDashboardData();
-      await fetchProducts();
 
-      const categoriesRes = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/categories/?lang=${lang}`,
-        // `http://localhost:8000/api/categories/?lang=${lang}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    const fetchData = async () => {
+      const token = localStorage.getItem("access_token");
+
+      try {
+        await fetchDashboardData();
+        await fetchProducts();
+
+        const categoriesRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/categories/?lang=${lang}`,
+          // `http://localhost:8000/api/categories/?lang=${lang}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const categoriesData = await categoriesRes.json();
+
+        console.log("Categories API:", categoriesData);
+
+        if (categoriesData.categories) {
+          setCategoriesList(categoriesData.categories);
         }
-      );
-  
-      const categoriesData = await categoriesRes.json();
 
-      console.log("Categories API:", categoriesData);
+      } catch (error) {
+        console.error("Error loading initial data:", error);
+        console.error(error);
+        console.log("1");
+        await fetchDashboardData();
+        console.log("2");
 
-      if (categoriesData.categories) {
-        setCategoriesList(categoriesData.categories);
+        await fetchProducts();
+        console.log("3");
+
+        const categoriesRes = await fetch();
+        console.log("4");
       }
-
-    } catch (error) {
-      console.error("Error loading initial data:", error);
-      console.error(error);
-      console.log("1");
-      await fetchDashboardData();
-      console.log("2");
-
-      await fetchProducts();
-      console.log("3");
-
-      const categoriesRes = await fetch();
-      console.log("4");
-    }
-  };
-  fetchData();
+    };
+    fetchData();
 
   }, [lang]);
   // useEffect(() => {
@@ -350,7 +350,7 @@ const removeEditingVariant = (index) => {
   //     }
 
   // }, [activeTab, lang]);
-  
+
   useEffect(() => {
     console.log("Categories:");
 
@@ -367,7 +367,7 @@ const removeEditingVariant = (index) => {
     });
 
   }, [categoriesList]);
-  
+
   const getImageUrl = (url) => {
     if (!url) return null;
     if (url.startsWith("http")) return url;
@@ -380,47 +380,46 @@ const removeEditingVariant = (index) => {
     setFormData((prev) => ({
       ...prev,
       [name]: files ? files[0] : value,
-      
+
     }));
-    if (name === "category" && value)
-    {
+    if (name === "category" && value) {
       fetchCategoryAttributes(value);
     }
   };
   const handleShareClick = async (product) => {
-      if (!instagramUsername) {
-          alert("لم يتم العثور على اسم حساب المتجر");
-          return;
-      }
+    if (!instagramUsername) {
+      alert("لم يتم العثور على اسم حساب المتجر");
+      return;
+    }
 
-      const productUrl =
-          `${window.location.origin}/${instagramUsername}/product/detail/${product.id}`;
+    const productUrl =
+      `${window.location.origin}/${instagramUsername}/product/detail/${product.id}`;
 
-      try {
-          if (navigator.share) {
-              await navigator.share({
-                  title: product.name,
-                  text: product.name,
-                  url: productUrl,
-              });
-          } else {
-              await navigator.clipboard.writeText(productUrl);
-              alert("تم نسخ رابط المنتج");
-          }
-      } catch (error) {
-          if (error.name !== "AbortError") {
-              console.error("Share error:", error);
-          }
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: product.name,
+          text: product.name,
+          url: productUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(productUrl);
+        alert("تم نسخ رابط المنتج");
       }
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error("Share error:", error);
+      }
+    }
   };
   const [categoryAttributes, setCategoryAttributes] = useState([]);
   const [productAttributes, setProductAttributes] = useState({});
   const handleAttributeChange = (attributeId, value) => {
 
-      setProductAttributes(prev => ({
-          ...prev,
-          [attributeId]: value
-      }));
+    setProductAttributes(prev => ({
+      ...prev,
+      [attributeId]: value
+    }));
 
   };
   // const fetchCategoryAttributes = async (categoryCode) => {
@@ -488,7 +487,7 @@ const removeEditingVariant = (index) => {
       const data = await res.json();
 
       if (data.success) {
-        alert(t.order_status_updated,"✅");
+        alert(t.order_status_updated, "✅");
         fetchDashboardData(); // إعادة تحميل الطلبات والإحصائيات
       } else {
         alert(data.error || t.update_order_status_failed);
@@ -525,7 +524,7 @@ const removeEditingVariant = (index) => {
   const addVariant = () => {
     setVariants((prev) => [
       ...prev,
-      { title: "", color: "", size: "", book_language: "", stock: 0, image_source: "file", image: null, extra_images:[], image_url: "", is_active: true, attributes:{} }
+      { title: "", color: "", size: "", book_language: "", stock: 0, image_source: "file", image: null, extra_images: [], image_url: "", is_active: true, attributes: {} }
     ]);
   };
 
@@ -557,12 +556,12 @@ const removeEditingVariant = (index) => {
       variants: prev.variants.map((variant, index) =>
         index === variantIndex
           ? {
-              ...variant,
-              attributes: {
-                ...variant.attributes,
-                [attributeId]: value,
-              },
-            }
+            ...variant,
+            attributes: {
+              ...variant.attributes,
+              [attributeId]: value,
+            },
+          }
           : variant
       ),
     }));
@@ -588,13 +587,13 @@ const removeEditingVariant = (index) => {
   const [extraImages, setExtraImages] = useState([]);
   const handleExtraImagesChange = (e) => {
     // تحويل FileList إلى Array
-    const files = Array.from(e.target.files); 
+    const files = Array.from(e.target.files);
     setExtraImages((prevImages) => [...prevImages, ...files]);
   };
   const removeExtraImage = (index) => {
     setExtraImages((prevImages) => prevImages.filter((_, i) => i !== index));
   }
-  
+
   // احتساب المخزون الكلي تلقائياً في حال وجود نسخ
   // const totalStock = variants.length > 0 
   //   ? variants.reduce((acc, curr) => acc + (parseInt(curr.stock) || 0), 0)
@@ -606,7 +605,7 @@ const removeEditingVariant = (index) => {
     const token = localStorage.getItem("access_token");
     const payload = new FormData();
     payload.append("name", formData.name);
-    
+
     payload.append("describtion", formData.describtion);
     payload.append("category", formData.category);
     console.log("CATEGORY BEFORE SEND:", formData.category);
@@ -620,7 +619,7 @@ const removeEditingVariant = (index) => {
     } else if (formData.image_source === "url") {
       payload.append("image_url", formData.instagram_image_url);
     }
-    
+
     payload.append("stock", parseInt(formData.stock) || 0);
     // خصائص المنتج الرئيسي
     payload.append(
@@ -629,7 +628,7 @@ const removeEditingVariant = (index) => {
     );
     // payload.append("stock", totalStock);
     extraImages.forEach((img) => {
-        payload.append("extra_images", img);
+      payload.append("extra_images", img);
     });
     variants.forEach((v, index) => {
       payload.append(`variants[${index}][title]`, v.title || `نسخة ${index + 1}`);
@@ -651,7 +650,7 @@ const removeEditingVariant = (index) => {
         payload.append(`variants[${index}][image_url]`, v.image_url);
       }
       (v.extra_images || []).forEach((img) => {
-          payload.append(`variants[${index}][extra_images]`, img);
+        payload.append(`variants[${index}][extra_images]`, img);
       });
       payload.append(
         `variants[${index}][attributes]`,
@@ -667,10 +666,10 @@ const removeEditingVariant = (index) => {
         body: payload,
       });
       const data = await res.json();
-      
+
       if (data.success || res.ok) {
-        console.log("ADD PRODUCT RESPONSE ",data)
-        alert(t.product_added_success , "🎉");
+        console.log("ADD PRODUCT RESPONSE ", data)
+        alert(t.product_added_success, "🎉");
         window.location.reload();
       } else {
         alert(data.error || t.add_product_failed);
@@ -688,7 +687,7 @@ const removeEditingVariant = (index) => {
     console.log(editingProduct.id);
 
     const token = localStorage.getItem("access_token");
-    
+
     // إعداد البيانات المرسلة للتعديل
 
     const payload = new FormData();
@@ -733,7 +732,7 @@ const removeEditingVariant = (index) => {
     //     }
     //   });
 
-      
+
     //   if (v.image_source === "file") {
     //     if (v.image instanceof File) {
     //       payload.append(`variants[${index}][image]`, v.image);
@@ -761,7 +760,7 @@ const removeEditingVariant = (index) => {
         index,
         v.attributes
       );
-     
+
       payload.append(`variants[${index}][id]`, v.id || "");
       payload.append(`variants[${index}][title]`, v.title || "");
       payload.append(`variants[${index}][color]`, v.color_hex || "");
@@ -827,24 +826,24 @@ const removeEditingVariant = (index) => {
       );
     }
 
-    
+
     try {
       // fetch(`http://localhost:8000/api/seller/products/update/${editingProduct.id}/`, {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/seller/products/update/${editingProduct.id}/`, {
         method: "POST",
-        headers: { 
-          
-          Authorization: `Bearer ${token}` 
+        headers: {
+
+          Authorization: `Bearer ${token}`
         },
         body: payload,
       });
 
       const data = await res.json();
       if (data.success) {
-        alert(t.product_updated_successfully,"✨");
+        alert(t.product_updated_successfully, "✨");
         setEditingProduct(null);
         // setT(data.translations);
-        fetchProducts(); 
+        fetchProducts();
       } else {
         alert(data.error || "فشل التحديث");
       }
@@ -873,55 +872,55 @@ const removeEditingVariant = (index) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyStoreLink = async () => {
-      if (!storeLink) return;
+    if (!storeLink) return;
 
-      try {
-          await navigator.clipboard.writeText(storeLink);
+    try {
+      await navigator.clipboard.writeText(storeLink);
 
-          setCopied(true);
+      setCopied(true);
 
-          setTimeout(() => {
-              setCopied(false);
-          }, 2000);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
 
-      } catch (error) {
-          console.error("COPY STORE LINK ERROR:", error);
-      }
+    } catch (error) {
+      console.error("COPY STORE LINK ERROR:", error);
+    }
   };
 
 
   const handleShareStoreLink = async () => {
-      if (!storeLink) return;
+    if (!storeLink) return;
 
-      try {
+    try {
 
-          // إذا كان الجهاز يدعم المشاركة
-          if (navigator.share) {
+      // إذا كان الجهاز يدعم المشاركة
+      if (navigator.share) {
 
-              await navigator.share({
-                  title: "متجري",
-                  text: "تفضل بزيارة متجري",
-                  url: storeLink,
-              });
+        await navigator.share({
+          title: "متجري",
+          text: "تفضل بزيارة متجري",
+          url: storeLink,
+        });
 
-          } else {
+      } else {
 
-              // إذا لم يدعم المشاركة، ننسخ الرابط
-              await handleCopyStoreLink();
-
-          }
-
-      } catch (error) {
-
-          // المستخدم أغلق نافذة المشاركة
-          if (error.name !== "AbortError") {
-              console.error(
-                  "SHARE STORE LINK ERROR:",
-                  error
-              );
-          }
+        // إذا لم يدعم المشاركة، ننسخ الرابط
+        await handleCopyStoreLink();
 
       }
+
+    } catch (error) {
+
+      // المستخدم أغلق نافذة المشاركة
+      if (error.name !== "AbortError") {
+        console.error(
+          "SHARE STORE LINK ERROR:",
+          error
+        );
+      }
+
+    }
   };
   const handleConnectInstagram = async () => {
     try {
@@ -956,18 +955,18 @@ const removeEditingVariant = (index) => {
   return (
     // <div className="seller-container" style={{ display: "flex", background: "#f8fafc", minHeight: "100vh", direction: "rtl", fontFamily: "system-ui, sans-serif" }}>
     <div
-        className="seller-container"
-        style={{
-            display: "flex",
-            width: "100%",
-            maxWidth: "100%",
-            minHeight: "100vh",
-            background: "#f8fafc",
-            direction: "rtl",
-            fontFamily: "system-ui, sans-serif",
-            boxSizing: "border-box"
-        }}
-    >  
+      className="seller-container"
+      style={{
+        display: "flex",
+        width: "100%",
+        maxWidth: "100%",
+        minHeight: "100vh",
+        background: "#f8fafc",
+        direction: "rtl",
+        fontFamily: "system-ui, sans-serif",
+        boxSizing: "border-box"
+      }}
+    >
       {/* القائمة الجانبية (Sidebar) */}
       <div className="sidebar" style={{ boxSizing: "border-box", background: "#fff", borderLeft: "1px solid #e2e8f0", padding: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <div className="logo" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "22px", fontWeight: "bold", color: "#1e3a8a", marginBottom: "30px" }}>
@@ -989,38 +988,38 @@ const removeEditingVariant = (index) => {
           </span>
         </div>
         {storeLink && (
-            <div>
-                {/* <span>رابط متجري:</span> */}
-                <a
-                    href={storeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    {storeLink}
-                </a>
-            </div>
+          <div>
+            {/* <span>رابط متجري:</span> */}
+            <a
+              href={storeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {storeLink}
+            </a>
+          </div>
         )}
         {storeLink && (
-            <div
-                style={{
-                    background: "#f8fafc",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "14px",
-                    padding: "14px",
-                    marginBottom: "18px",
-                }}
-            >
+          <div
+            style={{
+              background: "#f8fafc",
+              border: "1px solid #e2e8f0",
+              borderRadius: "14px",
+              padding: "14px",
+              marginBottom: "18px",
+            }}
+          >
 
-                {/* عنوان البطاقة */}
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginBottom: "10px",
-                    }}
-                >
-                    {/* <span
+            {/* عنوان البطاقة */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "10px",
+              }}
+            >
+              {/* <span
                         style={{
                             width: "34px",
                             height: "34px",
@@ -1035,165 +1034,165 @@ const removeEditingVariant = (index) => {
                         🔗
                     </span> */}
 
-                    <div>
-                        <div
-                            style={{
-                                fontSize: "14px",
-                                fontWeight: "700",
-                                color: "#0f172a",
-                            }}
-                        >
-                            {t.my_store_link}
-                        </div>
-
-                        <div
-                            style={{
-                                fontSize: "11px",
-                                color: "#64748b",
-                                marginTop: "2px",
-                            }}
-                        >
-                            {t.share_store_with_customers}
-                        </div>
-                    </div>
-                </div>
-
-
-                {/* الرابط */}
+              <div>
                 <div
-                    style={{
-                        background: "#fff",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "9px",
-                        padding: "9px 10px",
-                        marginBottom: "10px",
-                        direction: "ltr",
-                        overflow: "hidden",
-                    }}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    color: "#0f172a",
+                  }}
                 >
-                    <a
-                        href={storeLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            display: "block",
-                            color: "#2563eb",
-                            fontSize: "12px",
-                            textDecoration: "none",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                        }}
-                        title={storeLink}
-                    >
-                        {storeLink}
-                    </a>
+                  {t.my_store_link}
                 </div>
 
-
-                {/* الأزرار */}
                 <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gap: "8px",
-                    }}
+                  style={{
+                    fontSize: "11px",
+                    color: "#64748b",
+                    marginTop: "2px",
+                  }}
                 >
-
-                    {/* نسخ */}
-                    <button
-                        type="button"
-                        onClick={handleCopyStoreLink}
-                        style={{
-                            border: "1px solid #dbeafe",
-                            background: copied
-                                ? "#ecfdf5"
-                                : "#eff6ff",
-                            color: copied
-                                ? "#059669"
-                                : "#2563eb",
-                            borderRadius: "8px",
-                            padding: "8px 6px",
-                            cursor: "pointer",
-                            fontSize: "12px",
-                            fontWeight: "600",
-                            transition: "all 0.2s",
-                        }}
-                    >
-                        {copied ? "✓ " : t.copy_link}
-                    </button>
-
-
-                    {/* مشاركة */}
-                    <button
-                        type="button"
-                        onClick={(e) => {
-                          console.log("Share link is clicked!!");
-                          e.stopPropagation();
-                          // handleShareStoreLink();
-                        }}
-                        // style={{
-                        //     border: "1px solid #e2e8f0",
-                        //     background: "#fff",
-                        //     color: "#475569",
-                        //     borderRadius: "8px",
-                        //     padding: "8px 6px",
-                        //     cursor: "pointer",
-                        //     fontSize: "12px",
-                        //     fontWeight: "600",
-                        //     transition: "all 0.2s",
-                        style={{
-                            position: "relative",
-                            zIndex: 9999,
-                            pointerEvents: "auto",
-                            display: "inline-block",
-                            border: "1px solid #e2e8f0",
-                            background: "#fff",
-                            color: "#475569",
-                            borderRadius: "8px",
-                            padding: "8px 6px",
-                            cursor: "pointer",
-                            fontSize: "12px",
-                            fontWeight: "600",
-                        
-                        }}
-                    >
-                        📤{t.share}
-                    </button>
-
+                  {t.share_store_with_customers}
                 </div>
+              </div>
+            </div>
 
 
-                {/* فتح المتجر */}
-                <a
-                    href={storeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        marginTop: "8px",
-                        padding: "8px",
-                        borderRadius: "8px",
-                        background: "#2563eb",
-                        color: "#fff",
-                        textDecoration: "none",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                    }}
-                >
-                    🌐 {t.open_my_store}
-                </a>
+            {/* الرابط */}
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e2e8f0",
+                borderRadius: "9px",
+                padding: "9px 10px",
+                marginBottom: "10px",
+                direction: "ltr",
+                overflow: "hidden",
+              }}
+            >
+              <a
+                href={storeLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "block",
+                  color: "#2563eb",
+                  fontSize: "12px",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+                title={storeLink}
+              >
+                {storeLink}
+              </a>
+            </div>
+
+
+            {/* الأزرار */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "8px",
+              }}
+            >
+
+              {/* نسخ */}
+              <button
+                type="button"
+                onClick={handleCopyStoreLink}
+                style={{
+                  border: "1px solid #dbeafe",
+                  background: copied
+                    ? "#ecfdf5"
+                    : "#eff6ff",
+                  color: copied
+                    ? "#059669"
+                    : "#2563eb",
+                  borderRadius: "8px",
+                  padding: "8px 6px",
+                  cursor: "pointer",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  transition: "all 0.2s",
+                }}
+              >
+                {copied ? "✓ " : t.copy_link}
+              </button>
+
+
+              {/* مشاركة */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  console.log("Share link is clicked!!");
+                  e.stopPropagation();
+                  // handleShareStoreLink();
+                }}
+                // style={{
+                //     border: "1px solid #e2e8f0",
+                //     background: "#fff",
+                //     color: "#475569",
+                //     borderRadius: "8px",
+                //     padding: "8px 6px",
+                //     cursor: "pointer",
+                //     fontSize: "12px",
+                //     fontWeight: "600",
+                //     transition: "all 0.2s",
+                style={{
+                  position: "relative",
+                  zIndex: 9999,
+                  pointerEvents: "auto",
+                  display: "inline-block",
+                  border: "1px solid #e2e8f0",
+                  background: "#fff",
+                  color: "#475569",
+                  borderRadius: "8px",
+                  padding: "8px 6px",
+                  cursor: "pointer",
+                  fontSize: "12px",
+                  fontWeight: "600",
+
+                }}
+              >
+                📤{t.share}
+              </button>
 
             </div>
+
+
+            {/* فتح المتجر */}
+            <a
+              href={storeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                marginTop: "8px",
+                padding: "8px",
+                borderRadius: "8px",
+                background: "#2563eb",
+                color: "#fff",
+                textDecoration: "none",
+                fontSize: "12px",
+                fontWeight: "600",
+              }}
+            >
+              🌐 {t.open_my_store}
+            </a>
+
+          </div>
         )}
         <div style={{ color: "#64748b", fontSize: "14px", padding: "0 10px 10px" }}>{t.main_menu}</div>
         <button type="button" onClick={() => setActiveTab("products")} style={{ border: "none", background: "none", textAlign: "right", padding: "12px", borderRadius: "8px", cursor: "pointer", fontSize: "15px", color: "#475569" }}>🏠 {t.home}</button>
         <button
           type="button"
-          onClick={() => {console.log("It is clicked",orders);setActiveTab("orders")}}
+          onClick={() => { console.log("It is clicked", orders); setActiveTab("orders") }}
           style={{
             border: "none",
             background: activeTab === "orders" ? "#eff6ff" : "none",
@@ -1219,76 +1218,76 @@ const removeEditingVariant = (index) => {
           >
             {orders.length}
           </span>
-        </button> 
+        </button>
         <button
           type="button"
           onClick={() => setActiveTab("archivedOrders")}
           style={{
-              border: "none",
-              background:
-                  activeTab === "archivedOrders"
-                      ? "#eff6ff"
-                      : "none",
-              textAlign: "right",
-              padding: "12px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "15px",
-              color:
-                  activeTab === "archivedOrders"
-                      ? "#2563eb"
-                      : "#475569",
-              fontWeight:
-                  activeTab === "archivedOrders"
-                      ? "bold"
-                      : "normal"
+            border: "none",
+            background:
+              activeTab === "archivedOrders"
+                ? "#eff6ff"
+                : "none",
+            textAlign: "right",
+            padding: "12px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontSize: "15px",
+            color:
+              activeTab === "archivedOrders"
+                ? "#2563eb"
+                : "#475569",
+            fontWeight:
+              activeTab === "archivedOrders"
+                ? "bold"
+                : "normal"
           }}
-      >
+        >
           🗄️ {t.archived_orders || "الطلبات المؤرشفة"}
-      </button>
-      <button
+        </button>
+        <button
           type="button"
           onClick={() => setActiveTab("notifications")}
           style={{
-              position: "relative",
-              border: "none",
-              background: "none",
-              cursor: "pointer",
+            position: "relative",
+            border: "none",
+            background: "none",
+            cursor: "pointer",
           }}
-      >
+        >
           🔔
 
           {unreadCount > 0 && (
-              <span
-                  style={{
-                      position: "absolute",
-                      top: "-6px",
-                      right: "-8px",
+            <span
+              style={{
+                position: "absolute",
+                top: "-6px",
+                right: "-8px",
 
-                      minWidth: "18px",
-                      height: "18px",
+                minWidth: "18px",
+                height: "18px",
 
-                      padding: "0 5px",
+                padding: "0 5px",
 
-                      background: "#ef4444",
-                      color: "#fff",
+                background: "#ef4444",
+                color: "#fff",
 
-                      borderRadius: "999px",
+                borderRadius: "999px",
 
-                      fontSize: "11px",
-                      fontWeight: "bold",
+                fontSize: "11px",
+                fontWeight: "bold",
 
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
 
-                      lineHeight: "18px",
-                  }}
-              >
-                  {unreadCount}
-              </span>
+                lineHeight: "18px",
+              }}
+            >
+              {unreadCount}
+            </span>
           )}
-      </button>
+        </button>
         {/* <button
           type="button"
           onClick={handleConnectInstagram}
@@ -1311,7 +1310,7 @@ const removeEditingVariant = (index) => {
 
       {/* المحتوى الرئيسي للموقع */}
       <div className="main-content" style={{ flex: 1, padding: "30px", position: "relative" }}>
-        
+
         {/* شريط علوي للهيدر */}
         <div className="top-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px" }}>
           {/* <div>
@@ -1324,7 +1323,7 @@ const removeEditingVariant = (index) => {
           </div>
         </div>
 
-       <div className="stats-grid">
+        <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-title">{t.total_sales}</div>
             <div className="stat-value">
@@ -1386,12 +1385,12 @@ const removeEditingVariant = (index) => {
                   </tr>
                 ) : (
                   productsList.map((item) => (
-                    <tr key={item.id} 
-                      onClick={() => {console.log(item.id); navigate(`/seller/products/${item.id}`)}}
-                
+                    <tr key={item.id}
+                      onClick={() => { console.log(item.id); navigate(`/seller/products/${item.id}`) }}
+
                       style={{ borderBottom: "1px solid #f1f5f9" }}>
-                     <td
-                        
+                      <td
+
                         style={{
                           padding: "15px",
                           display: "flex",
@@ -1421,10 +1420,10 @@ const removeEditingVariant = (index) => {
                           {item.stock > 0 ? t.active : t.out_of_stock}
                         </span>
                       </td>
-                      <td style={{ fontWeight: "bold", color: "#0f172a" }}>{item.price} {item.currency || "₺"}</td>
-                      
+                      <td style={{ fontWeight: "bold", color: "#0f172a" }}>{item.price} {item.currency || "$"}</td>
+
                       <td style={{ textAlign: "center" }}>
-                        <button 
+                        <button
                           type="button"
                           onClick={(e) => {
 
@@ -1436,11 +1435,11 @@ const removeEditingVariant = (index) => {
                               item.variants?.map(v => v.attributes)
                             );
 
-                            console.log("THE ITEMS ARE ",item);
-                            console.log("The Vriants are: ",item.variants);
-                            console.log("ITEM ATTRIBUETS",item.attributes);
-                            console.log("EDIT CATEGORY",item.category);
-                            console.log("EDIT CATEGORY CODE",item.category_code);
+                            console.log("THE ITEMS ARE ", item);
+                            console.log("The Vriants are: ", item.variants);
+                            console.log("ITEM ATTRIBUETS", item.attributes);
+                            console.log("EDIT CATEGORY", item.category);
+                            console.log("EDIT CATEGORY CODE", item.category_code);
                             // const productAttributes = {};
                             // (item.attributes || []).forEach(attr => {
                             //   if (attr.attribute != null) {
@@ -1451,7 +1450,7 @@ const removeEditingVariant = (index) => {
                             // if (item.category) {
                             //   fetchCategoryAttributes(item.category);
                             // }
-                            
+
                             const selectedCategory = item.category_code || item.category;
 
                             console.log("Selected category:", selectedCategory);
@@ -1488,7 +1487,7 @@ const removeEditingVariant = (index) => {
                               name: item.name,
                               price: item.price,
                               old_price: item.old_price || "",
-                              currency: item.currency || "₺",
+                              currency: item.currency || "$",
                               stock: item.stock,
                               describtion: item.describtion || "",
                               // category: item.category || "",
@@ -1506,26 +1505,26 @@ const removeEditingVariant = (index) => {
                               variants: Array.isArray(item.variants)
                                 ? item.variants.map(v => {
 
-                                    const attributes = {};
+                                  const attributes = {};
 
-                                    (v.attributes || []).forEach(attr => {
-                                      if (attr.attribute != null) {
-                                        attributes[attr.attribute] =
-                                          attr.option != null
-                                            ? attr.option
-                                            : attr.value;
-                                      }
-                                    });
+                                  (v.attributes || []).forEach(attr => {
+                                    if (attr.attribute != null) {
+                                      attributes[attr.attribute] =
+                                        attr.option != null
+                                          ? attr.option
+                                          : attr.value;
+                                    }
+                                  });
 
-                                    return {
-                                      ...v,
-                                      image_source: v.image_url ? "url" : "file",
-                                      extra_images: v.images || [],
-                                      attributes: attributes,
-                                    };
-                                  })
+                                  return {
+                                    ...v,
+                                    image_source: v.image_url ? "url" : "file",
+                                    extra_images: v.images || [],
+                                    attributes: attributes,
+                                  };
+                                })
                                 : []
-                              
+
                             });
                             setModalTab("basic");
                           }}
@@ -1552,7 +1551,7 @@ const removeEditingVariant = (index) => {
                         >
                             🔗
                         </button> */}
-                        <button type="button" onClick={(e) =>{e.stopPropagation();  handleDelete(item.id)}}style={{ background: "#fef2f2", color: "#ef4444", border: "none", padding: "6px 12px", borderRadius: "6px", cursor: "pointer" }}>🗑️</button>
+                        <button type="button" onClick={(e) => { e.stopPropagation(); handleDelete(item.id) }} style={{ background: "#fef2f2", color: "#ef4444", border: "none", padding: "6px 12px", borderRadius: "6px", cursor: "pointer" }}>🗑️</button>
                       </td>
                     </tr>
                   ))
@@ -1607,7 +1606,7 @@ const removeEditingVariant = (index) => {
 
                     <td>{order.products_count}</td>
 
-                    <td>{order.total_price} $</td>
+                    <td>{order.total_price} ₺</td>
 
                     <td>
                       {order.status === "processing" && t.processing}
@@ -1645,11 +1644,11 @@ const removeEditingVariant = (index) => {
         {activeTab === "add" && (
           <form onSubmit={handleSubmit} style={{ background: "#fff", padding: "30px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
             <h3 style={{ marginTop: 0, marginBottom: "20px" }}>📋{t.add_new_product}</h3>
-            
+
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
               <div>
                 <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>{t.product_name_label}</label>
-                <input type="text" name="name" style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }}  value={formData.name} onChange={handleBaseChange} required />
+                <input type="text" name="name" style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={formData.name} onChange={handleBaseChange} required />
               </div>
               <div>
                 <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>{t.category_label}</label>
@@ -1677,9 +1676,9 @@ const removeEditingVariant = (index) => {
                           type="text"
                           className="attribute-input"
                           value={productAttributes[attr.id] || ""}
-                          onChange={(e) => handleAttributeChange(attr.id,e.target.value)
+                          onChange={(e) => handleAttributeChange(attr.id, e.target.value)
                           }
-                          
+
                         />
                       )}
 
@@ -1760,7 +1759,7 @@ const removeEditingVariant = (index) => {
               <div>
                 <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>{t.currency}</label>
                 <select name="currency" style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={formData.currency} onChange={handleBaseChange}>
-                  <option value="₺">₺ </option>
+                  <option value="$">$ </option>
                   <option value="USD">USD </option>
                   <option value="TRY">TRY </option>
                 </select>
@@ -1773,7 +1772,7 @@ const removeEditingVariant = (index) => {
               <div style={{ display: "flex", gap: "20px", marginBottom: "10px" }}>
                 <label><input type="radio" name="image_source" value="file" checked={formData.image_source === "file"} onChange={handleBaseChange} /> رفع ملف صورة</label>
                 <label><input type="radio" name="image_source" value="url" checked={formData.image_source === "url"} onChange={handleBaseChange} /> رابط صورة (Instagram / Web)</label>
-              
+
               </div>
               {formData.image_source === "file" ? (
                 <input type="file" accept="image/*" onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.files[0] }))} />
@@ -1866,7 +1865,7 @@ const removeEditingVariant = (index) => {
                 <button type="button" onClick={addVariant} style={{ background: "#10b981", color: "#fff", border: "none", padding: "8px 16px", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}>
                   ➕{t.add_new_variant}
                 </button>
-                
+
               </div>
 
               {variants.length === 0 ? (
@@ -2016,79 +2015,79 @@ const removeEditingVariant = (index) => {
                         <div className="variant-attributes">
                           {categoryAttributes.map((attr) => (
                             <div
-                                key={attr.id}
+                              key={attr.id}
+                              style={{
+                                marginBottom: "15px",
+                              }}
+                            >
+                              <label
                                 style={{
-                                  marginBottom: "15px",
+                                  display: "block",
+                                  marginBottom: "6px",
+                                  fontWeight: "bold",
                                 }}
                               >
-                                <label
-                                  style={{
-                                    display: "block",
-                                    marginBottom: "6px",
-                                    fontWeight: "bold",
-                                  }}
+                                {attr.translation}
+                              </label>
+
+                              {/* Text */}
+                              {attr.attribute_type === "text" && (
+                                <input
+                                  type="text"
+                                  className="attribute-input"
+                                  value={v.attributes?.[attr.id] || ""}
+                                  onChange={(e) =>
+                                    updateVariantAttribute(index, attr.id, e.target.value)
+                                  }
+
+                                />
+                              )}
+
+                              {/* Number */}
+                              {attr.attribute_type === "number" && (
+                                <input
+                                  type="number"
+                                  className="attribute-input"
+                                  value={v.attributes?.[attr.id] || ""}
+                                  onChange={(e) =>
+                                    updateVariantAttribute(index, attr.id, e.target.value)
+                                  }
+
+                                />
+                              )}
+
+                              {/* Select */}
+                              {attr.attribute_type === "select" && (
+                                <select
+                                  value={v.attributes?.[attr.id] || ""}
+                                  className="attribute-select"
+                                  onChange={(e) =>
+                                    updateVariantAttribute(index, attr.id, e.target.value)
+                                  }
+
                                 >
-                                  {attr.translation}
-                                </label>
+                                  <option value="">اختر</option>
 
-                                {/* Text */}
-                                {attr.attribute_type === "text" && (
-                                  <input
-                                    type="text"
-                                    className="attribute-input"
-                                    value={v.attributes?.[attr.id] || ""}
-                                    onChange={(e) =>
-                                      updateVariantAttribute(index, attr.id, e.target.value)
-                                    }
-                                    
-                                  />
-                                )}
+                                  {attr.options.map((option) => (
+                                    <option key={option.id} value={option.id}>
+                                      {option.translation}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
 
-                                {/* Number */}
-                                {attr.attribute_type === "number" && (
-                                  <input
-                                    type="number"
-                                    className="attribute-input"
-                                    value={v.attributes?.[attr.id] || ""}
-                                    onChange={(e) =>
-                                      updateVariantAttribute(index, attr.id, e.target.value)
-                                    }
-                                    
-                                  />
-                                )}
-
-                                {/* Select */}
-                                {attr.attribute_type === "select" && (
-                                  <select
-                                    value={v.attributes?.[attr.id] || ""}
-                                    className="attribute-select"
-                                    onChange={(e) =>
-                                      updateVariantAttribute(index, attr.id, e.target.value)
-                                    }
-                                    
-                                  >
-                                    <option value="">اختر</option>
-
-                                    {attr.options.map((option) => (
-                                      <option key={option.id} value={option.id}>
-                                        {option.translation}
-                                      </option>
-                                    ))}
-                                  </select>
-                                )}
-
-                                {/* Color */}
-                                {attr.attribute_type === "color" && (
-                                  <input
-                                    type="color"
-                                    className="attribute-color"
-                                    value={v.attributes?.[attr.id] || "#000000"}
-                                    onChange={(e) =>
-                                      updateVariantAttribute(index, attr.id, e.target.value)
-                                    }
-                                  />
-                                )}
-                              </div>
+                              {/* Color */}
+                              {attr.attribute_type === "color" && (
+                                <input
+                                  type="color"
+                                  className="attribute-color"
+                                  value={v.attributes?.[attr.id] || "#000000"}
+                                  onChange={(e) =>
+                                    updateVariantAttribute(index, attr.id, e.target.value)
+                                  }
+                                />
+                              )}
+                            </div>
                           ))}
                         </div>
                       )}
@@ -2141,7 +2140,7 @@ const removeEditingVariant = (index) => {
           </form>
         )}
         {activeTab === "archivedOrders" && (
-            <SellerArchivedOrders />
+          <SellerArchivedOrders />
         )}
         {/* {activeTab === "notifications" && (
             <Notifications
@@ -2149,8 +2148,8 @@ const removeEditingVariant = (index) => {
             />
         )} */}
         <Notifications
-            onUnreadCountChange={setUnreadCount}
-            visible={activeTab === "notifications"}
+          onUnreadCountChange={setUnreadCount}
+          visible={activeTab === "notifications"}
         />
         {/* النافذة المنبثقة للتعديل الاحترافي الكامل والمفعل */}
         {editingProduct && (
@@ -2186,7 +2185,7 @@ const removeEditingVariant = (index) => {
 
               {/* محتوى المودال الداخلي الفعلي */}
               <form onSubmit={handleUpdate} style={{ padding: "20px" }}>
-                
+
                 {/* 1. التبويب الأساسي */}
                 {modalTab === "basic" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -2212,149 +2211,149 @@ const removeEditingVariant = (index) => {
                       </select>
                     </div>
                     {/* خصائص المنتج الرئيسية */}
-                      {categoryAttributes.length > 0 && (
-                        <div
+                    {categoryAttributes.length > 0 && (
+                      <div
+                        style={{
+                          borderTop: "1px solid #f1f5f9",
+                          paddingTop: "15px",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <h4
                           style={{
-                            borderTop: "1px solid #f1f5f9",
-                            paddingTop: "15px",
-                            marginTop: "5px",
+                            marginBottom: "15px",
+                            color: "#334155",
                           }}
                         >
-                          <h4
+                          خصائص المنتج
+                        </h4>
+
+                        {categoryAttributes.map((attr) => (
+                          <div
+                            key={attr.id}
                             style={{
                               marginBottom: "15px",
-                              color: "#334155",
                             }}
                           >
-                            خصائص المنتج
-                          </h4>
-
-                          {categoryAttributes.map((attr) => (
-                            <div
-                              key={attr.id}
+                            <label
                               style={{
-                                marginBottom: "15px",
+                                display: "block",
+                                marginBottom: "6px",
+                                fontWeight: "bold",
+                                fontSize: "14px",
+                                color: "#334155",
                               }}
                             >
-                              <label
+                              {attr.translation}
+                            </label>
+
+                            {/* Text */}
+                            {attr.attribute_type === "text" && (
+                              <input
+                                type="text"
+                                value={editingProduct.attributes?.[attr.id] || ""}
+                                onChange={(e) =>
+                                  setEditingProduct((prev) => ({
+                                    ...prev,
+                                    attributes: {
+                                      ...(prev.attributes || {}),
+                                      [attr.id]: e.target.value,
+                                    },
+                                  }))
+                                }
                                 style={{
-                                  display: "block",
-                                  marginBottom: "6px",
-                                  fontWeight: "bold",
-                                  fontSize: "14px",
-                                  color: "#334155",
+                                  width: "100%",
+                                  padding: "10px",
+                                  borderRadius: "8px",
+                                  border: "1px solid #cbd5e1",
+                                }}
+                              />
+                            )}
+
+                            {/* Number */}
+                            {attr.attribute_type === "number" && (
+                              <input
+                                type="number"
+                                value={editingProduct.attributes?.[attr.id] || ""}
+                                onChange={(e) =>
+                                  setEditingProduct((prev) => ({
+                                    ...prev,
+                                    attributes: {
+                                      ...(prev.attributes || {}),
+                                      [attr.id]: e.target.value,
+                                    },
+                                  }))
+                                }
+                                style={{
+                                  width: "100%",
+                                  padding: "10px",
+                                  borderRadius: "8px",
+                                  border: "1px solid #cbd5e1",
+                                }}
+                              />
+                            )}
+
+                            {/* Select */}
+                            {attr.attribute_type === "select" && (
+                              <select
+                                value={editingProduct.attributes?.[attr.id] || ""}
+                                onChange={(e) =>
+                                  setEditingProduct((prev) => ({
+                                    ...prev,
+                                    attributes: {
+                                      ...(prev.attributes || {}),
+                                      [attr.id]: e.target.value,
+                                    },
+                                  }))
+                                }
+                                style={{
+                                  width: "100%",
+                                  padding: "10px",
+                                  borderRadius: "8px",
+                                  border: "1px solid #cbd5e1",
                                 }}
                               >
-                                {attr.translation}
-                              </label>
+                                <option value="">اختر</option>
 
-                              {/* Text */}
-                              {attr.attribute_type === "text" && (
-                                <input
-                                  type="text"
-                                  value={editingProduct.attributes?.[attr.id] || ""}
-                                  onChange={(e) =>
-                                    setEditingProduct((prev) => ({
-                                      ...prev,
-                                      attributes: {
-                                        ...(prev.attributes || {}),
-                                        [attr.id]: e.target.value,
-                                      },
-                                    }))
-                                  }
-                                  style={{
-                                    width: "100%",
-                                    padding: "10px",
-                                    borderRadius: "8px",
-                                    border: "1px solid #cbd5e1",
-                                  }}
-                                />
-                              )}
+                                {attr.options.map((option) => (
+                                  <option
+                                    key={option.id}
+                                    value={option.id}
+                                  >
+                                    {option.translation}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
 
-                              {/* Number */}
-                              {attr.attribute_type === "number" && (
-                                <input
-                                  type="number"
-                                  value={editingProduct.attributes?.[attr.id] || ""}
-                                  onChange={(e) =>
-                                    setEditingProduct((prev) => ({
-                                      ...prev,
-                                      attributes: {
-                                        ...(prev.attributes || {}),
-                                        [attr.id]: e.target.value,
-                                      },
-                                    }))
-                                  }
-                                  style={{
-                                    width: "100%",
-                                    padding: "10px",
-                                    borderRadius: "8px",
-                                    border: "1px solid #cbd5e1",
-                                  }}
-                                />
-                              )}
-
-                              {/* Select */}
-                              {attr.attribute_type === "select" && (
-                                <select
-                                  value={editingProduct.attributes?.[attr.id] || ""}
-                                  onChange={(e) =>
-                                    setEditingProduct((prev) => ({
-                                      ...prev,
-                                      attributes: {
-                                        ...(prev.attributes || {}),
-                                        [attr.id]: e.target.value,
-                                      },
-                                    }))
-                                  }
-                                  style={{
-                                    width: "100%",
-                                    padding: "10px",
-                                    borderRadius: "8px",
-                                    border: "1px solid #cbd5e1",
-                                  }}
-                                >
-                                  <option value="">اختر</option>
-
-                                  {attr.options.map((option) => (
-                                    <option
-                                      key={option.id}
-                                      value={option.id}
-                                    >
-                                      {option.translation}
-                                    </option>
-                                  ))}
-                                </select>
-                              )}
-
-                              {/* Color */}
-                              {attr.attribute_type === "color" && (
-                                <input
-                                  type="color"
-                                  value={
-                                    editingProduct.attributes?.[attr.id] ||
-                                    "#000000"
-                                  }
-                                  onChange={(e) =>
-                                    setEditingProduct((prev) => ({
-                                      ...prev,
-                                      attributes: {
-                                        ...(prev.attributes || {}),
-                                        [attr.id]: e.target.value,
-                                      },
-                                    }))
-                                  }
-                                  style={{
-                                    width: "50px",
-                                    height: "40px",
-                                    cursor: "pointer",
-                                  }}
-                                />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                            {/* Color */}
+                            {attr.attribute_type === "color" && (
+                              <input
+                                type="color"
+                                value={
+                                  editingProduct.attributes?.[attr.id] ||
+                                  "#000000"
+                                }
+                                onChange={(e) =>
+                                  setEditingProduct((prev) => ({
+                                    ...prev,
+                                    attributes: {
+                                      ...(prev.attributes || {}),
+                                      [attr.id]: e.target.value,
+                                    },
+                                  }))
+                                }
+                                style={{
+                                  width: "50px",
+                                  height: "40px",
+                                  cursor: "pointer",
+                                }}
+                              />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: "15px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
@@ -2379,7 +2378,7 @@ const removeEditingVariant = (index) => {
                     <div>
                       <label style={{ display: "block", marginBottom: "6px", fontSize: "14px", color: "#334155", fontWeight: "bold" }}>{t.currency}</label>
                       <select style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1" }} value={editingProduct.currency} onChange={(e) => setEditingProduct({ ...editingProduct, currency: e.target.value })}>
-                        <option value="₺">₺ (ريال سعودي)</option>
+                        <option value="$">$ (ريال سعودي)</option>
                         <option value="USD">USD (دولار أمريكي)</option>
                         <option value="TRY">TRY (ليرة تركية)</option>
                       </select>
@@ -2450,7 +2449,7 @@ const removeEditingVariant = (index) => {
 
                     {/* هنا سنضيف لاحقًا editingProduct.variants.map(...) */}
                     {editingProduct.variants.map((v, index) => (
-                      <div 
+                      <div
                         key={index}
                         style={{
                           background: "#f8fafc",
@@ -2465,144 +2464,144 @@ const removeEditingVariant = (index) => {
                         <input
                           value={v.title || ""}
                           placeholder={t.variant_name}
-                          onChange={(e) =>updateEditingVariant(index,"totle", e.target.value)}/>
-                          {categoryAttributes.length > 0 && (
-                            <div
+                          onChange={(e) => updateEditingVariant(index, "totle", e.target.value)} />
+                        {categoryAttributes.length > 0 && (
+                          <div
+                            style={{
+                              borderTop: "1px solid #e2e8f0",
+                              paddingTop: "12px",
+                              marginTop: "5px",
+                            }}
+                          >
+                            <label
                               style={{
-                                borderTop: "1px solid #e2e8f0",
-                                paddingTop: "12px",
-                                marginTop: "5px",
+                                display: "block",
+                                fontWeight: "bold",
+                                marginBottom: "12px",
+                                color: "#334155",
                               }}
                             >
-                              <label
+                              {t.variant_properties}
+                            </label>
+
+                            {categoryAttributes.map((attr) => (
+                              <div
+                                key={attr.id}
                                 style={{
-                                  display: "block",
-                                  fontWeight: "bold",
                                   marginBottom: "12px",
-                                  color: "#334155",
                                 }}
                               >
-                               {t.variant_properties}
-                              </label>
-
-                              {categoryAttributes.map((attr) => (
-                                <div
-                                  key={attr.id}
+                                <label
                                   style={{
-                                    marginBottom: "12px",
+                                    display: "block",
+                                    marginBottom: "5px",
+                                    fontSize: "13px",
+                                    color: "#475569",
                                   }}
                                 >
-                                  <label
+                                  {attr.translation}
+                                </label>
+
+                                {/* Text */}
+                                {attr.attribute_type === "text" && (
+                                  <input
+                                    type="text"
+                                    value={v.attributes?.[attr.id] || ""}
+                                    onChange={(e) =>
+                                      updateEditingVariantAttribute(
+                                        index,
+                                        attr.id,
+                                        e.target.value
+                                      )
+                                    }
                                     style={{
-                                      display: "block",
-                                      marginBottom: "5px",
-                                      fontSize: "13px",
-                                      color: "#475569",
+                                      width: "100%",
+                                      padding: "8px",
+                                      borderRadius: "7px",
+                                      border: "1px solid #cbd5e1",
+                                    }}
+                                  />
+                                )}
+
+                                {/* Number */}
+                                {attr.attribute_type === "number" && (
+                                  <input
+                                    type="number"
+                                    value={v.attributes?.[attr.id] || ""}
+                                    onChange={(e) =>
+                                      updateEditingVariantAttribute(
+                                        index,
+                                        attr.id,
+                                        e.target.value
+                                      )
+                                    }
+                                    style={{
+                                      width: "100%",
+                                      padding: "8px",
+                                      borderRadius: "7px",
+                                      border: "1px solid #cbd5e1",
+                                    }}
+                                  />
+                                )}
+
+                                {/* Select */}
+                                {attr.attribute_type === "select" && (
+                                  <select
+                                    value={v.attributes?.[attr.id] || ""}
+                                    onChange={(e) =>
+                                      updateEditingVariantAttribute(
+                                        index,
+                                        attr.id,
+                                        e.target.value
+                                      )
+                                    }
+                                    style={{
+                                      width: "100%",
+                                      padding: "8px",
+                                      borderRadius: "7px",
+                                      border: "1px solid #cbd5e1",
                                     }}
                                   >
-                                    {attr.translation}
-                                  </label>
+                                    <option value="">اختر</option>
 
-                                  {/* Text */}
-                                  {attr.attribute_type === "text" && (
-                                    <input
-                                      type="text"
-                                      value={v.attributes?.[attr.id] || ""}
-                                      onChange={(e) =>
-                                        updateEditingVariantAttribute(
-                                          index,
-                                          attr.id,
-                                          e.target.value
-                                        )
-                                      }
-                                      style={{
-                                        width: "100%",
-                                        padding: "8px",
-                                        borderRadius: "7px",
-                                        border: "1px solid #cbd5e1",
-                                      }}
-                                    />
-                                  )}
+                                    {attr.options.map((option) => (
+                                      <option
+                                        key={option.id}
+                                        value={option.id}
+                                      >
+                                        {option.translation}
+                                      </option>
+                                    ))}
+                                  </select>
+                                )}
 
-                                  {/* Number */}
-                                  {attr.attribute_type === "number" && (
-                                    <input
-                                      type="number"
-                                      value={v.attributes?.[attr.id] || ""}
-                                      onChange={(e) =>
-                                        updateEditingVariantAttribute(
-                                          index,
-                                          attr.id,
-                                          e.target.value
-                                        )
-                                      }
-                                      style={{
-                                        width: "100%",
-                                        padding: "8px",
-                                        borderRadius: "7px",
-                                        border: "1px solid #cbd5e1",
-                                      }}
-                                    />
-                                  )}
-
-                                  {/* Select */}
-                                  {attr.attribute_type === "select" && (
-                                    <select
-                                      value={v.attributes?.[attr.id] || ""}
-                                      onChange={(e) =>
-                                        updateEditingVariantAttribute(
-                                          index,
-                                          attr.id,
-                                          e.target.value
-                                        )
-                                      }
-                                      style={{
-                                        width: "100%",
-                                        padding: "8px",
-                                        borderRadius: "7px",
-                                        border: "1px solid #cbd5e1",
-                                      }}
-                                    >
-                                      <option value="">اختر</option>
-
-                                      {attr.options.map((option) => (
-                                        <option
-                                          key={option.id}
-                                          value={option.id}
-                                        >
-                                          {option.translation}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  )}
-
-                                  {/* Color */}
-                                  {attr.attribute_type === "color" && (
-                                    <input
-                                      type="color"
-                                      value={
-                                        v.attributes?.[attr.id] ||
-                                        "#000000"
-                                      }
-                                      onChange={(e) =>
-                                        updateEditingVariantAttribute(
-                                          index,
-                                          attr.id,
-                                          e.target.value
-                                        )
-                                      }
-                                      style={{
-                                        width: "50px",
-                                        height: "40px",
-                                        cursor: "pointer",
-                                      }}
-                                    />
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          {/* placeholder= {t.variant_name}
+                                {/* Color */}
+                                {attr.attribute_type === "color" && (
+                                  <input
+                                    type="color"
+                                    value={
+                                      v.attributes?.[attr.id] ||
+                                      "#000000"
+                                    }
+                                    onChange={(e) =>
+                                      updateEditingVariantAttribute(
+                                        index,
+                                        attr.id,
+                                        e.target.value
+                                      )
+                                    }
+                                    style={{
+                                      width: "50px",
+                                      height: "40px",
+                                      cursor: "pointer",
+                                    }}
+                                  />
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {/* placeholder= {t.variant_name}
                           onChange={(e) => updateEditingVariant(index, "title", e.target.value)}
                         /> */}
 
@@ -2661,8 +2660,8 @@ const removeEditingVariant = (index) => {
                         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "5px" }}>
                           {(v.extra_images || []).map((img, i) => {
                             // تحديد رابط الصورة سواء كانت ملف جديد أو رابط قديم من السيرفر
-                            const imgSrc = img instanceof File 
-                              ? URL.createObjectURL(img) 
+                            const imgSrc = img instanceof File
+                              ? URL.createObjectURL(img)
                               : getImageUrl(typeof img === "string" ? img : img.image_url);
 
                             return (
@@ -2697,7 +2696,7 @@ const removeEditingVariant = (index) => {
                             }}
                           /> */}
 
-                        {/* {showColorPicker === index && (
+                          {/* {showColorPicker === index && (
                           <div
                             style={{
                               position: "absolute",
@@ -2713,9 +2712,9 @@ const removeEditingVariant = (index) => {
                             />
                           </div>
                         )} */}
-                      </div>
+                        </div>
 
-{/* 
+                        {/* 
                       <input
                         value={v.size}
                         placeholder="المقاس"
@@ -2725,126 +2724,126 @@ const removeEditingVariant = (index) => {
                       /> */}
 
 
-                      <input
-                        type="number"
-                        value={v.stock}
-                        placeholder="المخزون"
-                        onChange={(e)=>
-                          updateEditingVariant(index,"stock",e.target.value)
-                        }
-                      />
+                        <input
+                          type="number"
+                          value={v.stock}
+                          placeholder="المخزون"
+                          onChange={(e) =>
+                            updateEditingVariant(index, "stock", e.target.value)
+                          }
+                        />
 
-                      {/* خصائص النسخة */}
-                      {categoryAttributes.length > 0 && (
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "8px",
-                            marginTop: "10px",
-                            padding: "10px",
-                            background: "#fff",
-                            borderRadius: "8px"
-                          }}
-                        >
+                        {/* خصائص النسخة */}
+                        {categoryAttributes.length > 0 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "8px",
+                              marginTop: "10px",
+                              padding: "10px",
+                              background: "#fff",
+                              borderRadius: "8px"
+                            }}
+                          >
 
-                          <label style={{fontWeight:"bold"}}>
-                            {t.variant_properties}
-                          </label>
-
-
-                          {categoryAttributes.map((attr) => (
-
-                            <div key={attr.id}>
-
-                              <label>
-                                {attr.translation || attr.name}
-                              </label>
+                            <label style={{ fontWeight: "bold" }}>
+                              {t.variant_properties}
+                            </label>
 
 
-                              {/* لو الخاصية Select */}
-                              {attr.attribute_type === "select" ? (
+                            {categoryAttributes.map((attr) => (
 
-                                <select
-                                  value={
-                                    v.attributes?.[attr.id] || ""
-                                  }
-                                  onChange={(e)=>
-                                    updateEditingVariant(
-                                      index,
-                                      "attributes",
-                                      {
-                                        ...v.attributes,
-                                        [attr.id]: e.target.value
-                                      }
-                                    )
-                                  }
-                                >
+                              <div key={attr.id}>
 
-                                  <option value="">
-                                    اختر
-                                  </option>
+                                <label>
+                                  {attr.translation || attr.name}
+                                </label>
 
-                                  {attr.options?.map((opt)=>(
 
-                                    <option 
-                                      key={opt.id}
-                                      value={opt.id}
-                                    >
-                                      {opt.translation || opt.value}
+                                {/* لو الخاصية Select */}
+                                {attr.attribute_type === "select" ? (
+
+                                  <select
+                                    value={
+                                      v.attributes?.[attr.id] || ""
+                                    }
+                                    onChange={(e) =>
+                                      updateEditingVariant(
+                                        index,
+                                        "attributes",
+                                        {
+                                          ...v.attributes,
+                                          [attr.id]: e.target.value
+                                        }
+                                      )
+                                    }
+                                  >
+
+                                    <option value="">
+                                      اختر
                                     </option>
 
-                                  ))}
+                                    {attr.options?.map((opt) => (
 
-                                </select>
+                                      <option
+                                        key={opt.id}
+                                        value={opt.id}
+                                      >
+                                        {opt.translation || opt.value}
+                                      </option>
+
+                                    ))}
+
+                                  </select>
 
 
-                              ) : (
+                                ) : (
 
-                                /* Text - Number - Color */
+                                  /* Text - Number - Color */
 
-                                <input
-                                  type={
-                                    attr.attribute_type === "number"
-                                    ? "number"
-                                    : "text"
-                                  }
+                                  <input
+                                    type={
+                                      attr.attribute_type === "number"
+                                        ? "number"
+                                        : "text"
+                                    }
 
-                                  value={
-                                    v.attributes?.[attr.id] || ""
-                                  }
+                                    value={
+                                      v.attributes?.[attr.id] || ""
+                                    }
 
-                                  onChange={(e)=>
-                                    updateEditingVariant(
-                                      index,
-                                      "attributes",
-                                      {
-                                        ...v.attributes,
-                                        [attr.id]: e.target.value
-                                      }
-                                    )
-                                  }
+                                    onChange={(e) =>
+                                      updateEditingVariant(
+                                        index,
+                                        "attributes",
+                                        {
+                                          ...v.attributes,
+                                          [attr.id]: e.target.value
+                                        }
+                                      )
+                                    }
 
-                                />
+                                  />
 
-                              )}
+                                )}
 
-                            </div>
+                              </div>
 
-                          ))}
+                            ))}
 
-                        </div>
-                      )}
+                          </div>
+                        )}
 
-                      <button
-                        type="button"
-                        onClick={()=>removeEditingVariant(index)}
-                      >
-                        🗑 حذف النسخة
-                      </button>
+                        <button
+                          type="button"
+                          onClick={() => removeEditingVariant(index)}
+                        >
+                          🗑 حذف النسخة
+                        </button>
 
-                    </div>
-                  ))}
+                      </div>
+                    ))}
 
                   </div>
                 )}

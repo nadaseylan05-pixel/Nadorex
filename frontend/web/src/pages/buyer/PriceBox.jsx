@@ -20,7 +20,7 @@ function PriceBox({
     const currency =
         variant?.currency ??
         product.currency ??
-        "$";
+        "₺";
 
     const hasDiscount =
         oldPrice &&
@@ -28,8 +28,8 @@ function PriceBox({
 
     const discountPercentage = hasDiscount
         ? Math.round(
-              ((oldPrice - price) / oldPrice) * 100
-          )
+            ((oldPrice - price) / oldPrice) * 100
+        )
         : 0;
 
     return (

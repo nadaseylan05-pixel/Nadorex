@@ -60,7 +60,7 @@ function QuantitySelector({
         alert("تم الاضافه بنجاح");
 
     };
-    console.log("CART IS WORKING!!.",onAddToCart);
+    console.log("CART IS WORKING!!.", onAddToCart);
     return (
 
         <div className={styles.wrapper}>

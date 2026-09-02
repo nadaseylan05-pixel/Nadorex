@@ -9,16 +9,16 @@ function CartSummary({
     onCheckout
 }) {
 
-    const {lang} =useLanguage();
+    const { lang } = useLanguage();
     const { t, loading } = useTranslations("translations/cart", lang);
     const itemCount = cartItems.reduce(
-        (sum,item)=> sum + item.quantity,
+        (sum, item) => sum + item.quantity,
         0
     );
 
 
     const subtotal = cartItems.reduce(
-        (sum,item)=>
+        (sum, item) =>
             sum + (item.price * item.quantity),
         0
     );
@@ -86,11 +86,11 @@ function CartSummary({
 
                 <span>
                     {
-                    shipping === 0
-                    ?
-                    "Calculated later"
-                    :
-                    `$${shipping}`
+                        shipping === 0
+                            ?
+                            "Calculated later"
+                            :
+                            `$${shipping}`
                     }
                 </span>
 
@@ -145,8 +145,8 @@ function CartSummary({
 
 
             <div className={styles.paymentBox}>
-                    
-                
+
+
 
                 <div className={styles.paymentTitle}>
 
@@ -155,7 +155,7 @@ function CartSummary({
                 </div>
 
 
-{/* 
+                {/* 
                 <div className={styles.paymentItem}>
 
                     💳

@@ -319,7 +319,7 @@ function ProductDetail() {
                         /> */}
                         <ImageGallery
                             product={product}
-                                      
+
                             variant={selectedVariant}
                         />
                     </div>
@@ -403,7 +403,7 @@ function ProductDetail() {
                                                 </span>
 
                                                 {attr.attribute_type ===
-                                                "color" ? (
+                                                    "color" ? (
 
                                                     <div
                                                         className={
@@ -496,7 +496,7 @@ function ProductDetail() {
                                                     </span>
 
                                                     {attr.attribute_type ===
-                                                    "color" ? (
+                                                        "color" ? (
 
                                                         <div
                                                             className={
@@ -615,7 +615,7 @@ function ProductDetail() {
 
             {variants.length > 0 && (
 
-                <section 
+                <section
 
                     ref={productCardRef}
                     className={styles.variantsSection}
@@ -683,10 +683,9 @@ function ProductDetail() {
                                     type="button"
                                     className={`
                                         ${styles.variantCard}
-                                        ${
-                                            isSelected
-                                                ? styles.variantSelected
-                                                : ""
+                                        ${isSelected
+                                            ? styles.variantSelected
+                                            : ""
                                         }
                                     `}
                                     onClick={() =>

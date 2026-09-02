@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function SellerRegister({ lang }) {
   const { t, loading } = useTranslations("translations/register");
   const navigate = useNavigate();
-  
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -46,7 +46,7 @@ function SellerRegister({ lang }) {
           body: JSON.stringify(form),
         }
       );
-      
+
       const data = await res.json();
       console.log("REGISTER RESPONSE:", data);
 
@@ -74,7 +74,7 @@ function SellerRegister({ lang }) {
       //   // 💡 تعديل الوجهة الافتراضية هنا لتكون لوحة التحكم الرئيسية مباشرة
       //   navigate("/seller/dashboard");
       // }
-  
+
     } catch (err) {
       console.error(err);
       setStatus("error");

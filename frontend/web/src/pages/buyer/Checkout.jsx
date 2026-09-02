@@ -8,7 +8,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import useTranslations from "../../hooks/useTranslations";
 function Checkout({ lang = "en" }) {
     const navigate = useNavigate();
-    const {instagramUsername}= useParams();
+    const { instagramUsername } = useParams();
     const { cartItems, clearCart } = useCart(); // تفريغ السلة بعد نجاح العملية
     // const { t, loading } = useTranslations("translations/cart", lang);
     const { t, loading: translationsLoading } = useTranslations(
@@ -35,7 +35,7 @@ function Checkout({ lang = "en" }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // تنظيف البيانات من المسافات الزائدة قبل الفحص والإرسال
         const cleanName = formData.name.trim();
         const cleanAddress = formData.address.trim();
@@ -71,7 +71,7 @@ function Checkout({ lang = "en" }) {
                     address: cleanAddress,
                     phone: cleanPhone,   // يتم إرساله هنا بشكل صريح ونظيف تماماً
                     email: cleanEmail,
-                    
+
                     // تجهيز بيانات المنتجات من السلة بالشكل الذي يتوقعه السيرفر لديك
                     cart_items: cartItems.map(item => ({
                         id: item.id,
@@ -90,12 +90,12 @@ function Checkout({ lang = "en" }) {
             if (response.ok) {
                 // حفظ رقم الهاتف الصافي لتتبع حالة الطلبات لاحقاً في قائمة طلباتي
                 localStorage.setItem("buyer_phone", cleanPhone);
-                
+
                 // تنظيف السلة بعد الشراء
                 if (clearCart) clearCart();
 
                 alert(t.order_confirmed_successfully);
-                
+
                 // العودة لصفحة المشتري الرئيسية
                 // navigate("/buyer");
                 navigate(`/${instagramUsername}`);
@@ -103,7 +103,7 @@ function Checkout({ lang = "en" }) {
                 setError(data.message || "فشل في تأكيد الطلب.");
             }
         } catch (err) {
-            
+
             setError("حدث خطأ في الاتصال بالخادم.");
         } finally {
             setLoading(false);
@@ -115,69 +115,69 @@ function Checkout({ lang = "en" }) {
             <button onClick={() => navigate(-1)} style={{ marginBottom: "20px", padding: "8px 16px", cursor: "pointer" }}>
                 ←{t.back_to_cart}
             </button>
-            
+
             <h2>{t.basic_information}</h2>
             <hr />
-            
+
             {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
 
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px", marginTop: "20px" }}>
                 <div>
                     <label style={{ display: "block", marginBottom: "5px" }}>{t.name}</label>
-                    <input 
-                        type="text" 
-                        name="name" 
-                        value={formData.name} 
-                        onChange={handleChange} 
-                        required 
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
                         style={{ width: "100%", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                     />
                 </div>
 
                 <div>
                     <label style={{ display: "block", marginBottom: "5px" }}>{t.address} *</label>
-                    <input 
-                        type="text" 
-                        name="address" 
-                        value={formData.address} 
-                        onChange={handleChange} 
-                        required 
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        required
                         style={{ width: "100%", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                     />
                 </div>
 
                 <div>
                     <label style={{ display: "block", marginBottom: "5px" }}>{t.phone_number} *</label>
-                    <input 
-                        type="tel" 
-                        name="phone" 
-                        value={formData.phone} 
-                        onChange={handleChange} 
-                        required 
+                    <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
                         style={{ width: "100%", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                     />
                 </div>
 
                 <div>
                     <label style={{ display: "block", marginBottom: "5px" }}>{t.email} (اختياري)</label>
-                    <input 
-                        type="email" 
-                        name="email" 
-                        value={formData.email} 
-                        onChange={handleChange} 
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         style={{ width: "100%", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
                     />
                 </div>
 
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     disabled={loading || cartItems.length === 0}
-                    style={{ 
-                        padding: "12px", 
-                        backgroundColor: "#28a745", 
-                        color: "white", 
-                        border: "none", 
-                        borderRadius: "4px", 
+                    style={{
+                        padding: "12px",
+                        backgroundColor: "#28a745",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
                         cursor: "pointer",
                         fontWeight: "bold",
                         fontSize: "16px"

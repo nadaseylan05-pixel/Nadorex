@@ -5,7 +5,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 /**
  * Wrapper عام لـ fetch
  */
-console.log("BASE_URL =",BASE_URL);
+console.log("BASE_URL =", BASE_URL);
 alert("api.js loaded");
 export async function apiFetch(endpoint, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
@@ -21,10 +21,10 @@ export async function apiFetch(endpoint, options = {}) {
     });
 
     // نطبع للمساعدة في التشخيص
-   
+
     console.log("Status:", res.status);
     console.log("Content-Type:", res.headers.get("content-type"));
-    
+
     const text = await res.text();
 
     // لو الرد ليس JSON

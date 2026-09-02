@@ -101,7 +101,7 @@
 // import styles from "../../styles/ImageGallery.module.css";
 
 // function ImageGallery({ product, variant, onVariantChange }) {
-    
+
 //     // 1. تجميع كافة الصور: صور المنتج الأساسية + صور كل النسخ النشطة
 //     const images = useMemo(() => {
 //         const list = [];

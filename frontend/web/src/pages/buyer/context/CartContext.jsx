@@ -92,7 +92,7 @@
 //         updateCart(cart);
 
 //     };
-    
+
 //     const changeQuantity = (target, delta) => {
 //         let cart = [...cartItems];
 
@@ -776,7 +776,7 @@ export function CartProvider({ children }) {
                         ? i !== target
 
                         : item.cart_id !==
-                          target
+                        target
             );
 
 

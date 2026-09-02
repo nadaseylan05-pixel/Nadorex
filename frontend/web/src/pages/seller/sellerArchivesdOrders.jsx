@@ -662,8 +662,8 @@ const getSellerArchivedOrders = async (lang) => {
 
     throw new Error(
       errorData.error ||
-        errorData.message ||
-        "Failed to fetch archived orders"
+      errorData.message ||
+      "Failed to fetch archived orders"
     );
   }
 
@@ -724,7 +724,7 @@ function SellerArchivedOrders() {
           textAlign: "center",
         }}
       >
-        
+
         {t.loading_archived_orders || "جاري تحميل الطلبات المؤرشفة..."}
       </div>
     );
@@ -775,7 +775,7 @@ function SellerArchivedOrders() {
           {/* {t.archived_orders && t.archived_orders !== "archived_orders"
             ? t.archived_orders
             : "الطلبات المؤرشفة"} */}
-            {t.archived_orders}
+          {t.archived_orders}
         </h2>
 
         <button
@@ -807,7 +807,7 @@ function SellerArchivedOrders() {
           {/* {t.no_archived_orders && t.no_archived_orders !== "no_archived_orders"
             ? t.no_archived_orders
             : "لا توجد طلبات مؤرشفة"} */}
-            {t.orders?.no_archived_orders}
+          {t.orders?.no_archived_orders}
         </div>
       ) : (
         <div

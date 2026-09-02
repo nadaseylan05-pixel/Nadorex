@@ -17,7 +17,7 @@ function SellerOrderDetails() {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    
+
     const [t, setT] = useState({});
     const [returnDays, setReturnDays] = useState({});
     const [selectedStatus, setSelectedStatus] = useState({});
@@ -48,7 +48,7 @@ function SellerOrderDetails() {
             const data = await response.json();
             setT(data.translations || {});
             console.log("PRODUCT DETAILS RESPONSE:", data);
-            console.log("TRANSLATIONS:",data.translations);
+            console.log("TRANSLATIONS:", data.translations);
             if (!response.ok || !data.success) {
 
                 throw new Error(
@@ -227,7 +227,7 @@ function SellerOrderDetails() {
             <div className={styles.page}>
 
                 <div className={styles.loading}>
-                   {t.loading_order_details}
+                    {t.loading_order_details}
                 </div>
 
             </div>
@@ -291,7 +291,7 @@ function SellerOrderDetails() {
                 <div>
 
                     <h1>
-                       {t.order_id}
+                        {t.order_id}
                     </h1>
 
                     <span className={styles.orderNumber}>
@@ -381,7 +381,7 @@ function SellerOrderDetails() {
                     <div className={styles.address}>
 
                         <strong>
-                             {t.address}:
+                            {t.address}:
                         </strong>
 
                         <span>
@@ -462,13 +462,12 @@ function SellerOrderDetails() {
                                 >
 
                                     <h3 style={{ margin: 0 }}>
-                                       {t.product} #{index + 1}
+                                        {t.product} #{index + 1}
                                     </h3>
 
                                     <span
-                                        className={`${styles.status} ${
-                                            styles[item.status]
-                                        }`}
+                                        className={`${styles.status} ${styles[item.status]
+                                            }`}
                                     >
                                         {item.status_display ||
                                             item.status}
@@ -503,7 +502,7 @@ function SellerOrderDetails() {
 
                                         <option value="shipped">
                                             {t.shipped || "تم الشحن"}
-                                            
+
                                         </option>
 
                                         <option value="delivered">
@@ -522,91 +521,91 @@ function SellerOrderDetails() {
                                             {t.cancelled || "ملغى"}
                                         </option>
 
-                                        
+
                                     </select>
                                     {/* عند اختيار الشحن لأول مرة: إدخال مدة الإرجاع */}
                                     {item.status === "processing" &&
-                                    selectedStatus[item.id] === "shipped" && (
+                                        selectedStatus[item.id] === "shipped" && (
 
-                                        <div className={styles.returnDaysBox}>
+                                            <div className={styles.returnDaysBox}>
 
-                                            <label>
-                                                {t.return_period_allowed ||
-                                                    "مدة الإرجاع المسموح بها"}
-                                            </label>
+                                                <label>
+                                                    {t.return_period_allowed ||
+                                                        "مدة الإرجاع المسموح بها"}
+                                                </label>
 
-                                            <div className={styles.returnDaysInput}>
+                                                <div className={styles.returnDaysInput}>
 
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    value={returnDays[item.id] ?? ""}
-                                                    onChange={(e) =>
-                                                        setReturnDays((prev) => ({
-                                                            ...prev,
-                                                            [item.id]: e.target.value,
-                                                        }))
-                                                    }
-                                                />
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        value={returnDays[item.id] ?? ""}
+                                                        onChange={(e) =>
+                                                            setReturnDays((prev) => ({
+                                                                ...prev,
+                                                                [item.id]: e.target.value,
+                                                            }))
+                                                        }
+                                                    />
 
-                                                <span>
-                                                    {t.day || "يوم"}
-                                                </span>
+                                                    <span>
+                                                        {t.day || "يوم"}
+                                                    </span>
 
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleUpdateStatus(
-                                                            item.id,
-                                                            "shipped"
-                                                        )
-                                                    }
-                                                >
-                                                    {t.confirm_shipping ||
-                                                        "تأكيد الشحن"}
-                                                </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            handleUpdateStatus(
+                                                                item.id,
+                                                                "shipped"
+                                                            )
+                                                        }
+                                                    >
+                                                        {t.confirm_shipping ||
+                                                            "تأكيد الشحن"}
+                                                    </button>
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
-
-                                    )}
+                                        )}
                                     {/* بعد تأكيد الشحن: عرض مدة الإرجاع كنص */}
                                     {item.status === "shipped" &&
-                                    item.return_days !== null &&
-                                    item.return_days !== undefined && (
+                                        item.return_days !== null &&
+                                        item.return_days !== undefined && (
 
-                                        <div className={styles.returnDaysInfo}>
+                                            <div className={styles.returnDaysInfo}>
 
-                                            <span>
-                                                {t.return_period_allowed ||
-                                                    "مدة الإرجاع المسموح بها"}:
-                                            </span>
+                                                <span>
+                                                    {t.return_period_allowed ||
+                                                        "مدة الإرجاع المسموح بها"}:
+                                                </span>
 
-                                            <strong>
-                                                {item.return_days} {t.day || "يوم"}
-                                            </strong>
+                                                <strong>
+                                                    {item.return_days} {t.day || "يوم"}
+                                                </strong>
 
-                                        </div>
+                                            </div>
 
-                                    )}
+                                        )}
                                     {item.status === "delivered" &&
-                                    item.return_days_remaining !== null && (
+                                        item.return_days_remaining !== null && (
 
-                                        <div className={styles.returnDaysInfo}>
+                                            <div className={styles.returnDaysInfo}>
 
-                                            <span>
-                                                {t.return_days_remaining ||
-                                                    "المتبقي من مدة الإرجاع"}:
-                                            </span>
+                                                <span>
+                                                    {t.return_days_remaining ||
+                                                        "المتبقي من مدة الإرجاع"}:
+                                                </span>
 
-                                            <strong>
-                                                {item.return_days_remaining} {t.day || "يوم"}
-                                            </strong>
+                                                <strong>
+                                                    {item.return_days_remaining} {t.day || "يوم"}
+                                                </strong>
 
-                                        </div>
+                                            </div>
 
-                                    )}
+                                        )}
 
                                 </div>
                                 {/* ==================================
@@ -645,18 +644,16 @@ function SellerOrderDetails() {
 
                                         <Info
                                             label="سعر الوحدة"
-                                            value={`${item.price} ${
-                                                item.variant?.currency ||
+                                            value={`${item.price} ${item.variant?.currency ||
                                                 "$"
-                                            }`}
+                                                }`}
                                         />
 
                                         <Info
                                             label="إجمالي المنتج"
-                                            value={`${item.total_price} ${
-                                                item.variant?.currency ||
+                                            value={`${item.total_price} ${item.variant?.currency ||
                                                 "$"
-                                            }`}
+                                                }`}
                                         />
 
                                     </div>
@@ -774,34 +771,34 @@ function SellerOrderDetails() {
                                 {item.variant &&
                                     item.variant_attributes?.length > 0 && (
 
-                                    <div style={{ marginTop: "20px" }}>
+                                        <div style={{ marginTop: "20px" }}>
 
-                                        <h4>
-                                           {t.variant_properties}
-                                        </h4>
+                                            <h4>
+                                                {t.variant_properties}
+                                            </h4>
 
-                                        <div
-                                            className={
-                                                styles.attributesGrid
-                                            }
-                                        >
+                                            <div
+                                                className={
+                                                    styles.attributesGrid
+                                                }
+                                            >
 
-                                            {item.variant_attributes.map(
-                                                (attribute, attributeIndex) => (
+                                                {item.variant_attributes.map(
+                                                    (attribute, attributeIndex) => (
 
-                                                    <Attribute
-                                                        key={attributeIndex}
-                                                        attribute={attribute}
-                                                    />
+                                                        <Attribute
+                                                            key={attributeIndex}
+                                                            attribute={attribute}
+                                                        />
 
-                                                )
-                                            )}
+                                                    )
+                                                )}
+
+                                            </div>
 
                                         </div>
 
-                                    </div>
-
-                                )}
+                                    )}
 
                             </div>
 
@@ -849,7 +846,7 @@ function SellerOrderDetails() {
                 <div>
 
                     <span>
-                       {t.order_total}
+                        {t.order_total}
                     </span>
 
                     <strong>

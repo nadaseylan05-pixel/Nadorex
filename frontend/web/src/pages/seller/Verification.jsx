@@ -4,7 +4,7 @@ export default function VerifyAccount() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -44,13 +44,13 @@ export default function VerifyAccount() {
         localStorage.setItem("refresh_token", data.refresh);
 
         navigate(data.redirect_url);
-       
+
       } else {
         // 💡 تعديل الوجهة الافتراضية هنا لتكون لوحة التحكم الرئيسية مباشرة
         navigate("/seller/dashboard");
       };
 
-      
+
     } catch (err) {
       console.error(err);
       setError(err.message);

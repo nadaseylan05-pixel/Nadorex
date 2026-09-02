@@ -4,7 +4,7 @@ async function loadProducts(email) {
     container.innerHTML = lang === 'ar' ? "جاري تحميل المنتجات..." : "Loading products...";
 
     try {
-        const response = await fetch(/api/store_products_data?lang=${lang}&email=${encodeURIComponent(email)});
+        const response = await fetch(/api/store_products_data ? lang = ${ lang } & email=${ encodeURIComponent(email) });
         if (!response.ok) throw new Error(lang === 'ar' ? "فشل في جلب المنتجات" : "Failed to fetch products");
 
         const products = await response.json();

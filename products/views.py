@@ -8,9 +8,9 @@ from django.core.signals import request_started
 from rest_framework.decorators import api_view
 import os, uuid
 import requests
-#from rest_framework.response import Response
+# from rest_framework.response import Response
 from django.db.models import Sum, Avg
-from .models import Products, Orders, ProductReviews, Translations # تأكدي من مسميات الموديلز لديكِ
+from .models import Products, Orders, ProductReviews, Translations  # تأكدي من مسميات الموديلز لديكِ
 from .services.merchant.login import validate_merchant_login  # الدالة اللي تتحقق من البائع
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -137,6 +137,7 @@ from datetime import timedelta
 #         return Response({"success": False, "message": f"Server Error: {str(e)}"}, status=500)
 from django.db.models import Sum, Count, Avg, Max
 from django.db.models.functions import Lower
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -304,6 +305,8 @@ def seller_dashboard_api(request):
             },
             status=500,
         )
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def seller_orders_api(request):
@@ -350,7 +353,7 @@ def seller_orders_api(request):
             {
                 "success": False,
                 "message": f"Server Error: {str(e)}",
-                "translations": get_translations(["orders", "commun","seller","products"], lang)
+                "translations": get_translations(["orders", "commun", "seller", "products"], lang)
             },
             status=500
         )
@@ -362,15 +365,18 @@ from rest_framework.response import Response
 from django.shortcuts import render
 from products.services.translations import index_translations
 
+
 def index_api(request):
-    #lang = request.session.get("lang", "en")
+    # lang = request.session.get("lang", "en")
     lang = request.GET.get("lang", "en")
     
     data = index_translations(lang)
     texts = get_translations(["home"], lang)
    
-    texts["lang"]= lang
+    texts["lang"] = lang
     return JsonResponse(data)
+
+
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.urls import reverse
@@ -383,8 +389,9 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpRequest
 from .utils import load_translations, t, get_or_create_session_id
-from .models import CartItems, Orders # تأكدي أن هذا موجود
+from .models import CartItems, Orders  # تأكدي أن هذا موجود
 from django.db.models import Count
+
 
 def requested_products(request):
     lang = request.session.get('lang', 'en')
@@ -403,8 +410,10 @@ def requested_products(request):
 
     return render(request, 'products/requested_products.html')
 
+
 from products.services.translations import commerce_view_translations
 from django.http import JsonResponse
+
 
 def commerce_view_api(request):
     lang = request.GET.get('lang', 'ar')
@@ -412,22 +421,22 @@ def commerce_view_api(request):
 
     return JsonResponse(data, safe=False)
 
+
 from django.shortcuts import render, redirect
 from .models import Merchants
 from .utils import generate_verification_code, send_verification_email, register_merchant_in_iyzico
-#import bcrypt
+# import bcrypt
 
 # هنا
 import random
 from django.core.mail import send_mail
-
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from products.models import Merchants
 from products.utils import t, load_translations, generate_verification_code, send_verification_email
-#import bcrypt
+# import bcrypt
 import uuid
 
 import smtplib
@@ -442,17 +451,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth.hashers import make_password
 
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-#from products.services.merchant.verification import verify_merchant_code
-#from products.services.merchant.login import validate_merchant_login
+# from products.services.merchant.verification import verify_merchant_code
+# from products.services.merchant.login import validate_merchant_login
 
 from products.services.translations import merchant_verify_translations
 
 from rest_framework.decorators import api_view
-#from rest_framework.response import Response
-#from rest_framework import status
+# from rest_framework.response import Response
+# from rest_framework import status
 
 from products.services.translations import merchant_verify_translations
 from products.services.merchant.verification.verify import  verify_merchant_service
@@ -460,7 +468,6 @@ from products.services.merchant.verification.verify import  verify_merchant_serv
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
 
 from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view
@@ -485,6 +492,7 @@ from rest_framework import status
 
 #     if not result["success"]:
 #         return Response({"success": False, "message": translations["invalid_verification_code"]}, status=400)
+
 
 #     return Response({"success": True, "message": translations["verification_success"]}, status=200)
 @api_view(["POST"])
@@ -637,6 +645,7 @@ def merchant_verify_api(request):
 #     # ==============================
 #     print("MERCHANT VERIFY CODE:", verification_code)
 #     print("SESSION KEYS:", request.session.keys())
+
     
 #     return Response(
 #         {
@@ -649,6 +658,8 @@ def merchant_verify_api(request):
 #         status=status.HTTP_200_OK
 #     )
 from django.contrib.auth.models import User
+
+
 @api_view(["POST"])
 def merchant_register_api(request):
     
@@ -717,7 +728,7 @@ def merchant_register_api(request):
 ###############################
         
         existing_merchant = Merchants.objects.filter(email=email).first()
-        print("EXISTING MERCHANT",existing_merchant)
+        print("EXISTING MERCHANT", existing_merchant)
         print("التحقق من البريد الإلكتروني")
         if existing_merchant and existing_merchant.user_id is not None:
             
@@ -749,9 +760,9 @@ def merchant_register_api(request):
         ).first()
         print("EXISTING ONSTAGRAM", existing_instagram)
         print("التحقق من اسم مستخدم إنستغرام 1")
-        if existing_instagram and existing_instagram.email != email:####
+        if existing_instagram and existing_instagram.email != email:  ####
     #############################
-        #اخر شي اضفته 
+        # اخر شي اضفته 
         # if User.objects.filter(username=email).exists():
             print("التحقق من اسم مستخدم إنستغرام 2")
             return Response(
@@ -769,7 +780,7 @@ def merchant_register_api(request):
         # إنشاء كود التحقق
         # ==============================
         verification_code = generate_verification_code()
-        print("verification_code",verification_code)
+        print("verification_code", verification_code)
         email_sent = send_verification_email(email, verification_code, lang)
         print("Generated code:", verification_code)
         print("EMAIL SENT ", email_sent)
@@ -866,10 +877,10 @@ def merchant_register_api(request):
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+
         
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 
 # @api_view(["GET"])
 # @permission_classes([IsAuthenticated])
@@ -900,6 +911,7 @@ from rest_framework.response import Response
 #         ),
 #         "state": state,
 #     }
+
 
 #     query_string = urlencode(params)
 #     print("INSTAGRAM PARAMS:", params)
@@ -1543,6 +1555,7 @@ def instagram_login(request):
 #             str(e)
 #         )
 
+
 #         return Response(
 #             {
 #                 "success": False,
@@ -1867,7 +1880,7 @@ def instagram_callback(request):
 
             merchant.instagram_token_expires_at = (
                 timezone.now()
-                + timedelta(
+                +timedelta(
                     seconds=int(expires_in)
                 )
             )
@@ -1932,6 +1945,8 @@ def instagram_callback(request):
             },
             status=500
         )
+
+
 @api_view(["POST"])
 def instagram_deauthorize(request):
     return Response({
@@ -1946,6 +1961,8 @@ def instagram_data_deletion(request):
         "success": True,
         "message": "Instagram data deletion request received"
     })
+
+
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import uuid
@@ -2004,12 +2021,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from products.services.translations import merchant_login_translations
 
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .services.translations import merchant_login_translations
-#from .services.auth import validate_merchant_login  # الدالة اللي تتحقق من البائع
+# from .services.auth import validate_merchant_login  # الدالة اللي تتحقق من البائع
 
 from django.http import JsonResponse
 from .services.translations import merchant_login_translations
@@ -2025,7 +2041,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 
-#from .services.auth import validate_merchant_login
+# from .services.auth import validate_merchant_login
 from .services.translations import merchant_login_translations
 import json
 from django.http import JsonResponse
@@ -2039,6 +2055,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from products.services.translations import merchant_login_translations 
+
 
 @csrf_exempt
 def merchant_login_api(request):
@@ -2072,7 +2089,7 @@ def merchant_login_api(request):
             )
 
         # 3️⃣ فحص دالة التحقق (تم تمرير المتغيرات مباشرة لحل مشكلة الـ TypeError نهائياً)
-        #result = validate_merchant_login(email, password)
+        # result = validate_merchant_login(email, password)
         # قم بتغيير هذا السطر في الـ view:
         result = validate_merchant_login(email=email, password=password)
         print("LOGIN RESULT:", result)
@@ -2102,7 +2119,7 @@ def merchant_login_api(request):
         print("✅ LOGIN OK - GENERATING JWT TOKENS")
         
         user = result.user
-        refresh = RefreshToken.for_user(user) # توليد التوكين للمستخدم
+        refresh = RefreshToken.for_user(user)  # توليد التوكين للمستخدم
 
         # إرجاع رد النجاح مضافاً إليه التوكينات للـ React
         return JsonResponse(
@@ -2111,8 +2128,8 @@ def merchant_login_api(request):
                 "message": "Login successful",
                 "redirect_url": "/seller/login/add",
                 "access": str(refresh.access_token),  # 🔑 التوكين الأساسي لـ React
-                "refresh": str(refresh),               # 🔑 توكين التجديد
-                "translations": get_translations("auth",lang)
+                "refresh": str(refresh),  # 🔑 توكين التجديد
+                "translations": get_translations("auth", lang)
             },
             status=200
         )
@@ -2131,10 +2148,12 @@ def merchant_login_api(request):
             },
             status=500
         )
+
+
 from django.shortcuts import render
-#from products.services.merchant.show_products import show_products_service
+# from products.services.merchant.show_products import show_products_service
 from products.services.translations import show_products 
-#اللي شكلها للمشتري
+# اللي شكلها للمشتري
 
 # products/views.py
 from django.shortcuts import render
@@ -2157,7 +2176,7 @@ from .models import Categories, Products
 from django.contrib import messages
 
 commission_rates = {"USD": 0.10, "EUR": 0.12, "TRY": 0.15}
-currency_symbols = {"USD": "$", "EUR": "€", "TRY": "₺"}
+currency_symbols = {"USD": "$", "EUR": "€", "TRY": "$"}
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -2171,7 +2190,6 @@ from .models import Products, CategoryTranslations
 from .utils import get_available_sizes, get_available_colors, calculate_commission
 import uuid, os
 
-
 from django.conf import settings
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -2181,11 +2199,11 @@ from .models import Products, Categories
 from .utils import get_available_sizes, get_available_colors, calculate_commission, load_translations
 
 from django.shortcuts import render, redirect
-from .models import Products,ProductImages, Categories
+from .models import Products, ProductImages, Categories
 from .utils import get_available_sizes, get_available_colors, calculate_commission, load_translations
 
 from django.shortcuts import render, redirect
-from .models import Products,ProductImages
+from .models import Products, ProductImages
 from django.utils import timezone
 
 from django.shortcuts import render, redirect
@@ -2221,7 +2239,6 @@ from products.services.product.add_product import create_product
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
@@ -2229,6 +2246,7 @@ from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 
 @api_view(["GET"])
 def get_products_api(request):
@@ -2246,6 +2264,7 @@ def get_products_api(request):
         })
 
     return Response({"products": data})
+
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -2314,7 +2333,6 @@ from products.serializers.product_serializer import ProductDetailSerializer
 #         #     "product": serializer.data,
 #         #     "translations": translations
 #         # })
-        
 
 #         return JsonResponse({
 #             "success": True,
@@ -2333,6 +2351,7 @@ from products.serializers.product_serializer import ProductDetailSerializer
 #             "success": False,
 #             "error": str(e)
 #         }, status=400)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -2402,6 +2421,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -2473,7 +2493,7 @@ def add_product_api(request):
         return JsonResponse({
             "success": True,
             "product_id": product.id,
-            "translations": get_translations(["products","commun"], lang)
+            "translations": get_translations(["products", "commun"], lang)
             
         })
 
@@ -2483,10 +2503,8 @@ def add_product_api(request):
         return JsonResponse({"success": False, "error": str(e)}, status=400)
 
 
-
 from django.shortcuts import render, get_object_or_404
 from .models import Products
-
 
 ########################333333333333333
 # def register_test(request):
@@ -2637,8 +2655,8 @@ def store_page_api(request):
         **get_store_data(request=request),
     })
 
-
 # الاحتياط
+
 
 def set_language(request, lang):
     request.session['lang'] = lang
@@ -2649,11 +2667,12 @@ def set_language(request, lang):
 from django.http import JsonResponse
 
 from django.http import JsonResponse
-from products.services.buyer.buyer_product import get_products,\
+from products.services.buyer.buyer_product import get_products, \
     FavoriteServiceKeeper
 
+
 def buyer_products_api(request):
-    #raise Exception("I AM HERE")
+    # raise Exception("I AM HERE")
     print("BUYER API CALLED")
     lang = request.GET.get("lang", "en")
     '''
@@ -2664,8 +2683,10 @@ def buyer_products_api(request):
     )
     '''
     data = get_products(request)
-    data["translations"]=get_translations(["products","cart","commun","search"] ,lang)
+    data["translations"] = get_translations(["products", "cart", "commun", "search"] , lang)
     return JsonResponse(data, json_dumps_params={"ensure_ascii": False})
+
+
 from django.shortcuts import render
 from .models import CartItems, Products, Merchants 
 from django.db.models import Sum
@@ -2706,6 +2727,7 @@ def stores_view(request):
     }
     return render(request, 'products/stores.html', context)
 
+
 from django.shortcuts import render, get_object_or_404
 
 # تأكد من استيراد النماذج والدوال المساعدة
@@ -2727,6 +2749,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import CartItems, Orders, Products
 from django.db.models import Sum
 from .utils import t, load_translations
+
 
 def buyer_cart_page(request):
     lang = request.session.get('lang', 'en')
@@ -2806,6 +2829,7 @@ def edit_cart_item_view(request, item_id):
 
     return render(request, 'products/edit_cart_item.html', {'item': item})
 
+
 # ordered_products_page
 def ordered_products_page(request):
     lang = request.session.get('lang', 'en')
@@ -2833,8 +2857,11 @@ def ordered_products_page(request):
 
     return render(request, 'products/confirmed_orders.html', context)
 
+
 from django.shortcuts import render
 from django.utils import timezone
+
+
 def confirm_order_view(request):
     lang = request.session.get('lang', 'en')
     translations = load_translations()
@@ -2935,6 +2962,7 @@ def remove_from_cart_view(request, item_id):
     
     return redirect('view_cart')  # تأكدي أن اسم صفحة عرض السلة هو view_cart
 
+
 from django.http import JsonResponse
 from products.services.translations import store_list_translations
 
@@ -2946,6 +2974,7 @@ def store_list_api(request):
         "stores": get_all_stores_service(),
         "texts": store_list_translations(lang),
     })
+
 
 from .utils import get_product_by_id, get_currency_symbol
 # قبل الدمج
@@ -2968,6 +2997,7 @@ class FindInSet(Func):
     function = 'FIND_IN_SET'
     output_field = IntegerField()
 
+
 from django.db.models import (
     Q, F, Value, OuterRef, Subquery, CharField, TextField
 )
@@ -2989,6 +3019,7 @@ from .models import (
 
 # from .db_functions import FindInSet
 from .utils import detect_language, translate_text_to_all, save_base64_image_to_field
+
 
 # -------------------------------------------------------------------
 # 🟡 View عرض نتائج البحث
@@ -3152,6 +3183,7 @@ def display_products(lang, translations, products, add_to_cart=None, highlight_p
 from products.utils import load_category_translations, t
 #****************
 
+
 def show_products_for_buyer(request, lang, translations):
     from urllib.parse import urlparse, parse_qs
 
@@ -3231,12 +3263,13 @@ from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from products.services.buyer.cart import add_to_cart_service, get_confirmed_orders_service #checkout_cart_service
+from products.services.buyer.cart import add_to_cart_service, get_confirmed_orders_service  # checkout_cart_service
 from products.services.translations import cart_translations
 
-#from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 
-#@csrf_exempt
+
+# @csrf_exempt
 @require_POST
 def add_to_cart_api(request):
     lang = data.get("lang", "ar")
@@ -3251,7 +3284,7 @@ def add_to_cart_api(request):
         }, status=400)
 
     lang = data.get("lang", "ar")
-    texts= get_translations("cart", lang)
+    texts = get_translations("cart", lang)
     try:
         product_id = int(data.get("product_id"))
         quantity = int(data.get("quantity", 1))
@@ -3287,6 +3320,7 @@ from django.views.decorators.http import require_POST, require_GET
 
 from django.http import JsonResponse
 
+
 def cart_api(request):
 
     data = get_cart_data(
@@ -3295,12 +3329,7 @@ def cart_api(request):
 
     )
 
-
     return JsonResponse(data)
-
-
-
-
 
 
 def remove_cart_api(request, cart_id):
@@ -3313,10 +3342,7 @@ def remove_cart_api(request, cart_id):
 
     )
 
-
     return JsonResponse(result)
-
-
 
 
 import json
@@ -3331,12 +3357,13 @@ def orders_api(request):
 
     )
 
-
     return JsonResponse({
 
         "orders":data
 
     })
+
+
 from django.core.signing import TimestampSigner
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -3348,6 +3375,7 @@ from django.core.signing import (
     SignatureExpired,
 )
 # تأكدي من استيراد الموديل Orders إذا لم يكن مستورداً أعلى الملف
+
 
 @require_POST
 def cancel_order_api(request, order_id):
@@ -3374,6 +3402,8 @@ def cancel_order_api(request, order_id):
         
     except Exception as e:
         return JsonResponse({"success": False, "message": f"حدث خطأ داخلي: {str(e)}"}, status=200)
+
+
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import os
@@ -3480,6 +3510,8 @@ def instagram_webhook(request):
                 "Invalid payload",
                 status=400
             )
+
+
 @require_POST
 def return_order_api(request, order_id):
     try:
@@ -3528,12 +3560,13 @@ def return_order_api(request, order_id):
     except Exception as e:
         return JsonResponse({"success": False, "message": str(e)}, status=200)
 
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
-import traceback # 👈 مهم جداً لطباعة تفاصيل الخطأ بدقة
+import traceback  # 👈 مهم جداً لطباعة تفاصيل الخطأ بدقة
 
 # تأكدي تماماً أن اسم الموديل هنا مطابق لاسم الكلاس في الـ models.py (Orders بالجمع)
 from .models import Orders 
@@ -3550,6 +3583,8 @@ from products.services.buyer.cart import (
 )
 
 from django.views.decorators.csrf import csrf_exempt
+
+
 @csrf_exempt
 @require_POST
 def order_action_api(request):
@@ -3591,11 +3626,13 @@ def order_action_api(request):
             "success": False,
             "message": str(e)
         })
+
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 from .services.buyer.cart import (
-    #add_to_cart,
+    # add_to_cart,
     update_cart_quantity,
     get_cart_data
 )
@@ -3618,6 +3655,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
+
 
 @csrf_exempt
 @require_POST
@@ -3694,6 +3732,8 @@ def confirm_order_api(request):
         print("❌ CONFIRM_ORDER API ERROR:", repr(e))
         traceback.print_exc()
         return JsonResponse({"success": False, "message": str(e)}, status=500)
+
+
 @require_GET
 def confirmed_orders_api(request):
     try:
@@ -3765,13 +3805,14 @@ def confirmed_orders_api(request):
     except Exception as e:
         traceback.print_exc()
         return JsonResponse({"success": False, "orders": [], "message": str(e)}, status=200)
+
+
 @require_POST
 def add_cart_api(request):
 
     body = json.loads(
         request.body
     )
-
 
     result = add_to_cart(
 
@@ -3786,18 +3827,15 @@ def add_cart_api(request):
 
     )
 
-
     return JsonResponse(result)
+
 
 @require_POST
 def update_cart_api(request):
 
-
-    body=json.loads(
+    body = json.loads(
         request.body
     )
-
-
 
     result = update_cart_quantity(
 
@@ -3809,14 +3847,17 @@ def update_cart_api(request):
 
     )
 
-
     return JsonResponse(result)
+
+
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-from .models import Categories, CategoryTranslations, Products,ProductVariants
+from .models import Categories, CategoryTranslations, Products, ProductVariants
 from django.contrib.auth.decorators import login_required
 import traceback
 from products.services.merchant.show_products import get_merchant_products_service
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_seller_products_api(request):
@@ -3847,14 +3888,14 @@ def get_seller_products_api(request):
         total_stock = products_stock + variants_stock
         
         print("The merchantt is:", merchant)
-        print("THEE PRODUCTS ARE :",products)
+        print("THEE PRODUCTS ARE :", products)
 
         return JsonResponse({
             "success": True,
             "products": products,
             "products_length":len(products),
             "total_stock":total_stock,
-            "translations": get_translations(["seller","commun","products"], lang),
+            "translations": get_translations(["seller", "commun", "products"], lang),
         })
         # return JsonResponse({
         #     "success": True,
@@ -3865,12 +3906,11 @@ def get_seller_products_api(request):
     
     except Exception as e:
         traceback.print_exc()
-        print("ERROR :",e)
+        print("ERROR :", e)
         return JsonResponse({
             "success": False,
             "error": str(e)
         }, status=500)
-        
         
 # @api_view(["GET"])
 # @permission_classes([IsAuthenticated])
@@ -3900,16 +3940,19 @@ def get_seller_products_api(request):
 #             "success": False,
 #             "error": str(e)
 #         }, status=500)
+
  
 import re
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from products.services.merchant.show_products import update_product_service
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def update_product_api(request, pk):
-    lang = request.GET.get("lang","en")
+    lang = request.GET.get("lang", "en")
     try:
         # 1. جلب كافة بيانات النصوص القادمة من request.data
         product_data = request.data.dict() if hasattr(request.data, 'dict') else dict(request.data)
@@ -3919,9 +3962,9 @@ def update_product_api(request, pk):
         
         variants_dict = {}
         
-        #3. تجميع الحقول النصية الخاصة بالـ Variants
+        # 3. تجميع الحقول النصية الخاصة بالـ Variants
         for key, value in request.data.items():
-            print("DATA KEY",key)
+            print("DATA KEY", key)
             match = re.match(r'variants\[(\d+)\]\[(\w+)\]', key)
             if match:
                 index = int(match.group(1))
@@ -3949,10 +3992,10 @@ def update_product_api(request, pk):
                         variants_dict[index][field_name] = {}
                 else:
                     variants_dict[index][field_name] = value
-                print("VARIANT DIC",variants_dict)
+                print("VARIANT DIC", variants_dict)
         print(request.data)
         for key in request.FILES:
-            print("FILE KEY",key)
+            print("FILE KEY", key)
             # الصورة الرئيسية
             match = re.match(r"variants\[(\d+)\]\[image\]", key)
             if match:
@@ -3963,7 +4006,6 @@ def update_product_api(request, pk):
 
                 variants_dict[index]["image"] = request.FILES[key]
                 continue
-
 
             # الصور الإضافية
             match = re.match(r"variants\[(\d+)\]\[extra_images\]", key)
@@ -3986,13 +4028,14 @@ def update_product_api(request, pk):
         # 6. تمرير البيانات للخدمة (Service)
         update_product_service(pk, request.user.email, product_data, product_files)
         
-        return JsonResponse({"success": True,"translations":get_translations(["products","commun"], lang), "message": "Product updated successfully"}, status=200)
+        return JsonResponse({"success": True, "translations":get_translations(["products", "commun"], lang), "message": "Product updated successfully"}, status=200)
         
     except Exception as err:
         print("ERROR IS :", err)
         import traceback
         print(traceback.format_exc())
         return JsonResponse({"success": False, "error": str(err)}, status=500)
+
 
 import json
 from django.http import JsonResponse
@@ -4004,12 +4047,12 @@ from .models import Orders
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def update_order_status_api(request, pk):
-    lang =request.GET.get("lang", "en")
+    lang = request.GET.get("lang", "en")
     try:
         # تمرير المعرف وإيميل التاجر والبيانات المرسلة
         update_order_status_service(pk, request.user.email, request.data)
         
-        return JsonResponse({"success": True, "message": "Order status updated successfully","translations":get_translations(["orders","commun","products","returns","seller"], lang)}, status=200)
+        return JsonResponse({"success": True, "message": "Order status updated successfully", "translations":get_translations(["orders", "commun", "products", "returns", "seller"], lang)}, status=200)
 
     except Orders.DoesNotExist:
         return JsonResponse({"success": False, "error": "Order not found"}, status=404)
@@ -4017,7 +4060,11 @@ def update_order_status_api(request, pk):
         return JsonResponse({"success": False, "error": str(e)}, status=400)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=500)    
+
+
 from products.services.merchant.show_products import delete_product_service
+
+
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def delete_product_api(request, pk):
@@ -4026,9 +4073,12 @@ def delete_product_api(request, pk):
         return JsonResponse({"success": True, "message": "Product deleted"}, status=200)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 
 @api_view(["GET"])
 def product_detail(request, product_id):
@@ -4049,21 +4099,20 @@ def product_detail(request, product_id):
                      }
         )
 
-        print(serializer.data)   # <-- سيطبع هنا إذا نجح
+        print(serializer.data)  # <-- سيطبع هنا إذا نجح
 
         # return Response(serializer.data)
-    
         
         return Response({
             **serializer.data,
             "translations": get_translations(["products"], lang)
         })
-        
 
     except Exception as e:
         import traceback
         traceback.print_exc()
         raise
+
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -4074,6 +4123,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .services.buyer.buyer_product import FavoriteServiceKeeper
 
+
 @api_view(['POST'])
 def ToggleFavoriteView(request):
     buyer_phone = request.data.get("buyer_phone")
@@ -4081,24 +4131,28 @@ def ToggleFavoriteView(request):
 
     if not buyer_phone or not product_id:
         return Response(
-            {"error": "buyer_phone و product_id مطلوبان"}, 
+            {"error": "buyer_phone و product_id مطلوبان"},
             status=status.HTTP_400_BAD_REQUEST
         )
 
     result = FavoriteService.toggle_favorite(buyer_phone, product_id)
     return Response(result, status=status.HTTP_200_OK)
+
+
 import traceback
 from products.models import Favorite
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from products.services.buyer.search_products_service import search_products_service
 from products.serializers.product_serializer import SearchProductSerializer, CategorySerializer
+
+
 @api_view(['GET'])
 def get_buyer_favorites(request):
-    lang =request.GET.get("lang","en")
+    lang = request.GET.get("lang", "en")
     try:
         buyer_phone = request.GET.get('buyer_phone', '')
-        instagram_username=request.GET.get('instagram_username', '')
+        instagram_username = request.GET.get('instagram_username', '')
         if not buyer_phone:
             return JsonResponse({'favorites': []})
 
@@ -4146,9 +4200,10 @@ def get_buyer_favorites(request):
             'error': str(e),
             'details': traceback.format_exc()
         }, status=500)
+
+
 @api_view(["GET"])
 def search_products_api(request):
-    
         
     lang = request.GET.get("lang", "en")
     search = request.GET.get("search", "")
@@ -4182,6 +4237,8 @@ def search_products_api(request):
         "products": serializer.data,
         "translations":get_translations("products", lang)
     })
+
+
 @api_view(["GET"])
 def categories_api(request):
 
@@ -4205,37 +4262,45 @@ def categories_api(request):
     })
 # views.py
 
+
 def cart_translations_api(request):
     lang = request.GET.get("lang", "en")
 
     return JsonResponse(
-        get_translations(["cart","commun"], lang)
+        get_translations(["cart", "commun"], lang)
     )
+
+
 @api_view(["GET", "POST"])
 def login_translations_api(request):
     lang = request.GET.get("lang", "en")
 
     if request.method == "GET":
         return Response({
-            "translations": get_translations("auth",lang)
+            "translations": get_translations("auth", lang)
         })
+
+
 @api_view(["GET", "POST"])
 def register_translations_api(request):
     lang = request.GET.get("lang", "en")
 
     if request.method == "GET":
         return Response({
-            "translations": get_translations("auth",lang)
+            "translations": get_translations("auth", lang)
         })
+
 
 @api_view(["GET", "POST"])
 def buyer_translations_api(request):
-    lang =request.GET.get("lang", "en")
+    lang = request.GET.get("lang", "en")
     
-    if request.method=="GET":
+    if request.method == "GET":
         return response({
-            "translations":get_translations(["search", "commun","products"], lang)
+            "translations":get_translations(["search", "commun", "products"], lang)
         })
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_order_details_api(request, order_number):
@@ -4317,7 +4382,7 @@ def get_order_details_api(request, order_number):
 
                 "items": items,
             },
-            "translations":get_translations(["orders","commun","returns"], lang),
+            "translations":get_translations(["orders", "commun", "returns"], lang),
 
         })
 
@@ -4328,11 +4393,15 @@ def get_order_details_api(request, order_number):
             "success": False,
             "error": str(e)
         }, status=500)
+
+
 from products.services.category.get_category_attributes_service import (
     get_category_attributes_service
 )
 from products.models import CategoryAttributeTranslation
 from products.serializers.product_serializer import CategoryAttributeSerializer
+
+
 @api_view(["GET"])
 def get_category_attributes_api(request, category_code):
 
@@ -4358,10 +4427,12 @@ def get_category_attributes_api(request, category_code):
         "data": serializer.data
     })
 
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.shortcuts import get_object_or_404
 import traceback
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -4500,7 +4571,7 @@ def seller_order_details_api(request, order_number):
                     "attribute_type": attr.get("attribute_type"),
                     "value": attr.get("value"),
                 })
-            print("CURRENT ORDER IS :",snapshot)
+            print("CURRENT ORDER IS :", snapshot)
             # ----------------------------------------------
             # Variant
             # ----------------------------------------------
@@ -4623,7 +4694,7 @@ def seller_order_details_api(request, order_number):
 
                 "return_expiry_date": (
                     order.delivered_date
-                    + timezone.timedelta(
+                    +timezone.timedelta(
                         days=order.return_days or 0
                     )
                 ).isoformat()
@@ -4634,7 +4705,7 @@ def seller_order_details_api(request, order_number):
                     (
                         (
                             order.delivered_date
-                            + timezone.timedelta(
+                            +timezone.timedelta(
                                 days=order.return_days or 0
                             )
                         ) - timezone.now()
@@ -4651,7 +4722,6 @@ def seller_order_details_api(request, order_number):
                 #     []
                 # ),
                 "product_attributes": product_attributes,
-
 
                 "variant_attributes": snapshot.get(
                     "variant_attributes",
@@ -4721,7 +4791,7 @@ def seller_order_details_api(request, order_number):
                 "total_price": total_order_price,
                 
             },
-            "translations":get_translations(["commun","orders","returns","seller"], lang),
+            "translations":get_translations(["commun", "orders", "returns", "seller"], lang),
         })
 
     except Exception as e:
@@ -4732,6 +4802,7 @@ def seller_order_details_api(request, order_number):
             "success": False,
             "message": str(e),
         }, status=500)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -4803,7 +4874,7 @@ def seller_archived_orders_api(request):
             "success": True,
             "orders": orders_list,
             "translations": get_translations(
-                ["orders", "commun","seller"],
+                ["orders", "commun", "seller"],
                 lang
             )
         })
@@ -4820,11 +4891,14 @@ def seller_archived_orders_api(request):
             status=500
         )
 
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 from products.services.notification_services import get_merchant_notifications
 from products.models import Notifications
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def seller_notifications_api(request):
@@ -4905,7 +4979,7 @@ def seller_notifications_api(request):
 
             text_key = (
                 "notification_"
-                + notification.notification_type
+                +notification.notification_type
             )
 
             notifications_data.append({
@@ -5024,6 +5098,7 @@ def seller_notifications_api(request):
 #             "message": str(e)
 #         }, status=500)
 
+
 @api_view(["PATCH"])
 @permission_classes([IsAuthenticated])
 def mark_seller_notification_read_api(request, notification_id):
@@ -5116,7 +5191,6 @@ def mark_seller_notification_read_api(request, notification_id):
 #                 "message": "authentication_required"
 #             }, status=401)
 
-
 #         # ==================================================
 #         # جلب التاجر
 #         # ==================================================
@@ -5130,7 +5204,6 @@ def mark_seller_notification_read_api(request, notification_id):
 #                 "success": False,
 #                 "message": "merchant_not_found"
 #             }, status=404)
-
 
 #         # ==================================================
 #         # جلب الإشعار
@@ -5148,14 +5221,12 @@ def mark_seller_notification_read_api(request, notification_id):
 #                 "message": "notification_not_found"
 #             }, status=404)
 
-
 #         # ==================================================
 #         # تحديده كمقروء
 #         # ==================================================
 
 #         notification.is_read = True
 #         notification.save(update_fields=["is_read"])
-
 
 #         # ==================================================
 #         # Response
@@ -5167,7 +5238,6 @@ def mark_seller_notification_read_api(request, notification_id):
 #             "notification_id": notification.id,
 #         })
 
-
 #     except Exception as e:
 
 #         import traceback
@@ -5177,6 +5247,7 @@ def mark_seller_notification_read_api(request, notification_id):
 #             "success": False,
 #             "message": str(e),
 #         }, status=500)
+
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated

@@ -403,7 +403,7 @@ import { useLanguage } from "../../context/LanguageContext";
 const getSellerNotifications = async (lang) => {
 
     const token = localStorage.getItem("access_token");
-    
+
     const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/seller/notifications/?lang=${lang}`,
         // `http://localhost:8000/api/seller/notifications/?lang=${lang}`,
@@ -527,7 +527,7 @@ const markNotificationAsRead = async (notificationId) => {
 // Notifications Component
 // ==================================================
 
-function Notifications({onUnreadCountChange}) {
+function Notifications({ onUnreadCountChange }) {
 
     const { lang } = useLanguage();
 
@@ -577,8 +577,8 @@ function Notifications({onUnreadCountChange}) {
                 data?.notifications || []
             );
             setT(
-                  data?.translations || {}
-              );
+                data?.translations || {}
+            );
             setUnreadCount(
                 data?.unread_count || 0
             );
@@ -918,7 +918,7 @@ function Notifications({onUnreadCountChange}) {
                     textAlign: "center",
                 }}
             >
-               {t.loading_notifications}
+                {t.loading_notifications}
             </div>
         );
     }
@@ -1002,7 +1002,7 @@ function Notifications({onUnreadCountChange}) {
                     تحديث
                 ================================== */}
 
-                <button
+                {/* <button
                     type="button"
                     onClick={fetchNotifications}
                     style={{
@@ -1014,7 +1014,8 @@ function Notifications({onUnreadCountChange}) {
                     }}
                 >
                     {t.refresh}
-                </button>
+                   
+                </button> */}
 
             </div>
 
@@ -1077,13 +1078,13 @@ function Notifications({onUnreadCountChange}) {
 
                                     cursor:
                                         readingId ===
-                                        notification.id
+                                            notification.id
                                             ? "default"
                                             : "pointer",
 
                                     opacity:
                                         readingId ===
-                                        notification.id
+                                            notification.id
                                             ? 0.6
                                             : 1,
 
